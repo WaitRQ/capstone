@@ -3,6 +3,17 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  name: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.TEXT
+  },
+  imageUrl: {
+    type: Sequelize.TEXT,
+    defaultValue: 'https://identix.state.gov/qotw/images/no-photo.gif'
+  },
+
   email: {
     type: Sequelize.STRING,
     unique: true,
