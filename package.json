@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "WaitRQ",
   "version": "1.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -12,7 +12,7 @@
     "deploy": "script/deploy",
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint-fix": "npm run lint -- --fix",
-    "precommit": "# lint-staged # un-comment to enable",
+    "precommit": "lint-staged # un-comment to enable",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
