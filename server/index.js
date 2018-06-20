@@ -13,6 +13,12 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
+// This is a global Mocha hook, used for resource cleanup.
+// Otherwise, Mocha v4+ never quits after tests.
+if (process.env.NODE_ENV === 'test') {
+  after('close the session store', () => sessionStore.stopExpiringSessions())
+}
+
 /**
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
@@ -25,12 +31,15 @@ if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser((id, done) =>
-  db.models.user
-    .findById(id)
-    .then(user => done(null, user))
-    .catch(done)
-)
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.models.user.findById(id)
+    done(null, user)
+  } catch (err) {
+    done(err)
+  }
+})
 
 const createApp = () => {
   // logging middleware
@@ -99,16 +108,18 @@ const startListening = () => {
 
 const syncDb = () => db.sync()
 
+async function bootApp() {
+  await sessionStore.sync()
+  await syncDb()
+  await createApp()
+  await startListening()
+}
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  sessionStore
-    .sync()
-    .then(syncDb)
-    .then(createApp)
-    .then(startListening)
+  bootApp()
 } else {
   createApp()
 }
