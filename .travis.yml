@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "WaitRQ-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: waitrq # see README
+  api_key:
+    secure: euKFUCl51gDpujh6SKFSbwobK0xRa54kBwm638mJ3mw68hPDmmh22thfIB6H7gbjXoBRJSh6tm0XMeZbOUpHQ9MeDFiXaV7XdbxE12Sc8NdCpsPZZB3ZhLA442YT0Ake7f1c8Nn7t8k6uSqlMY2zPLkphmy1Dixh8bc0Qxt8dhWRQCBFUq3AKK00c3FANY6SJAHw4Jvr2mFrdQV1mXnPRFiOT2kaokv58NTLXvH/vO5w0t13fovvP2hgkC1twimIaNKaPiOo0Zcn1UDmvN8qrZsZIseT9SJ1ZWDUWMYWfKJPIvt6nhcZB1NM6MmhGYpuy0h8N/ruQTcJAIYdjO2BDgnPcW+MmNnt+/gTOmp/Cy4V0OxkkGsjLSu3jfi2DvBd+d+fI3lw57a9F289C25NjDal3Q6L+4IAX2IZ/RaS3Re+mYCUHLFmQQKRLaqB3rmNMkswN9/vmHp5OCSo6e20onaNttPDqPQ5Vynbw4fyFJJFRYptkUuyvrpXkMjmXC+BanrdLMFUskygP/e9MRoGTUeM6I8FHnIkljEGu8YsfUDMD0YJjtu97r0AiNP6Y035QU657/NnVY+OMMkow0Jqi1X7hlXtFtMH/vlpYKH4pvmTUBVkqSR469Ym5xUYQ+dYGCsNId835xdQtp4x6AhIm1pSlue73gJmNFDv81yvOSk= # see README
