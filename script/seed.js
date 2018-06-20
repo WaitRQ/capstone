@@ -2,6 +2,9 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const {Location} = require('../server/db/models')
+const {Reservation} = require('../server/db/models')
+const {Message} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -21,9 +24,56 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      name: 'Cody',
+      imageUrl:
+        'https://s.yimg.com/ny/api/res/1.2/rEOFkdkJf3IjLi1_3t_syQ--/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9MjUwO2g9MjAwO2lsPXBsYW5l/http://media.zenfs.com/en-US/blogs/ept_prod/ymoviesblog-617027335-1305843351.jpg',
+      email: 'cody@email.com',
+      password: '123'
+    }),
+    User.create({
+      name: 'Murphy',
+      imageUrl:
+        'https://blanklabel.blob.core.windows.net/placementshots/rubenstein-web-a.jpg',
+      email: 'murphy@email.com',
+      password: '123'
+    })
   ])
+
+  const location = await Promise.all([
+    Location.create({
+      name: 'Apple Soho',
+      imageUrl: 'https://media.timeout.com/images/100520009/630/472/image.jpg',
+      address: '103 Prince Street, New York',
+      latitude: 40.725058,
+      longtitude: -73.999037
+    }),
+    Location.create({
+      name: 'The Rink At Rockefeller Center',
+      imageUrl:
+        'http://blog.dreamhotels.com/wp-content/uploads/2014/10/TheRink.jpg',
+      address: '600 5th Ave, New York',
+      latitude: 40.7592592,
+      longtitude: -73.9782257
+    })
+  ])
+
+  const reservation = await Reservation.create({
+    userId: users[0].id,
+    locationId: location[0].id,
+    status: 'pending',
+    paid: 25.5,
+    clientId: users[1].id
+  })
+
+  const message = await Message.create({
+    reservationId: reservation.id,
+    fromId: reservation.userId,
+    toId: reservation.clientId,
+    text:
+      'hey, lines moving slower, i will text you when i am closer in an hour'
+  })
+
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
