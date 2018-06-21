@@ -11,4 +11,27 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    const location = await Location.create(req.body)
+    res.json(location)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const location = await Location.update(req.body, {
+      where: {
+        id: req.params.id
+      },
+      returning: true
+    })
+    res.json(location[1][0].dataValues)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //included other routes like an update post/put route
