@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import {GoogleMap, Login, Signup, UserHome} from './components'
 import {me} from './store'
 
