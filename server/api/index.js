@@ -2,11 +2,12 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
+router.use('/locations', require('./location'))
+router.use('/reservations', require('./reservation'))
+router.use('/messages', require('./message'))
 
 //uncomment new routes when ready
 
-// router.use('/reservation', require('./reservation'))
-// router.use('/location', require('./location'))
 // router.use('/message', require('./message'))
 
 router.use((req, res, next) => {
