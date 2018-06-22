@@ -3,29 +3,45 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+  <AppBar>
+    <Toolbar>
+      <Typography variant="title" color="textSecondary">
+        waitRQ
+      </Typography>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Button>
+              <Link to="/home">Home</Link>
+            </Button>
+            <Button>
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
+            </Button>
+          </div>
+        ) : (
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Button>
+              <Link to="/login">Login</Link>
+            </Button>
+            <Button>
+              <Link to="/signup">Sign Up</Link>
+            </Button>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </Toolbar>
+  </AppBar>
 )
 
 /**
