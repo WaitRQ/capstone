@@ -25,5 +25,12 @@ form div {
 }
 
 .content {
-  margin-top: 100px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px;
 }
