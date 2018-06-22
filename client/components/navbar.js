@@ -15,14 +15,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       {isLoggedIn ? (
         <div className="flex-container">
           {/* The navbar will show these links after you log in */}
-          <Button>
-            <Link to="/home">Home</Link>
-          </Button>
-          <Button>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
-          </Button>
+          Welcome
         </div>
       ) : (
         <div className="flex-container">
