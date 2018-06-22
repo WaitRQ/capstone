@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {Router} from 'react-router-dom'
 import history from './history'
 import store from './store'
-import App from './app'
+import {MiniDrawer} from './components'
 
 // establishes socket connection
 import './socket'
@@ -12,7 +12,7 @@ import './socket'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <App />
+      <MiniDrawer />
     </Router>
   </Provider>,
   document.getElementById('app')
