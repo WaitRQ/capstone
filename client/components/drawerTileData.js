@@ -1,37 +1,40 @@
+// This file is shared across the demos.
+
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import StarIcon from '@material-ui/icons/Star'
-import SendIcon from '@material-ui/icons/Send'
+import HomeIcon from '@material-ui/icons/Home'
+import WaitRQIcon from '@material-ui/icons/SupervisorAccount'
+import AccountIcon from '@material-ui/icons/AccountCircle'
+import ExitIcon from '@material-ui/icons/ExitToApp'
+import MailIcon from '@material-ui/icons/Mail'
 
-export const mailFolderListItems = (
+export const folderListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <InboxIcon />
+        <HomeIcon />
       </ListItemIcon>
-      <ListItemText primary="Inbox" />
+      <ListItemText primary="Home" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <StarIcon />
+        <WaitRQIcon />
       </ListItemIcon>
-      <ListItemText primary="Starred" />
+      <ListItemText primary="waitRQs" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <SendIcon />
+        <AccountIcon />
       </ListItemIcon>
-      <ListItemText primary="Send mail" />
+      <ListItemText primary="My Account" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <DraftsIcon />
+        <ExitIcon />
       </ListItemIcon>
-      <ListItemText primary="Drafts" />
+      <ListItemText primary="Logout" />
     </ListItem>
   </div>
 )
