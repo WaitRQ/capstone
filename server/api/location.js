@@ -22,13 +22,13 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const location = await Location.update(req.body, {
+    const result = await Location.update(req.body, {
       where: {
         id: req.params.id
       },
       returning: true
     })
-    res.json(location[1][0].dataValues)
+    res.json(result[1][0].dataValues)
   } catch (err) {
     next(err)
   }
