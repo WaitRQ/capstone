@@ -19,8 +19,6 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        {/* <Route path="/test/map" component={MapWithSearchBox} /> */}
-        {/* Routes above are for testing purpose */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
