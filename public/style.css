@@ -27,6 +27,8 @@ form div {
 .content {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 15px;
+  height: 100vh;
 }
 .flex-container {
   display: flex;
