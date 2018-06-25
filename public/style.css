@@ -31,6 +31,14 @@ form div {
 .flex-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.flex-container2 {
+  display: flex;
+  align-self: flex-end;
   align-items: center;
   margin: 5px;
 }
