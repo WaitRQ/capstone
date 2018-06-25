@@ -1,7 +1,6 @@
 import React from 'react'
-if (process.env.NODE_ENV !== 'production') require('../../secrets')
 
-const apiKey = process.env.GOOGLE_MAP
+const apiKey = 'AIzaSyA1ngr1yQhZ1xp-bk7Uk2gCbiSLPFKzUwY'
 
 const _ = require('lodash')
 const {compose, withProps, lifecycle} = require('recompose')
