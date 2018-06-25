@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {GoogleMap, Login, Signup, UserHome} from './components'
+import {MapContainer, Login, Signup, UserHome} from './components'
 import {me} from './store'
 
 /**
@@ -19,7 +19,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/test/map" component={GoogleMap} />
+        <Route path="/test/map" component={MapContainer} />
         {/* Routes above are for testing purpose */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
