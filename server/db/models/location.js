@@ -15,7 +15,7 @@ const Location = db.define('location', {
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue:
-      'https://www.imore.com/sites/imore.com/files/styles/xlarge/public/field/image/2015/02/apple-store-west-lake-front-press.jpg?itok=l6uTaHOH'
+      'https://images.pexels.com/photos/279166/pexels-photo-279166.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
   },
 
   latitude: {
