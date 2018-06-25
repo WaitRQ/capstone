@@ -14,60 +14,64 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
+const LoginIcons = props => (
+  <List>
+    <Link to="/home">
+      <ListItem button>
+        <ListItemIcon>
+          <HomeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+    </Link>
+    <ListItem button>
+      <ListItemIcon>
+        <WaitRQIcon />
+      </ListItemIcon>
+      <ListItemText primary="waitRQs" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AccountIcon />
+      </ListItemIcon>
+      <ListItemText primary="My Account" />
+    </ListItem>
+    <a href="#" onClick={props.handleClick}>
+      <ListItem button>
+        <ListItemIcon>
+          <ExitIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItem>
+    </a>
+  </List>
+)
+
+const NoLoginIcons = () => (
+  <List>
+    <Link to="/login">
+      <ListItem button>
+        <ListItemIcon>
+          <LoginIcon />
+        </ListItemIcon>
+        <ListItemText primary="Login" />
+      </ListItem>
+    </Link>
+    <Link to="/signup">
+      <ListItem button>
+        <ListItemIcon>
+          <SignupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Signup" />
+      </ListItem>
+    </Link>
+  </List>
+)
+
 const FolderListItems = ({handleClick, isLoggedIn}) => {
   return (
     <>
-      {isLoggedIn ? (
-        <List>
-          <Link to="/home">
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-          </Link>
-          <ListItem button>
-            <ListItemIcon>
-              <WaitRQIcon />
-            </ListItemIcon>
-            <ListItemText primary="waitRQs" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <AccountIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Account" />
-          </ListItem>
-          <a href="#" onClick={handleClick}>
-            <ListItem button>
-              <ListItemIcon>
-                <ExitIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItem>
-          </a>
-        </List>
-      ) : (
-        <List>
-          <Link to="/login">
-            <ListItem button>
-              <ListItemIcon>
-                <LoginIcon />
-              </ListItemIcon>
-              <ListItemText primary="Login" />
-            </ListItem>
-          </Link>
-          <Link to="/signup">
-            <ListItem button>
-              <ListItemIcon>
-                <SignupIcon />
-              </ListItemIcon>
-              <ListItemText primary="Signup" />
-            </ListItem>
-          </Link>
-        </List>
-      )}
+      {isLoggedIn ? <LoginIcons handleClick={handleClick} /> : <NoLoginIcons />}
     </>
   )
 }
@@ -83,7 +87,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
+    handleClick: evt => {
+      evt.preventDefault()
       dispatch(logout())
     }
   }

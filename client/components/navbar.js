@@ -10,12 +10,12 @@ const Navbar = ({email, isLoggedIn}) => (
     </Typography>
     <nav>
       {isLoggedIn ? (
-        <div className="flex-container2">
+        <div className="flex-container">
           {/* The navbar will show these links after you log in */}
           <h3>Welcome, {email}</h3>
         </div>
       ) : (
-        <div className="flex-container2">
+        <div className="flex-container">
           <h3>Please login</h3>
         </div>
       )}
