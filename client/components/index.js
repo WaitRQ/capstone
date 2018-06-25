@@ -5,6 +5,6 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
-export {default as MapContainer} from './MapContainer'
+export {default as MapWithSearchBox} from './MapWithSearchBox'
 export {Login, Signup} from './auth-form'
 export {default as MiniDrawer} from './drawer'
