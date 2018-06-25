@@ -1,31 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({email, isLoggedIn}) => (
   <div className="flex-container">
     <Typography variant="title" color="textSecondary">
       waitRQ
     </Typography>
     <nav>
       {isLoggedIn ? (
-        <div className="flex-container">
+        <div className="flex-container2">
           {/* The navbar will show these links after you log in */}
-          Welcome
+          <h3>Welcome, {email}</h3>
         </div>
       ) : (
-        <div className="flex-container">
-          {/* The navbar will show these links before you log in */}
-          <Button>
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button>
-            <Link to="/signup">Sign Up</Link>
-          </Button>
+        <div className="flex-container2">
+          <h3>Please login</h3>
         </div>
       )}
     </nav>
@@ -37,24 +28,16 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    email: state.user.email
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState)(Navbar)
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
