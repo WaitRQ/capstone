@@ -6,7 +6,12 @@ import Grid from '@material-ui/core/Grid'
 import {DrawerStyle} from './style'
 
 class InfoWindowDisplay extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
+    console.log('This is props', this.props.bounds)
     const {classes} = this.props
     return (
       <div className={classes.rootB}>

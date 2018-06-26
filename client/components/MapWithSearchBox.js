@@ -2,7 +2,7 @@ import React from 'react'
 import InfoWindowDisplay from './infoWindowDisplay'
 
 const apiKey = 'AIzaSyA1ngr1yQhZ1xp-bk7Uk2gCbiSLPFKzUwY'
-
+var address = ''
 const _ = require('lodash')
 const {compose, withProps, lifecycle, withStateHandlers} = require('recompose')
 const {
@@ -35,7 +35,6 @@ const MapWithSearchBox = compose(
   lifecycle({
     componentWillMount() {
       const refs = {}
-
       this.setState({
         bounds: null,
         center: {
@@ -57,7 +56,9 @@ const MapWithSearchBox = compose(
         },
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces()
+          address = places
           const bounds = new google.maps.LatLngBounds()
+          console.log('places', places)
 
           places.forEach(place => {
             if (place.geometry.viewport) {
@@ -65,22 +66,21 @@ const MapWithSearchBox = compose(
             } else {
               bounds.extend(place.geometry.location)
             }
-          })
+          }) //for each
           const nextMarkers = places.map(place => ({
             position: place.geometry.location
           }))
           const nextCenter = _.get(nextMarkers, '0.position', this.state.center)
-
           this.setState({
             center: nextCenter,
             markers: nextMarkers
-          })
-        }
-      })
-    }
-  }),
+          }) //set state
+        } //on places changed
+      }) //Set State
+    } //componentWillMount
+  }), //with props
   withScriptjs,
-  withGoogleMap
+  withGoogleMap //compose
 )(props => (
   <GoogleMap
     ref={props.onMapMounted}
@@ -121,7 +121,7 @@ const MapWithSearchBox = compose(
       >
         {props.isOpen && (
           <InfoWindow onCloseClick={props.onToggleOpen}>
-            <InfoWindowDisplay />
+            <InfoWindowDisplay bounds={address} />
           </InfoWindow>
         )}
       </Marker>
