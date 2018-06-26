@@ -28,7 +28,7 @@ router.put('/:id', async (req, res, next) => {
       },
       returning: true
     })
-    res.json(result[1][0].dataValues)
+    res.json(result[1][0])
   } catch (err) {
     next(err)
   }

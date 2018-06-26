@@ -1,10 +1,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
-const {Location} = require('../server/db/models')
-const {Reservation} = require('../server/db/models')
-const {Message} = require('../server/db/models')
+const {
+  User,
+  Location,
+  Reservation,
+  Message,
+  Status
+} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -40,7 +43,7 @@ async function seed() {
     })
   ])
 
-  const location = await Promise.all([
+  const locations = await Promise.all([
     Location.create({
       name: 'Apple Soho',
       imageUrl: 'https://media.timeout.com/images/100520009/630/472/image.jpg',
@@ -58,25 +61,64 @@ async function seed() {
     })
   ])
 
-  const reservation = await Reservation.create({
-    userId: users[0].id,
-    locationId: location[0].id,
-    status: 'pending',
-    paid: 25.5,
-    clientId: users[1].id
-  })
+  const statuses = await Promise.all([
+    Status.create({
+      type: 'unpaid'
+    }),
+    Status.create({
+      type: 'paid'
+    }),
+    Status.create({
+      type: 'confirmed'
+    }),
+    Status.create({
+      type: 'canceled'
+    }),
+    Status.create({
+      type: 'completed'
+    })
+  ])
 
-  const message = await Message.create({
-    reservationId: reservation.id,
-    fromId: reservation.userId,
-    toId: reservation.clientId,
-    text:
-      'hey, lines moving slower, i will text you when i am closer in an hour'
-  })
+  const reservations = await Promise.all([
+    Reservation.create({
+      sellerId: users[0].id,
+      locationId: locations[0].id,
+      statusId: statuses[0].id,
+      price: 25.5,
+      buyerId: users[1].id
+    }),
+    Reservation.create({
+      sellerId: users[1].id,
+      locationId: locations[1].id,
+      statusId: statuses[2].id,
+      price: 10.8,
+      buyerId: users[0].id
+    })
+  ])
+
+  const messages = await await Promise.all([
+    Message.create({
+      reservationId: reservations[0].id,
+      fromId: reservations[0].sellerId,
+      toId: reservations[0].buyerId,
+      text:
+        'hey, lines moving slower, i will text you when i am closer in an hour'
+    }),
+    Message.create({
+      reservationId: reservations[1].id,
+      fromId: reservations[1].sellerId,
+      toId: reservations[1].buyerId,
+      text: 'hey, lines moving fast, you may come now!'
+    })
+  ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${locations.length} locations`)
+  console.log(`seeded ${statuses.length} statuses`)
+  console.log(`seeded ${reservations.length} reservations`)
+  console.log(`seeded ${messages.length} messages`)
   console.log(`seeded successfully`)
 }
 
