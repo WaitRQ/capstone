@@ -4,18 +4,20 @@ import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 
 const Navbar = ({email, isLoggedIn}) => (
-  <div className="flex-container">
-    <Typography variant="title" color="textSecondary">
-      waitRQ
-    </Typography>
+  <div className="navbar flex justify-between items-baseline">
+    <div className="self-baseline">
+      <Typography variant="title" color="textSecondary">
+        waitRQ
+      </Typography>
+    </div>
     <nav>
       {isLoggedIn ? (
-        <div className="flex-container">
+        <div>
           {/* The navbar will show these links after you log in */}
           <h3>Welcome, {email}</h3>
         </div>
       ) : (
-        <div className="flex-container">
+        <div>
           <h3>Please login</h3>
         </div>
       )}
