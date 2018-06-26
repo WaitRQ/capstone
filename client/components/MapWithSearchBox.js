@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {Component} from 'react'
+
+import MapContainer from './MapContainer'
 import InfoWindowDisplay from './infoWindowDisplay'
 
 const apiKey = 'AIzaSyA1ngr1yQhZ1xp-bk7Uk2gCbiSLPFKzUwY'
@@ -15,118 +17,119 @@ const {
 
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
 
-const MapWithSearchBox = compose(
-  withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{height: `100%`}} />,
-    containerElement: <div style={{height: `90%`}} />,
-    mapElement: <div style={{height: `100%`}} />
-  }),
-  withStateHandlers(
-    () => ({
+class MapWithSearchBox extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      markers: [],
+      bounds: {},
+      center: {},
       isOpen: false
-    }),
-    {
-      onToggleOpen: ({isOpen}) => () => ({
-        isOpen: !isOpen
-      })
     }
-  ),
-  lifecycle({
-    componentWillMount() {
-      const refs = {}
-      this.setState({
-        bounds: null,
-        center: {
-          lat: 40.705247,
-          lng: -74.008351
-        },
-        markers: [],
-        onMapMounted: ref => {
-          refs.map = ref
-        },
-        onBoundsChanged: () => {
-          this.setState({
-            bounds: refs.map.getBounds(),
-            center: refs.map.getCenter()
-          })
-        },
-        onSearchBoxMounted: ref => {
-          refs.searchBox = ref
-        },
-        onPlacesChanged: () => {
-          const places = refs.searchBox.getPlaces()
-          address = places
-          const bounds = new google.maps.LatLngBounds()
-          console.log('places', places)
+  }
 
-          places.forEach(place => {
-            if (place.geometry.viewport) {
-              bounds.union(place.geometry.viewport)
-            } else {
-              bounds.extend(place.geometry.location)
-            }
-          }) //for each
-          const nextMarkers = places.map(place => ({
-            position: place.geometry.location
-          }))
-          const nextCenter = _.get(nextMarkers, '0.position', this.state.center)
-          this.setState({
-            center: nextCenter,
-            markers: nextMarkers
-          }) //set state
-        } //on places changed
-      }) //Set State
-    } //componentWillMount
-  }), //with props
-  withScriptjs,
-  withGoogleMap //compose
-)(props => (
-  <GoogleMap
-    ref={props.onMapMounted}
-    defaultZoom={15}
-    center={props.center}
-    onBoundsChanged={props.onBoundsChanged}
-  >
-    <SearchBox
-      ref={props.onSearchBoxMounted}
-      bounds={props.bounds}
-      controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={props.onPlacesChanged}
-    >
-      <input
-        type="text"
-        placeholder="Customized your placeholder"
-        style={{
-          boxSizing: `border-box`,
-          border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
-          marginTop: `27px`,
-          padding: `0 12px`,
-          borderRadius: `3px`,
-          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
-          outline: `none`,
-          textOverflow: `ellipses`
-        }}
-      />
-    </SearchBox>
+  onToggleOpen = () => {
+    this.setState(prevState => ({isOpen: !!prevState.isOpen}))
+  }
 
-    {props.markers.map((marker, index) => (
-      <Marker
-        key={index}
-        onClick={props.onToggleOpen}
-        position={marker.position}
+  componentWillMount() {
+    const refs = {}
+    this.setState({
+      bounds: null,
+      center: {
+        lat: 40.705247,
+        lng: -74.008351
+      },
+      markers: [],
+      onMapMounted: ref => {
+        refs.map = ref
+      },
+      onBoundsChanged: () => {
+        this.setState({
+          bounds: refs.map.getBounds(),
+          center: refs.map.getCenter()
+        })
+      },
+      onSearchBoxMounted: ref => {
+        refs.searchBox = ref
+      },
+      onPlacesChanged: () => {
+        const places = refs.searchBox.getPlaces()
+        address = places
+        const bounds = new google.maps.LatLngBounds()
+        console.log('places', places)
+
+        places.forEach(place => {
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport)
+          } else {
+            bounds.extend(place.geometry.location)
+          }
+        }) //for each
+        const nextMarkers = places.map(place => ({
+          position: place.geometry.location
+        }))
+        const nextCenter = _.get(nextMarkers, '0.position', this.state.center)
+        this.setState({
+          center: nextCenter,
+          markers: nextMarkers
+        }) //set state
+      } //on places changed
+    }) //Set State
+  } //componentWillMount
+
+  // withScriptjs,
+  // withGoogleMap //compose
+  render() {
+    return (
+      <GoogleMap
+        ref={this.onMapMounted}
+        defaultZoom={15}
+        center={this.state.center}
+        onBoundsChanged={this.onBoundsChanged}
       >
-        {props.isOpen && (
-          <InfoWindow onCloseClick={props.onToggleOpen}>
-            <InfoWindowDisplay bounds={address} />
-          </InfoWindow>
-        )}
-      </Marker>
-    ))}
-  </GoogleMap>
-))
+        <SearchBox
+          ref={this.onSearchBoxMounted}
+          bounds={this.state.bounds}
+          controlPosition={google.maps.ControlPosition.TOP_LEFT}
+          onPlacesChanged={this.onPlacesChanged}
+        >
+          <input
+            type="text"
+            placeholder="Customized your placeholder"
+            style={{
+              boxSizing: `border-box`,
+              border: `1px solid transparent`,
+              width: `240px`,
+              height: `32px`,
+              marginTop: `27px`,
+              padding: `0 12px`,
+              borderRadius: `3px`,
+              boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+              fontSize: `14px`,
+              outline: `none`,
+              textOverflow: `ellipses`
+            }}
+          />
+        </SearchBox>
+
+        {this.state.markers.map((marker, index) => (
+          <Marker
+            key={index}
+            onClick={this.onToggleOpen}
+            position={this.state.marker.position}
+          >
+            {this.state.isOpen && (
+              <InfoWindow onCloseClick={this.state.onToggleOpen}>
+                <InfoWindowDisplay bounds={address} />
+              </InfoWindow>
+            )}
+          </Marker>
+        ))}
+      </GoogleMap>
+    )
+  }
+}
 
 export default MapWithSearchBox

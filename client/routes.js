@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {MapWithSearchBox, Login, Signup, UserHome} from './components'
+import {MapContainer, Login, Signup, UserHome} from './components'
 import {me} from './store'
 
 /**
  * COMPONENT
  */
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
@@ -25,7 +26,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={UserHome} /> */}
-            <Route path="/home" component={MapWithSearchBox} />
+            <Route path="/home" component={MapContainer} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
