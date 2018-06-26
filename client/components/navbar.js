@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 const Navbar = ({email, isLoggedIn}) => (
   <div className="navbar flex justify-between items-baseline">
     <div className="self-baseline">
-      <Typography variant="title" color="textSecondary">
+      <Typography variant="title" color="inherit">
         waitRQ
       </Typography>
     </div>
