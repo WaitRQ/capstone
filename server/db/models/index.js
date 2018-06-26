@@ -10,14 +10,11 @@ const Message = require('./message')
  *    BlogPost.belongsTo(User)
  */
 
-Reservation.belongsTo(User)
-User.hasMany(Reservation)
-
 Reservation.belongsTo(Location)
 Location.hasMany(Reservation)
 
-Reservation.belongsTo(User, {as: 'client'})
-User.hasMany(Reservation, {as: 'client'})
+Reservation.belongsTo(User, {as: 'seller'})
+Reservation.belongsTo(User, {as: 'buyer'})
 
 Message.belongsTo(Reservation)
 Reservation.hasMany(Message)

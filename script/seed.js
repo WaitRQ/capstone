@@ -59,17 +59,17 @@ async function seed() {
   ])
 
   const reservation = await Reservation.create({
-    userId: users[0].id,
+    sellerId: users[0].id,
     locationId: location[0].id,
     status: 'pending',
     paid: 25.5,
-    clientId: users[1].id
+    buyerId: users[1].id
   })
 
   const message = await Message.create({
     reservationId: reservation.id,
-    fromId: reservation.userId,
-    toId: reservation.clientId,
+    fromId: reservation.sellerId,
+    toId: reservation.buyerId,
     text:
       'hey, lines moving slower, i will text you when i am closer in an hour'
   })
