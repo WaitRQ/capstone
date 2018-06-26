@@ -83,14 +83,14 @@ async function seed() {
     Reservation.create({
       sellerId: users[0].id,
       locationId: locations[0].id,
-      status: statuses[0].id,
+      statusId: statuses[0].id,
       price: 25.5,
       buyerId: users[1].id
     }),
     Reservation.create({
       sellerId: users[1].id,
       locationId: locations[1].id,
-      status: statuses[2].id,
+      statusId: statuses[2].id,
       price: 10.8,
       buyerId: users[0].id
     })
