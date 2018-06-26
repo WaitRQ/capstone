@@ -4,3 +4,4 @@
  * having to figure out which file they belong to!
  */
 export {styles as DrawerStyle} from './drawerStyle'
+export {NewReservationStyle} from './newReservation'
