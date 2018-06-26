@@ -1,14 +1,16 @@
 import React from 'react'
+import InfoWindowDisplay from './infoWindowDisplay'
 
 const apiKey = 'AIzaSyA1ngr1yQhZ1xp-bk7Uk2gCbiSLPFKzUwY'
 
 const _ = require('lodash')
-const {compose, withProps, lifecycle} = require('recompose')
+const {compose, withProps, lifecycle, withStateHandlers} = require('recompose')
 const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
+  Marker,
+  InfoWindow
 } = require('react-google-maps')
 
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
@@ -20,6 +22,16 @@ const MapWithSearchBox = compose(
     containerElement: <div style={{height: `90%`}} />,
     mapElement: <div style={{height: `100%`}} />
   }),
+  withStateHandlers(
+    () => ({
+      isOpen: false
+    }),
+    {
+      onToggleOpen: ({isOpen}) => () => ({
+        isOpen: !isOpen
+      })
+    }
+  ),
   lifecycle({
     componentWillMount() {
       const refs = {}
@@ -100,8 +112,19 @@ const MapWithSearchBox = compose(
         }}
       />
     </SearchBox>
+
     {props.markers.map((marker, index) => (
-      <Marker key={index} position={marker.position} />
+      <Marker
+        key={index}
+        onClick={props.onToggleOpen}
+        position={marker.position}
+      >
+        {props.isOpen && (
+          <InfoWindow onCloseClick={props.onToggleOpen}>
+            <InfoWindowDisplay />
+          </InfoWindow>
+        )}
+      </Marker>
     ))}
   </GoogleMap>
 ))
