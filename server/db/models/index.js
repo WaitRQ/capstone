@@ -2,6 +2,7 @@ const User = require('./user')
 const Location = require('./location')
 const Reservation = require('./reservation')
 const Message = require('./message')
+const Status = require('./status')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -15,6 +16,7 @@ Location.hasMany(Reservation)
 
 Reservation.belongsTo(User, {as: 'seller'})
 Reservation.belongsTo(User, {as: 'buyer'})
+Reservation.belongsTo(Status)
 
 Message.belongsTo(Reservation)
 Reservation.hasMany(Message)
@@ -32,5 +34,6 @@ module.exports = {
   User,
   Location,
   Reservation,
-  Message
+  Message,
+  Status
 }

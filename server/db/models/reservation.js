@@ -11,9 +11,6 @@ const Reservation = db.define('reservation', {
       this.setDataValue('price', val * 100)
     }
   },
-  status: {
-    type: Sequelize.ENUM('new', 'pending', 'paid', 'canceled', 'completed')
-  },
   date: {
     type: Sequelize.DATE,
     defaultValue: Date.now()
