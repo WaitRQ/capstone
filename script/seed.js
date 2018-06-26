@@ -62,7 +62,7 @@ async function seed() {
     sellerId: users[0].id,
     locationId: location[0].id,
     status: 'pending',
-    paid: 25.5,
+    price: 25.5,
     buyerId: users[1].id
   })
 
