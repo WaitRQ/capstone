@@ -12,9 +12,13 @@ const Reservation = db.define('reservation', {
     }
   },
   date: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     defaultValue: Date.now()
-  }
+  }, //date of reservation
+  time: {
+    type: Sequelize.TIME,
+    defaultValue: '09:00'
+  } //time of reservation
 })
 
 module.exports = Reservation
