@@ -1,35 +1,34 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
 import {connect} from 'react-redux'
+import InfoWindowMap from './InfoWindowMap'
 
-const MyMapComponent = withScriptjs(
-  withGoogleMap(props => {
-    console.log('this.props', props)
+class MyMapComponent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+  render() {
     return (
       <div>
         <GoogleMap
           defaultZoom={14}
           center={{
-            lat: props.defaultCenter.lat,
-            lng: props.defaultCenter.lng
+            lat: this.props.defaultCenter.lat,
+            lng: this.props.defaultCenter.lng
           }}
         >
-          {props.allLocations.length &&
-            props.allLocations.map(location => {
-              return (
-                <Marker
-                  key={location.id}
-                  position={{lat: location.latitude, lng: location.longitude}}
-                />
-              )
+          {this.props.allLocations.length &&
+            this.props.allLocations.map(location => {
+              return <InfoWindowMap key={location.id} location={location} />
             })}
         </GoogleMap>
         <SearchBox
-          ref={props.onSearchBoxMounted}
-          bounds={props.bounds}
+          ref={this.props.onSearchBoxMounted}
+          bounds={this.props.bounds}
           controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={props.onPlacesChanged}
+          onPlacesChanged={this.props.onPlacesChanged}
         >
           <input
             type="text"
@@ -51,11 +50,13 @@ const MyMapComponent = withScriptjs(
         </SearchBox>
       </div>
     )
-  })
-)
+  }
+}
 
 const mapStateToProps = state => ({
   allLocations: state.location.allLocations
 })
 
-export default connect(mapStateToProps)(MyMapComponent)
+export default connect(mapStateToProps)(
+  withScriptjs(withGoogleMap(MyMapComponent))
+)
