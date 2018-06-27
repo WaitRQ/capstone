@@ -11,6 +11,30 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+//get my reservations where I'm a buyer
+router.get('/buyer/:userId', async (req, res, next) => {
+  try {
+    const reservations = await Reservation.getReservationsAsBuyerByUserId(
+      req.params.userId
+    )
+    res.json(reservations)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//get my reservations where I'm a seller
+router.get('/seller/:userId', async (req, res, next) => {
+  try {
+    const reservations = await Reservation.getReservationsAsSellerByUserId(
+      req.params.userId
+    )
+    res.json(reservations)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const reservation = await Reservation.create(req.body)

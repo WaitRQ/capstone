@@ -42,8 +42,22 @@ Reservation.getReservationsAsBuyerByUserId = function(userId) {
   })
 }
 
-Reservation.getReservationsAsBuyerBySellerId = function(userId) {
-  return this.findAll({where: {sellerId: userId}, include: [Location]})
+Reservation.getReservationsAsSellerByUserId = function(userId) {
+  return this.findAll({
+    where: {sellerId: userId},
+    include: [
+      {
+        model: User,
+        as: 'seller'
+      },
+      {
+        model: Location
+      },
+      {
+        model: Status
+      }
+    ]
+  })
 }
 
 module.exports = Reservation

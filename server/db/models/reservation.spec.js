@@ -85,11 +85,15 @@ describe('Reservation model', () => {
         expect(rets[1].sellerId).to.be.equal(testReservation3.sellerId)
       })
 
-      // it('Returns empty when query by TEST_PORTFOLIOMETADATA_ID_3', async () => {
-      //   const rets = await PortfolioData.listPortfolioDataByPortfolioMetadataId(
-      //     TEST_PORTFOLIOMETADATA_ID_3);
-      //   expect(rets).to.be.an('array').that.is.empty;
-      // });
+      it('Eager loading user, location, and status', async () => {
+        const rets = await Reservation.getReservationsAsBuyerByUserId(2)
+        expect(rets)
+          .to.be.an('array')
+          .that.to.have.lengthOf(1)
+        expect(rets[0].buyer.name).to.be.equal(testUser2.name)
+        expect(rets[0].location.name).to.be.equal(testLocation1.name)
+        expect(rets[0].status.type).to.be.equal(testStatus1.type)
+      })
     })
   })
 })
