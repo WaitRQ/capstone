@@ -2,13 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {
-  MapContainer,
-  MapWithSearchBox,
-  Login,
-  Signup,
-  NewReservation
-} from './components'
+import {MapContainer, Login, Signup, NewReservation} from './components'
 import {me} from './store'
 
 /**
