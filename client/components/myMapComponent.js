@@ -1,9 +1,11 @@
 import React from 'react'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
+import {connect} from 'react-redux'
 
 const MyMapComponent = withScriptjs(
   withGoogleMap(props => {
+    console.log('this.props', props)
     return (
       <div>
         <GoogleMap
@@ -13,9 +15,15 @@ const MyMapComponent = withScriptjs(
             lng: props.defaultCenter.lng
           }}
         >
-          {props.isMarkerShown && (
-            <Marker position={{lat: -34.397, lng: 150.644}} />
-          )}
+          {props.allLocations.length &&
+            props.allLocations.map(location => {
+              return (
+                <Marker
+                  key={location.id}
+                  position={{lat: location.latitude, lng: location.longitude}}
+                />
+              )
+            })}
         </GoogleMap>
         <SearchBox
           ref={props.onSearchBoxMounted}
@@ -46,4 +54,8 @@ const MyMapComponent = withScriptjs(
   })
 )
 
-export default MyMapComponent
+const mapStateToProps = state => ({
+  allLocations: state.location.allLocations
+})
+
+export default connect(mapStateToProps)(MyMapComponent)

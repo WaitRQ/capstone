@@ -26,7 +26,7 @@ const Location = db.define('location', {
     }
   },
 
-  longtitude: {
+  longitude: {
     type: Sequelize.FLOAT,
     validate: {
       min: -180,
