@@ -4,6 +4,7 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {MapContainer, Login, Signup, NewReservation} from './components'
 import {me} from './store'
+import {getAllLocations} from './store/location'
 
 /**
  * COMPONENT
@@ -12,6 +13,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.loadLocationData()
   }
 
   render() {
@@ -45,17 +47,15 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    allLocations: state.location.allLocations
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  loadInitialData: () => dispatch(me()),
+  loadLocationData: () => dispatch(getAllLocations())
+})
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
