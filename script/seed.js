@@ -127,19 +127,19 @@ async function seed() {
 
   const statuses = await Promise.all([
     Status.create({
-      type: 'unpaid'
-    }),
-    Status.create({
-      type: 'paid'
+      type: 'new'
     }),
     Status.create({
       type: 'confirmed'
     }),
     Status.create({
-      type: 'canceled'
+      type: 'complete'
     }),
     Status.create({
-      type: 'completed'
+      type: 'waiterPaid'
+    }),
+    Status.create({
+      type: 'canceled'
     })
   ])
 
@@ -156,6 +156,13 @@ async function seed() {
       locationId: locations[1].id,
       statusId: statuses[2].id,
       price: 10.8,
+      buyerId: users[0].id
+    }),
+    Reservation.create({
+      sellerId: users[1].id,
+      locationId: locations[1].id,
+      statusId: statuses[1].id,
+      price: 20,
       buyerId: users[0].id
     })
   ])

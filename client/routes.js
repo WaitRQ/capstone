@@ -3,8 +3,10 @@ import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {MapContainer, Login, Signup, NewReservation} from './components'
-import {me} from './store'
+
 import {getAllLocations} from './store/location'
+
+import {me, loadReservation} from './store'
 
 /**
  * COMPONENT
@@ -13,7 +15,10 @@ import {getAllLocations} from './store/location'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+
     this.props.loadLocationData()
+
+    this.props.loadReservation()
   }
 
   render() {
@@ -52,10 +57,19 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  loadInitialData: () => dispatch(me()),
-  loadLocationData: () => dispatch(getAllLocations())
-})
+const mapDispatch = dispatch => {
+  return {
+    loadInitialData() {
+      dispatch(me())
+    },
+    loadReservation() {
+      dispatch(loadReservation())
+    },
+    loadLocationData() {
+      dispatch(getAllLocations())
+    }
+  }
+}
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
