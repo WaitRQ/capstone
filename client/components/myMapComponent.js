@@ -29,15 +29,13 @@ class MyMapComponent extends Component {
   onPlacesChanged = () => {
     const places = refs.searchBox.getPlaces()
     const bounds = new google.maps.LatLngBounds()
-    console.log('places', places)
+
     places.forEach(place => {
       if (place.geometry.viewport) {
         bounds.union(place.geometry.viewport)
       } else {
         bounds.extend(place.geometry.location)
       }
-      console.log('this.is bounds.f.b', bounds.f.b)
-      console.log('this.is bounds.b.b', bounds.b.b)
 
       this.setState({
         center: {
@@ -60,6 +58,16 @@ class MyMapComponent extends Component {
             this.props.allLocations.map(location => {
               return <InfoWindowMap key={location.id} location={location} />
             })}
+          {this.state.address ? (
+            <Marker
+              position={{
+                lat: this.state.center.lat,
+                lng: this.state.center.lng
+              }}
+            />
+          ) : (
+            ''
+          )}
         </GoogleMap>
 
         <SearchBox
