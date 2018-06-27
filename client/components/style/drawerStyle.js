@@ -62,6 +62,15 @@ export const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  },
+  rootB: {
+    flexGrow: 1,
+    justify: 'center'
   }
 })
 
