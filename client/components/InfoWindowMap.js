@@ -17,8 +17,6 @@ class InfoWindowMap extends Component {
   }
 
   render() {
-    console.log('these are my props', this.props)
-
     return (
       <Marker
         onClick={this.handleToggle}
