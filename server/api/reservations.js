@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const reservations = await Reservation.findAll()
+    const reservations = await Reservation.findAll({include: [{all: true}]})
     res.json(reservations)
   } catch (err) {
     next(err)
