@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 const Location = require('./location')
 const User = require('./user')
+const Status = require('./status')
 
 const Reservation = db.define('reservation', {
   price: {
@@ -33,6 +34,9 @@ Reservation.getReservationsAsBuyerByUserId = function(userId) {
       },
       {
         model: Location
+      },
+      {
+        model: Status
       }
     ]
   })

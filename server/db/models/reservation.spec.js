@@ -5,7 +5,7 @@ const db = require('../index')
 const Reservation = db.model('reservation')
 const User = db.model('user')
 const Location = db.model('location')
-// const Status = db.model('status')
+const Status = db.model('status')
 
 describe('Reservation model', () => {
   beforeEach(() => {
@@ -18,21 +18,21 @@ describe('Reservation model', () => {
         date: '2018-04-26',
         sellerId: 1,
         buyerId: 2,
-        // statusId: 1,
+        statusId: 1,
         locationId: 1
       }
       const testReservation2 = {
         date: '2018-05-26',
         sellerId: 1,
         buyerId: 3,
-        // statusId: 1,
-        locationId: 2
+        statusId: 1,
+        locationId: 1
       }
       const testReservation3 = {
         date: '2018-06-26',
         sellerId: 2,
         buyerId: 3,
-        // statusId: 2,
+        statusId: 2,
         locationId: 2
       }
 
@@ -45,7 +45,6 @@ describe('Reservation model', () => {
         email: 'scott@email.com'
       }
       const testUser3 = {
-        id: 3,
         name: 'Yeshi',
         email: 'yeshi@email.com'
       }
@@ -58,16 +57,17 @@ describe('Reservation model', () => {
         name: 'dullPlace'
       }
 
+      const testStatus1 = {
+        type: 'open'
+      }
+      const testStatus2 = {
+        type: 'completed'
+      }
+
       beforeEach(async () => {
-        await Location.bulkCreate([testLocation1, testLocation2])
-
         await User.bulkCreate([testUser1, testUser2, testUser3])
-
-        // await Status.create(
-        //   {
-        //     type: 'paid'
-        //   });
-
+        await Location.bulkCreate([testLocation1, testLocation2])
+        await Status.bulkCreate([testStatus1, testStatus2])
         await Reservation.bulkCreate([
           testReservation1,
           testReservation2,
@@ -77,24 +77,12 @@ describe('Reservation model', () => {
 
       it('Returns testReservation2 and testReservation3 when query by userId 3', async () => {
         const rets = await Reservation.getReservationsAsBuyerByUserId(3)
-        console.log('_________rets', rets[0].buyer)
         expect(rets)
           .to.be.an('array')
           .that.to.have.lengthOf(2)
 
-        expect(rets[0].buyerId).to.be.equal(testUser3.id)
-        // expect(rets[0].portfolioMetadatumId)
-        //   .to.be.equal(TEST_PORTFOLIODATA_1.portfolioMetadatumId);
-        // expect(rets[0].securityId)
-        //   .to.be.equal(TEST_PORTFOLIODATA_1.securityId);
-        // expect(rets[0].security.ticker).to.be.equal(TEST_SECURITY_1.ticker);
-
-        // expect(rets[1].position).to.be.equal(TEST_PORTFOLIODATA_2.position);
-        // expect(rets[1].portfolioMetadatumId)
-        //   .to.be.equal(TEST_PORTFOLIODATA_2.portfolioMetadatumId);
-        // expect(rets[1].securityId)
-        //   .to.be.equal(TEST_PORTFOLIODATA_2.securityId);
-        // expect(rets[1].security.ticker).to.be.equal(TEST_SECURITY_2.ticker);
+        expect(rets[0].date).to.be.equal(testReservation2.date)
+        expect(rets[1].sellerId).to.be.equal(testReservation3.sellerId)
       })
 
       // it('Returns empty when query by TEST_PORTFOLIOMETADATA_ID_3', async () => {
