@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Location = require('./location')
+const User = require('./user')
+const Status = require('./status')
 
 const Reservation = db.define('reservation', {
   price: {
@@ -20,5 +23,41 @@ const Reservation = db.define('reservation', {
     defaultValue: '09:00'
   } //time of reservation
 })
+
+Reservation.getReservationsAsBuyerByUserId = function(userId) {
+  return this.findAll({
+    where: {buyerId: userId},
+    include: [
+      {
+        model: User,
+        as: 'buyer'
+      },
+      {
+        model: Location
+      },
+      {
+        model: Status
+      }
+    ]
+  })
+}
+
+Reservation.getReservationsAsSellerByUserId = function(userId) {
+  return this.findAll({
+    where: {sellerId: userId},
+    include: [
+      {
+        model: User,
+        as: 'seller'
+      },
+      {
+        model: Location
+      },
+      {
+        model: Status
+      }
+    ]
+  })
+}
 
 module.exports = Reservation
