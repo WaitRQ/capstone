@@ -34,8 +34,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={UserHome} /> */}
             <Route path="/home" component={MapContainer} />
-            <Route path="/home" component={MapWithSearchBox} />
-            <Route component={MapWithSearchBox} />
+            <Route component={MapContainer} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
