@@ -6,10 +6,12 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import {connect} from 'react-redux'
 
-class MyReservations extends React.Component {
-  render() {
-    return <div />
-  }
+const MyReservations = props => {
+  const {myReservations} = props
+  return <Table />
 }
+const mapStateToProps = state => ({
+  myReservations: state.reservation.sessionSecurities
+})
 
-export default MyReservations
+export default connect(mapStateToProps)(MyReservations)
