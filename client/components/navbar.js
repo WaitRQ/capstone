@@ -2,26 +2,41 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import {AvatarStyles} from './style'
+import {withStyles} from '@material-ui/core/styles'
 
-const Navbar = ({email, isLoggedIn}) => (
-  <div className="flex-container">
-    <Typography variant="title" color="textSecondary">
-      waitRQ
-    </Typography>
-    <nav>
-      {isLoggedIn ? (
-        <div className="flex-container">
-          {/* The navbar will show these links after you log in */}
-          <h3>Welcome, {email}</h3>
-        </div>
-      ) : (
-        <div className="flex-container">
-          <h3>Please login</h3>
-        </div>
-      )}
-    </nav>
-  </div>
-)
+function Navbar(props) {
+  const {name, imageUrl, email, isLoggedIn, classes} = props
+  return (
+    <div className="navbar flex justify-between items-baseline">
+      <div className="self-baseline">
+        <Typography variant="title" color="inherit">
+          waitRQ
+        </Typography>
+      </div>
+      <nav>
+        {isLoggedIn ? (
+          <div className="flex">
+            {/* The navbar will show these links after you log in */}
+            <h3>Welcome, {name ? name : email}</h3>
+            <div className={classes.row}>
+              <Avatar
+                alt="Remy Sharp"
+                src={imageUrl}
+                className={classes.avatar}
+              />
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h3>Please login</h3>
+          </div>
+        )}
+      </nav>
+    </div>
+  )
+}
 
 /**
  * CONTAINER
@@ -29,11 +44,13 @@ const Navbar = ({email, isLoggedIn}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    email: state.user.email
+    email: state.user.email,
+    name: state.user.name,
+    imageUrl: state.user.imageUrl
   }
 }
 
-export default connect(mapState)(Navbar)
+export default withStyles(AvatarStyles)(connect(mapState)(Navbar))
 
 /**
  * PROP TYPES

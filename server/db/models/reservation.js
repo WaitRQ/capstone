@@ -2,21 +2,23 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Reservation = db.define('reservation', {
-  paid: {
-    type: Sequelize.NUMERIC(10, 2),
-    defaultValue: 0
-  },
-  amountOwed: {
-    type: Sequelize.NUMERIC(10, 2),
-    defaultValue: 0
-  },
-  status: {
-    type: Sequelize.ENUM('new', 'pending', 'paid', 'canceled', 'completed')
+  price: {
+    type: Sequelize.FLOAT,
+    get() {
+      return this.getDataValue('price') / 100
+    },
+    set(val) {
+      this.setDataValue('price', val * 100)
+    }
   },
   date: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     defaultValue: Date.now()
-  }
+  }, //date of reservation
+  time: {
+    type: Sequelize.TIME,
+    defaultValue: '09:00'
+  } //time of reservation
 })
 
 module.exports = Reservation
