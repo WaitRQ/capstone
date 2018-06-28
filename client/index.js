@@ -5,7 +5,6 @@ import {Router} from 'react-router-dom'
 import history from './history'
 import store from './store'
 import {MiniDrawer} from './components'
-import App from './components/app'
 
 // establishes socket connection
 import './socket'
@@ -13,10 +12,7 @@ import './socket'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <div>
-        <MiniDrawer />
-        <App />
-      </div>
+      <MiniDrawer />
     </Router>
   </Provider>,
   document.getElementById('app')
