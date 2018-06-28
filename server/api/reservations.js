@@ -1,10 +1,15 @@
 const router = require('express').Router()
 const {Reservation} = require('../db/models') ///replace this if named differently
+const stripe = require('stripe')(process.env.STRIPE_SECRET)
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const reservations = await Reservation.findAll({include: [{all: true}]})
+    const reservations = await Reservation.findAll({
+      where: {statusId: 1},
+      include: [{all: true}]
+    })
     res.json(reservations)
   } catch (err) {
     next(err)
@@ -26,8 +31,18 @@ router.get('/user/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const reservation = await Reservation.create(req.body)
-    res.json(reservation)
+    const stripeReturn = await stripe.charges.create(req.body.stripeObject)
+    if (stripeReturn.status === 'succeeded') {
+      const newReservation = req.body.reservation
+      const reservation = await Reservation.create(newReservation)
+      const fullRes = await Reservation.findOne({
+        where: {id: reservation.id},
+        include: [{all: true}]
+      })
+      res.json(fullRes.dataValues)
+    } else {
+      res.status(402).send('payment rejected')
+    }
   } catch (err) {
     next(err)
   }
