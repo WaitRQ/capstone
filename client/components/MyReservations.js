@@ -10,8 +10,6 @@ const MyReservations = props => {
   const {myReservations} = props
   return <Table />
 }
-const mapStateToProps = state => ({
-  myReservations: state.reservation.sessionSecurities
-})
+const mapStateToProps = state => ({})
 
 export default connect(mapStateToProps)(MyReservations)
