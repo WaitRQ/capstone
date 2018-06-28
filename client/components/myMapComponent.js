@@ -49,24 +49,26 @@ class MyMapComponent extends Component {
   }
 
   render() {
-    console.log('this is refs', refs)
-    console.log(this.state)
     return (
       <div>
         <GoogleMap defaultZoom={14} center={this.state.center}>
           {this.props.allLocations.length &&
             this.props.allLocations.map(location => {
-              return <InfoWindowMap key={location.id} location={location} />
+              return (
+                <InfoWindowMap
+                  key={location.id}
+                  userData={this.state}
+                  location={location}
+                />
+              )
             })}
-          {this.state.address ? (
+          {this.state.address && (
             <Marker
               position={{
                 lat: this.state.center.lat,
                 lng: this.state.center.lng
               }}
             />
-          ) : (
-            ''
           )}
         </GoogleMap>
 
