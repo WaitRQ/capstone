@@ -13,6 +13,7 @@ router.get('/', async (req, res, next) => {
 
 //get reservations by userId
 router.get('/user/:userId', async (req, res, next) => {
+  console.log('cqy is a pig', req.params.userId)
   try {
     const reservations = await Reservation.getReservationsByUserId(
       req.params.userId

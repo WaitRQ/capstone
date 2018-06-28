@@ -30,13 +30,12 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
-        {/* testing route */}
-        <Route path="/test/myaccount" component={UserAccount} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={UserHome} /> */}
             <Route path="/home" component={MapContainer} />
+            <Route path="/myaccount" component={UserAccount} />
             <Route component={MapContainer} />
           </Switch>
         )}

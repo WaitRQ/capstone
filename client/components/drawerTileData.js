@@ -30,12 +30,14 @@ const LoginIcons = props => (
       </ListItemIcon>
       <ListItemText primary="waitRQs" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AccountIcon />
-      </ListItemIcon>
-      <ListItemText primary="My Account" />
-    </ListItem>
+    <Link to="/myaccount">
+      <ListItem button>
+        <ListItemIcon>
+          <AccountIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Account" />
+      </ListItem>
+    </Link>
     <a href="#" onClick={props.handleClick}>
       <ListItem button>
         <ListItemIcon>
