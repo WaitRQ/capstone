@@ -3,6 +3,7 @@ import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
 import {connect} from 'react-redux'
 import InfoWindowMap from './InfoWindowMap'
+import {addCurrentUserLocation} from '../store/location'
 
 const refs = {}
 
@@ -13,9 +14,7 @@ class MyMapComponent extends Component {
       center: {
         lat: this.props.defaultCenter.lat,
         lng: this.props.defaultCenter.lng
-      },
-      address: '',
-      name: ''
+      }
     }
   }
 
@@ -26,7 +25,7 @@ class MyMapComponent extends Component {
     refs.searchBox = ref
   }
 
-  onPlacesChanged = () => {
+  onPlacesChanged = async () => {
     const places = refs.searchBox.getPlaces()
     const bounds = new google.maps.LatLngBounds()
 
@@ -36,16 +35,22 @@ class MyMapComponent extends Component {
       } else {
         bounds.extend(place.geometry.location)
       }
-
-      this.setState({
-        center: {
-          lat: bounds.f.b,
-          lng: bounds.b.b
-        },
-        address: places[0].formatted_address,
-        name: places[0].name
-      })
     })
+    this.setState({
+      center: {
+        lat: bounds.f.b,
+        lng: bounds.b.b
+      }
+    })
+    console.log('this is state', this.state)
+
+    var userData = {
+      name: places[0].name,
+      address: places[0].formatted_address,
+      latitude: bounds.f.b,
+      longitude: bounds.b.b
+    }
+    await this.props.addCurrentUserLocation(userData)
   }
 
   render() {
@@ -62,14 +67,6 @@ class MyMapComponent extends Component {
                 />
               )
             })}
-          {this.state.address && (
-            <Marker
-              position={{
-                lat: this.state.center.lat,
-                lng: this.state.center.lng
-              }}
-            />
-          )}
         </GoogleMap>
 
         <SearchBox
@@ -105,6 +102,10 @@ const mapStateToProps = state => ({
   allLocations: state.location.allLocations
 })
 
-export default connect(mapStateToProps)(
+const mapDispatch = dispatch => ({
+  addCurrentUserLocation: userData => dispatch(addCurrentUserLocation(userData))
+})
+
+export default connect(mapStateToProps, mapDispatch)(
   withScriptjs(withGoogleMap(MyMapComponent))
 )
