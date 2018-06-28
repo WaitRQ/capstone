@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {Marker, InfoWindow} from 'react-google-maps'
+
+import {addCurrentUserLocation} from '../store/location'
+
 import NewReservation from './newReservation'
 
 class InfoWindowMap extends Component {
@@ -11,14 +15,22 @@ class InfoWindowMap extends Component {
     }
   }
 
+  componentDidMount = () => {
+    console.log('this is the user data', this.props.userData)
+    var userData = {
+      name: this.props.userData.name,
+      address: this.props.userData.address,
+      latitude: this.props.userData.latitude,
+      longitude: this.props.userData.longitude
+    }
+    addCurrentUserLocation(userData)
+  }
+
   handleToggle = () => {
-    console.log('in handle toggel')
     this.setState(prevState => ({isOpen: !prevState.isOpen}))
   }
 
   render() {
-    console.log('these are my props', this.props)
-
     return (
       <Marker
         onClick={this.handleToggle}
@@ -37,4 +49,8 @@ class InfoWindowMap extends Component {
   }
 }
 
-export default InfoWindowMap
+const mapDispatch = dispatch => ({
+  addCurrentUserLocation: userData => dispatch(addCurrentUserLocation(userData))
+})
+
+export default connect(null, mapDispatch)(InfoWindowMap)
