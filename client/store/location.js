@@ -31,9 +31,10 @@ export const getAllLocations = () => {
 }
 
 export const addCurrentUserLocation = userData => {
+  console.log('in thunk', userData)
   return async dispatch => {
     try {
-      const response = await axios.post('/api/locations')
+      const response = await axios.post('/api/locations', userData)
       const location = response.data
       dispatch(addedLocation(location))
     } catch (error) {
