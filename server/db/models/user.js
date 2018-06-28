@@ -13,7 +13,6 @@ const User = db.define('user', {
     type: Sequelize.TEXT,
     defaultValue: 'https://identix.state.gov/qotw/images/no-photo.gif'
   },
-
   email: {
     type: Sequelize.STRING,
     unique: true,
