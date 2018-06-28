@@ -13,7 +13,7 @@ class InfoWindowMap extends Component {
     }
   }
 
-  shouldComponentUpdate = () => {
+  componentDidMount = () => {
     console.log('this is the user data', this.props.userData)
     var userData = {
       name: this.props.userData.name,
