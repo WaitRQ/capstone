@@ -165,12 +165,16 @@ async function seed() {
 
   const reservations = await Promise.all([
     Reservation.create({
-      date: '2018-06-24',
       sellerId: users[0].id,
       locationId: locations[0].id,
       statusId: statuses[0].id,
-      price: 25.5,
-      buyerId: users[1].id
+      price: 25.5
+    }),
+    Reservation.create({
+      sellerId: users[0].id,
+      locationId: locations[8].id,
+      statusId: statuses[0].id,
+      price: 38.5
     }),
     Reservation.create({
       date: '2018-06-20',
@@ -193,21 +197,21 @@ async function seed() {
       sellerId: users[2].id,
       locationId: locations[3].id,
       statusId: statuses[1].id,
-      price: 20,
+      price: 10,
       buyerId: users[0].id
     }),
     Reservation.create({
       sellerId: users[4].id,
       locationId: locations[4].id,
-      statusId: statuses[0].id,
-      price: 20,
+      statusId: statuses[1].id,
+      price: 50,
       buyerId: users[0].id
     }),
     Reservation.create({
       sellerId: users[2].id,
       locationId: locations[5].id,
-      statusId: statuses[0].id,
-      price: 20,
+      statusId: statuses[1].id,
+      price: 35,
       buyerId: users[0].id
     })
   ])
