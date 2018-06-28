@@ -11,7 +11,6 @@ import {
 } from './components'
 import {getAllLocations} from './store/location'
 import {me, loadReservation} from './store'
-import Chat from './components/chat'
 
 /**
  * COMPONENT
@@ -35,7 +34,6 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
-        <Route path="/test/chat" component={Chat} />
 
         {isLoggedIn && (
           <Switch>
