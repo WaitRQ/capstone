@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Marker, InfoWindow} from 'react-google-maps'
-import NewReservation from './NewReservation'
+import NewReservation from './newReservation'
 
 class InfoWindowMap extends Component {
   constructor(props) {
