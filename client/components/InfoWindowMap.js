@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Marker, InfoWindow} from 'react-google-maps'
-import NewReservation from './NewReservation'
+
 import {addCurrentUserLocation} from '../store/location'
+
+import NewReservation from './newReservation'
 
 class InfoWindowMap extends Component {
   constructor(props) {

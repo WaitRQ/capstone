@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 const db = require('../db')
-const Location = require('./location')
-const User = require('./user')
-const Status = require('./status')
 
 const Reservation = db.define('reservation', {
   price: {
@@ -24,39 +22,10 @@ const Reservation = db.define('reservation', {
   } //time of reservation
 })
 
-Reservation.getReservationsAsBuyerByUserId = function(userId) {
+Reservation.getReservationsByUserId = function(userId) {
   return this.findAll({
-    where: {buyerId: userId},
-    include: [
-      {
-        model: User,
-        as: 'buyer'
-      },
-      {
-        model: Location
-      },
-      {
-        model: Status
-      }
-    ]
-  })
-}
-
-Reservation.getReservationsAsSellerByUserId = function(userId) {
-  return this.findAll({
-    where: {sellerId: userId},
-    include: [
-      {
-        model: User,
-        as: 'seller'
-      },
-      {
-        model: Location
-      },
-      {
-        model: Status
-      }
-    ]
+    where: {[Op.or]: [{buyerId: userId}, {sellerId: userId}]},
+    include: [{all: true}]
   })
 }
 
