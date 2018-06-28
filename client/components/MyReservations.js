@@ -20,14 +20,25 @@ const MyReservations = props => {
         </TableHead>
         <TableBody>
           {props.myReservations.map(reservation => {
-            return (
-              <TableRow key={reservation.id}>
-                <TableCell>{reservation.date}</TableCell>
-                <TableCell>{reservation.location.name}</TableCell>
-                <TableCell>{reservation[props.propName].name}</TableCell>
-                <TableCell>{reservation.status.type}</TableCell>
-              </TableRow>
-            )
+            if (reservation[props.propName]) {
+              return (
+                <TableRow key={reservation.id}>
+                  <TableCell>{reservation.date}</TableCell>
+                  <TableCell>{reservation.location.name}</TableCell>
+                  <TableCell>{reservation[props.propName].name}</TableCell>
+                  <TableCell>{reservation.status.type}</TableCell>
+                </TableRow>
+              )
+            } else {
+              return (
+                <TableRow key={reservation.id}>
+                  <TableCell>{reservation.date}</TableCell>
+                  <TableCell>{reservation.location.name}</TableCell>
+                  <TableCell>N/A</TableCell>
+                  <TableCell>{reservation.status.type}</TableCell>
+                </TableRow>
+              )
+            }
           })}
         </TableBody>
       </Table>
