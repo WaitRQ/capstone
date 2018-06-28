@@ -13,23 +13,29 @@ describe('Reservation model', () => {
   })
 
   describe('Class Methods', () => {
-    describe('getReservationsAsBuyerByUserId', () => {
+    describe('getReservationsByUserId', () => {
       const testReservation1 = {
+        id: 1,
         date: '2018-04-26',
+        price: 10,
         sellerId: 1,
         buyerId: 2,
         statusId: 1,
         locationId: 1
       }
       const testReservation2 = {
+        id: 2,
         date: '2018-05-26',
+        price: 20,
         sellerId: 1,
         buyerId: 3,
         statusId: 1,
         locationId: 1
       }
       const testReservation3 = {
+        id: 3,
         date: '2018-06-26',
+        price: 30,
         sellerId: 2,
         buyerId: 3,
         statusId: 2,
@@ -37,30 +43,37 @@ describe('Reservation model', () => {
       }
 
       const testUser1 = {
+        id: 1,
         name: 'Huu',
         email: 'huu@email.com'
       }
       const testUser2 = {
+        id: 2,
         name: 'Scott',
         email: 'scott@email.com'
       }
       const testUser3 = {
+        id: 3,
         name: 'Yeshi',
         email: 'yeshi@email.com'
       }
 
       const testLocation1 = {
+        id: 1,
         name: 'funPlace'
       }
 
       const testLocation2 = {
+        id: 2,
         name: 'dullPlace'
       }
 
       const testStatus1 = {
+        id: 1,
         type: 'open'
       }
       const testStatus2 = {
+        id: 2,
         type: 'completed'
       }
 
@@ -75,24 +88,24 @@ describe('Reservation model', () => {
         ])
       })
 
-      it('Returns testReservation2 and testReservation3 when query by userId 3', async () => {
-        const rets = await Reservation.getReservationsAsBuyerByUserId(3)
+      it('Returns testReservation1 and testReservation3 when query by userId 2', async () => {
+        const rets = await Reservation.getReservationsByUserId(2)
         expect(rets)
           .to.be.an('array')
           .that.to.have.lengthOf(2)
 
-        expect(rets[0].date).to.be.equal(testReservation2.date)
-        expect(rets[1].sellerId).to.be.equal(testReservation3.sellerId)
+        expect(rets[0].date).to.be.equal(testReservation1.date)
+        expect(rets[1].buyerId).to.be.equal(testReservation3.buyerId)
       })
 
       it('Eager loading user, location, and status', async () => {
-        const rets = await Reservation.getReservationsAsBuyerByUserId(2)
+        const rets = await Reservation.getReservationsByUserId(1)
         expect(rets)
           .to.be.an('array')
-          .that.to.have.lengthOf(1)
-        expect(rets[0].buyer.name).to.be.equal(testUser2.name)
+          .that.to.have.lengthOf(2)
+        expect(rets[0].seller.name).to.be.equal(testUser1.name)
         expect(rets[0].location.name).to.be.equal(testLocation1.name)
-        expect(rets[0].status.type).to.be.equal(testStatus1.type)
+        expect(rets[1].status.type).to.be.equal(testStatus1.type)
       })
     })
   })
