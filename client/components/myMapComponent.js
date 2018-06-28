@@ -1,27 +1,82 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
+import {connect} from 'react-redux'
+import InfoWindowMap from './InfoWindowMap'
 
-const MyMapComponent = withScriptjs(
-  withGoogleMap(props => {
+const refs = {}
+
+class MyMapComponent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      center: {
+        lat: this.props.defaultCenter.lat,
+        lng: this.props.defaultCenter.lng
+      },
+      address: '',
+      name: ''
+    }
+  }
+
+  onMapMounted = ref => {
+    refs.map = ref
+  }
+  onSearchBoxMounted = ref => {
+    refs.searchBox = ref
+  }
+
+  onPlacesChanged = () => {
+    const places = refs.searchBox.getPlaces()
+    const bounds = new google.maps.LatLngBounds()
+
+    places.forEach(place => {
+      if (place.geometry.viewport) {
+        bounds.union(place.geometry.viewport)
+      } else {
+        bounds.extend(place.geometry.location)
+      }
+
+      this.setState({
+        center: {
+          lat: bounds.f.b,
+          lng: bounds.b.b
+        },
+        address: places[0].formatted_address,
+        name: places[0].name
+      })
+    })
+  }
+
+  render() {
     return (
       <div>
-        <GoogleMap
-          defaultZoom={14}
-          center={{
-            lat: props.defaultCenter.lat,
-            lng: props.defaultCenter.lng
-          }}
-        >
-          {props.isMarkerShown && (
-            <Marker position={{lat: -34.397, lng: 150.644}} />
+        <GoogleMap defaultZoom={14} center={this.state.center}>
+          {this.props.allLocations.length &&
+            this.props.allLocations.map(location => {
+              return (
+                <InfoWindowMap
+                  key={location.id}
+                  userData={this.state}
+                  location={location}
+                />
+              )
+            })}
+          {this.state.address && (
+            <Marker
+              position={{
+                lat: this.state.center.lat,
+                lng: this.state.center.lng
+              }}
+            />
           )}
         </GoogleMap>
+
         <SearchBox
-          ref={props.onSearchBoxMounted}
-          bounds={props.bounds}
+          ref={this.onSearchBoxMounted}
+          bounds={this.props.bounds}
           controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={props.onPlacesChanged}
+          onPlacesChanged={this.onPlacesChanged}
         >
           <input
             type="text"
@@ -43,7 +98,13 @@ const MyMapComponent = withScriptjs(
         </SearchBox>
       </div>
     )
-  })
-)
+  }
+}
 
-export default MyMapComponent
+const mapStateToProps = state => ({
+  allLocations: state.location.allLocations
+})
+
+export default connect(mapStateToProps)(
+  withScriptjs(withGoogleMap(MyMapComponent))
+)

@@ -36,8 +36,8 @@ NumberFormatCustom.propTypes = {
 }
 
 class NewReservation extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       date: '2018-06-26',
       time: '07:30',
@@ -54,6 +54,7 @@ class NewReservation extends Component {
     event.preventDefault()
   }
   render() {
+    console.log('this is the location', this.props.location)
     const {classes} = this.props
     const {price, date, time} = this.state
     return (

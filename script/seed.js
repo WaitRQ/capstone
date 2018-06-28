@@ -69,7 +69,7 @@ async function seed() {
       imageUrl: 'https://media.timeout.com/images/100520009/630/472/image.jpg',
       address: '103 Prince Street, New York',
       latitude: 40.725058,
-      longtitude: -73.999037
+      longitude: -73.999037
     }),
     Location.create({
       name: 'The Rink At Rockefeller Center',
@@ -77,7 +77,7 @@ async function seed() {
         'http://blog.dreamhotels.com/wp-content/uploads/2014/10/TheRink.jpg',
       address: '600 5th Ave, New York',
       latitude: 40.7592592,
-      longtitude: -73.9782257
+      longitude: -73.9782257
     }),
     Location.create({
       name: 'Ippudo West Side',
@@ -85,7 +85,7 @@ async function seed() {
         'https://images.pexels.com/photos/698549/pexels-photo-698549.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       address: '321 W 51st St, New York',
       latitude: '40.763491',
-      longtitude: '-73.986586'
+      longitude: '-73.986586'
     }),
     Location.create({
       name: 'Hamilton the Musical',
@@ -93,7 +93,7 @@ async function seed() {
         'https://images.pexels.com/photos/1089194/pexels-photo-1089194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       address: '226 W 46th St, New York,',
       latitude: '40.759017',
-      longtitude: '-73.986698'
+      longitude: '-73.986698'
     }),
     Location.create({
       name: 'The Cloisters',
@@ -101,7 +101,7 @@ async function seed() {
         'https://images.pexels.com/photos/51381/baroque-church-collegiate-church-church-melk-51381.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       address: '99 Margaret Corbin Dr, New York,',
       latitude: '40.864863',
-      longtitude: '-73.931727'
+      longitude: '-73.931727'
     }),
     Location.create({
       name: 'The Metropolitan Museum of Art',
@@ -109,7 +109,7 @@ async function seed() {
         'https://images.pexels.com/photos/34633/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       address: '1000 5th Ave, New York,',
       latitude: '40.779437',
-      longtitude: '-73.963244'
+      longitude: '-73.963244'
     }),
     Location.create({
       name: 'Wicked',
@@ -117,7 +117,7 @@ async function seed() {
         'https://images.pexels.com/photos/1120872/pexels-photo-1120872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       address: '222 W 51st St, New York,',
       latitude: '40.759017',
-      longtitude: '-73.986698'
+      longitude: '-73.986698'
     }),
     Location.create({
       name: 'Best Buy',
@@ -125,7 +125,7 @@ async function seed() {
         'https://i2.wp.com/digiday.com/wp-content/uploads/2017/07/Best-Buy.jpg?fit=1440%2C600&ssl=1',
       address: '529 5th Ave, New York,',
       latitude: '40.754411',
-      longtitude: '-73.979698'
+      longitude: '-73.979698'
     }),
     Location.create({
       name: 'The Standard, High Line',
@@ -133,7 +133,7 @@ async function seed() {
         'https://cdn.vox-cdn.com/thumbor/2ClGGQamLrgWoHX3IgKdo-8NMPg=/0x0:3000x2002/1200x800/filters:focal(1495x466:1975x946)/cdn.vox-cdn.com/uploads/chorus_image/image/50934721/533124666.0.jpg',
       address: '48 Washington Stree, New York,',
       latitude: '40.740923',
-      longtitude: '-74.008111'
+      longitude: '-74.008111'
     }),
     Location.create({
       name: 'Fullstack Academy of Code',
@@ -141,7 +141,7 @@ async function seed() {
         'https://www.launchacademy.com/assets/home-hero-2-d173fc2af4966d5d532899bb64235c1af2d3a8eaf6d90a5b234437ae1fc3ea84.png',
       address: '5 Hanover Sq, New York,',
       latitude: '40.705076',
-      longtitude: '-74.009160'
+      longitude: '-74.009160'
     })
   ])
 
