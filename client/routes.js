@@ -2,10 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Route, Switch, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {MapContainer, Login, Signup, NewReservation} from './components'
-
+import {
+  MapContainer,
+  Login,
+  Signup,
+  NewReservation,
+  UserAccount
+} from './components'
 import {getAllLocations} from './store/location'
-
 import {me, loadReservation} from './store'
 import Chat from './components/chat'
 
@@ -38,6 +42,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={UserHome} /> */}
             <Route path="/home" component={MapContainer} />
+            <Route path="/myaccount" component={UserAccount} />
             <Route component={MapContainer} />
           </Switch>
         )}

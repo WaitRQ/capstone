@@ -45,7 +45,6 @@
     "express-session": "^1.15.1",
     "firebase": "^5.1.0",
     "history": "^4.6.3",
-    "lodash": "^4.17.10",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
