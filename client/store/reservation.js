@@ -48,7 +48,6 @@ export const fetchMyReservations = userId => async dispatch => {
 
 export const createReservation = newReservation => async dispatch => {
   try {
-    console.log('in thunk')
     const {data} = await axios.post(`/api/reservations/`, newReservation)
     dispatch(makeReservation(data))
   } catch (err) {
