@@ -41,7 +41,8 @@ class NewReservation extends Component {
     this.state = {
       date: '2018-06-26',
       time: '07:30',
-      price: '20'
+      price: '20',
+      booked: false
     }
   }
 
@@ -63,8 +64,8 @@ class NewReservation extends Component {
           <Typography variant="headline" component="h3">
             Make a new reservation
           </Typography>
-          <Typography component="p">
-            Current location and estimated wait placeholder
+          <Typography variant="subheading">
+            {this.props.location.name}
           </Typography>
         </div>
         <div className="pb2">
@@ -119,7 +120,11 @@ class NewReservation extends Component {
           </Paper>
         </div>
         <div className="center">
-          <Payment price={this.state.price} />
+          <Payment
+            {...this.state}
+            {...this.props.location}
+            userId={this.props.userId}
+          />
         </div>
       </div>
     )
@@ -131,7 +136,8 @@ class NewReservation extends Component {
  */
 const mapState = state => {
   return {
-    tbd: 'tbd'
+    userId: state.user.id,
+    userName: state.user.name
   }
 }
 

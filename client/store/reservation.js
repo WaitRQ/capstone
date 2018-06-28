@@ -1,17 +1,19 @@
 import axios from 'axios'
+import history from '../history'
 
 /**
  * ACTION TYPES
  */
 const GET_RESERVATION = 'GET_RESERVATION'
 const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
+const MAKE_RESERVATION = 'MAKE_RESERVATION'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   reservationsByUser: [],
-  openReservationsByLocation: []
+  newReservations: []
 }
 
 /**
@@ -22,6 +24,7 @@ const getMyReservations = reservations => ({
   type: GET_RESERVATIONS_BY_USER,
   reservations
 })
+const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 
 /**
  * THUNK CREATORS
@@ -43,13 +46,31 @@ export const fetchMyReservations = userId => async dispatch => {
   }
 }
 
+export const createReservation = newReservation => async dispatch => {
+  try {
+    console.log('in thunk')
+    const {data} = await axios.post(`/api/reservations/`, newReservation)
+    dispatch(makeReservation(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_RESERVATION:
+      return {...state, newReservations: action.reservation}
     case GET_RESERVATIONS_BY_USER:
-      return {reservationsByUser: action.reservations}
+      return {...state, reservationsByUser: action.reservations}
+    case MAKE_RESERVATION:
+      return {
+        ...state,
+        reservationsByUser: [...state.reservationsByUser, action.reservation],
+        newReservations: [...state.newReservations, action.reservation]
+      }
     default:
       return state
   }
