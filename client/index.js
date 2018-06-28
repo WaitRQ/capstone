@@ -12,9 +12,7 @@ import './socket'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <div>
-        <MiniDrawer />
-      </div>
+      <MiniDrawer />
     </Router>
   </Provider>,
   document.getElementById('app')

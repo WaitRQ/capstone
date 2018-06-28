@@ -12,7 +12,6 @@ import store, {createReservation} from '../store'
 
 class Payment extends Component {
   onToken = token => {
-    console.log(token)
     store.dispatch(
       createReservation({
         reservation: {
@@ -31,10 +30,9 @@ class Payment extends Component {
         }
       })
     )
-    //need to figure out how this goes to the store to the backend
+    this.props.handlePaid()
   }
   render() {
-    console.log('props for payment', this.props)
     let paymentAmount = 100
     if (this.props.price) {
       paymentAmount = this.props.price * 100
