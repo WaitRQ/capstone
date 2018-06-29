@@ -2,13 +2,25 @@ import React, {Component} from 'react'
 import NumberFormat from 'react-number-format'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
-import {withStyles} from '@material-ui/core/styles'
+import {
+  withStyles,
+  MuiThemeProvider,
+  createMuiTheme
+} from '@material-ui/core/styles'
+import green from '@material-ui/core/colors/green'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import {NewReservationStyle} from './style'
 import {connect} from 'react-redux'
 import {logout} from '../store'
 import Payment from './payment'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: green
+  }
+})
 
 function NumberFormatCustom(props) {
   const {inputRef, onChange, ...other} = props
@@ -41,8 +53,38 @@ class NewReservation extends Component {
     this.state = {
       date: '2018-06-26',
       time: '07:30',
-      price: '20'
+      price: '20',
+      booked: false
     }
+  }
+
+  setTimeDate = () => {
+    var today = new Date()
+    var dd = today.getDate()
+    var mm = today.getMonth() + 1 //January is 0!
+    var yyyy = today.getFullYear()
+    var hour = today.getHours()
+
+    if (dd < 10) {
+      dd = '0' + dd
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm
+    }
+
+    if (hour < 10) {
+      hour = '0' + hour
+    }
+
+    this.setState({
+      date: yyyy + '-' + mm + '-' + dd,
+      time: hour + ':00'
+    })
+  }
+
+  componentDidMount() {
+    this.setTimeDate()
   }
 
   handleChange = name => event => {
@@ -50,11 +92,21 @@ class NewReservation extends Component {
       [name]: event.target.value
     })
   }
+
   handleSubmit(event) {
     event.preventDefault()
   }
+
+  handlePaid = () => {
+    this.setState({booked: true})
+  }
+
+  handleNewRes = () => {
+    this.setTimeDate()
+    this.setState({booked: false})
+  }
+
   render() {
-    console.log('this is the location', this.props.location)
     const {classes} = this.props
     const {price, date, time} = this.state
     return (
@@ -63,8 +115,8 @@ class NewReservation extends Component {
           <Typography variant="headline" component="h3">
             Make a new reservation
           </Typography>
-          <Typography component="p">
-            Current location and estimated wait placeholder
+          <Typography variant="subheading">
+            {this.props.location.name}
           </Typography>
         </div>
         <div className="pb2">
@@ -119,7 +171,25 @@ class NewReservation extends Component {
           </Paper>
         </div>
         <div className="center">
-          <Payment price={this.state.price} />
+          {this.state.booked ? (
+            <MuiThemeProvider theme={theme}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.margin}
+                onClick={this.handleNewRes}
+              >
+                Reservation Created!
+              </Button>
+            </MuiThemeProvider>
+          ) : (
+            <Payment
+              {...this.state}
+              {...this.props.location}
+              userId={this.props.userId}
+              handlePaid={this.handlePaid}
+            />
+          )}
         </div>
       </div>
     )
@@ -131,7 +201,8 @@ class NewReservation extends Component {
  */
 const mapState = state => {
   return {
-    tbd: 'tbd'
+    userId: state.user.id,
+    userName: state.user.name
   }
 }
 

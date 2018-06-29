@@ -12,7 +12,7 @@ import {
 } from './components'
 import {getAllLocations} from './store/location'
 import {me, loadReservation} from './store'
-import Chat from './components/chat'
+import VideoComponent from './components/videoComponent'
 
 /**
  * COMPONENT
@@ -37,7 +37,6 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
-        <Route path="/test/chat" component={Chat} />
 
         {isLoggedIn && (
           <Switch>
@@ -46,6 +45,7 @@ class Routes extends Component {
             <Route exact path="/location" component={LocationScreen} />
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
+            <Route path="/video" component={VideoComponent} />
             <Route component={MapContainer} />
           </Switch>
         )}

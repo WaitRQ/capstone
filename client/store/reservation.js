@@ -1,17 +1,25 @@
 import axios from 'axios'
+import history from '../history'
 
 /**
  * ACTION TYPES
  */
 const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
 const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
+const GET_RESERVATION = 'GET_RESERVATION'
 const UPDATED_RESERVATION = 'UPDATED_RESERVATION'
+
+const MAKE_RESERVATION = 'MAKE_RESERVATION'
+
 /**
  * INITIAL STATE
  */
 const initialState = {
   reservationsByUser: [],
-  allReservations: []
+
+  allReservations: [],
+
+  newReservations: []
 }
 
 /**
@@ -25,10 +33,13 @@ const getMyReservations = reservations => ({
   type: GET_RESERVATIONS_BY_USER,
   reservations
 })
+
 const updatedReservations = reservation => ({
   type: UPDATED_RESERVATION,
   reservation
 })
+
+const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 
 /**
  * THUNK CREATORS
@@ -54,6 +65,15 @@ export const editReservation = resId => async dispatch => {
   try {
     const updatedRes = await axios.put(`/api/reservations/${resId}`)
     dispatch(updatedReservations(updatedRes))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const createReservation = newReservation => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/reservations/`, newReservation)
+    dispatch(makeReservation(data))
   } catch (err) {
     console.log(err)
   }
@@ -64,6 +84,8 @@ export const editReservation = resId => async dispatch => {
  */
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_RESERVATION:
+      return {...state, newReservations: action.reservation}
     case GET_RESERVATIONS_BY_USER:
       return {
         reservationsByUser: action.reservations
@@ -77,6 +99,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         allReservations: [...state.allReservations, action.reservation]
+      }
+    case MAKE_RESERVATION:
+      return {
+        ...state,
+        reservationsByUser: [...state.reservationsByUser, action.reservation],
+        newReservations: [...state.newReservations, action.reservation]
       }
     default:
       return state
