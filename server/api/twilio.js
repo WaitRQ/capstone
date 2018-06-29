@@ -4,8 +4,8 @@ var AccessToken = require('twilio').jwt.AccessToken
 var VideoGrant = AccessToken.VideoGrant
 
 // Endpoint to generate access token
-router.get('/:reservationId', function(req, res) {
-  var identity = req.params.reservationId
+router.get('/:userId', function(req, res) {
+  var identity = req.params.userId
 
   // Create an access token which we will sign and return to the client,
   // containing the grant we just created

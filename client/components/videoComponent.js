@@ -4,10 +4,11 @@ import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
+// import CardHeader from '@material-ui/core/CardHeader'
 import CardText from '@material-ui/core/CardContent'
+import {connect} from 'react-redux'
 
-export default class VideoComponent extends Component {
+class VideoComponent extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -145,7 +146,7 @@ export default class VideoComponent extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/twilio/${this.state.reservationId}`).then(results => {
+    axios.get(`/api/twilio/${this.props.userId}`).then(results => {
       const {identity, token} = results.data
       this.setState({identity, token})
     })
@@ -196,3 +197,14 @@ export default class VideoComponent extends Component {
     )
   }
 }
+
+/**
+ * CONTAINER
+ */
+const mapState = state => {
+  return {
+    userId: state.user.id
+  }
+}
+
+export default connect(mapState)(VideoComponent)
