@@ -7,7 +7,8 @@ import {
   Login,
   Signup,
   NewReservation,
-  UserAccount
+  UserAccount,
+  LocationScreen
 } from './components'
 import {getAllLocations} from './store/location'
 import {me, loadReservation} from './store'
@@ -32,6 +33,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/location" component={LocationScreen} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
@@ -41,6 +43,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             {/* <Route path="/home" component={UserHome} /> */}
+            <Route exact path="/location" component={LocationScreen} />
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
             <Route component={MapContainer} />

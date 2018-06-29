@@ -36,6 +36,7 @@ class MyMapComponent extends Component {
         bounds.extend(place.geometry.location)
       }
     })
+    console.log('This is place', places)
     this.setState({
       center: {
         lat: bounds.f.b,
