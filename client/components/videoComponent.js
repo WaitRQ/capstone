@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import Video from 'twilio-video'
 import axios from 'axios'
-import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
-import {Card, CardHeader, CardText} from 'material-ui/Card'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardText from '@material-ui/core/CardContent'
 
 export default class VideoComponent extends Component {
   constructor(props) {
@@ -137,7 +139,7 @@ export default class VideoComponent extends Component {
       }
       this.detachParticipantTracks(room.localParticipant)
       room.participants.forEach(this.detachParticipantTracks)
-      // this.state.activeRoom = null;
+      this.setstate({activeRoom: null})
       this.setState({hasJoinedRoom: false, localMediaAvailable: false})
     })
   }
@@ -165,30 +167,32 @@ export default class VideoComponent extends Component {
     )
     // Hide 'Join Room' button if user has already joined a room.
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ? (
-      <button label="Leave Room" secondary={true} onClick={this.leaveRoom} />
+      <Button color="secondary" onClick={this.leaveRoom}>
+        Leave Room
+      </Button>
     ) : (
-      <button label="Join Room" primary={true} onClick={this.joinRoom} />
+      <Button color="primary" onClick={this.joinRoom}>
+        Join Room
+      </Button>
     )
     return (
-      <div>
-        <div>
+      <Card>
+        <CardText>
           <div className="flex-container">
             {showLocalTrack}
             <div className="flex-item">
-              <div
-                hintText="Room Name"
+              <TextField
+                placeholder="Room Name"
                 onChange={this.handleRoomNameChange}
-                errorText={
-                  this.state.roomNameErr ? 'Room Name is required' : undefined
-                }
+                error={!!this.state.roomNameErr}
               />
               <br />
               {joinOrLeaveRoomButton}
             </div>
             <div className="flex-item" ref="remoteMedia" id="remote-media" />
           </div>
-        </div>
-      </div>
+        </CardText>
+      </Card>
     )
   }
 }
