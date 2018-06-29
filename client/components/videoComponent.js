@@ -140,7 +140,7 @@ class VideoComponent extends Component {
       }
       this.detachParticipantTracks(room.localParticipant)
       room.participants.forEach(this.detachParticipantTracks)
-      this.setstate({activeRoom: null})
+      this.setState({activeRoom: null})
       this.setState({hasJoinedRoom: false, localMediaAvailable: false})
     })
   }
