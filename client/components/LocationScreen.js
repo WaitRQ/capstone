@@ -25,9 +25,10 @@ class LocationScreen extends Component {
     super(props)
   }
 
-  handleClick = () => {}
+  handleClick = async itemId => {}
 
   render() {
+    console.log('these are my props', this.props.user.id)
     const openReservations = this.props.allOpenReservations.filter(
       reservation => {
         return reservation.locationId === this.props.location.id
@@ -85,7 +86,6 @@ class LocationScreen extends Component {
             >
               <List className={classes.ListBox}>
                 {openReservations.map((item, index) => {
-                  console.log('this is item', item)
                   return (
                     <div key={index}>
                       <ListItem>
@@ -95,6 +95,7 @@ class LocationScreen extends Component {
                           } `}
                           secondary={`Time: ${item.time}`}
                         />
+                        {}
                         <Button
                           onClick={() => this.handleClick(item.id)}
                           style={{marginRight: 20}}

@@ -5,7 +5,7 @@ import axios from 'axios'
  */
 const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
 const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
-
+const UPDATED_RESERVATION = 'UPDATED_RESERVATION'
 /**
  * INITIAL STATE
  */
@@ -24,6 +24,10 @@ const gotAllReservations = reservations => ({
 const getMyReservations = reservations => ({
   type: GET_RESERVATIONS_BY_USER,
   reservations
+})
+const updatedReservations = reservation => ({
+  type: UPDATED_RESERVATION,
+  reservation
 })
 
 /**
@@ -46,6 +50,15 @@ export const fetchMyReservations = userId => async dispatch => {
   }
 }
 
+export const editReservation = resId => async dispatch => {
+  try {
+    const updatedRes = await axios.put(`/api/reservations/${resId}`)
+    dispatch(updatedReservations(updatedRes))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -59,6 +72,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         allReservations: action.reservations
+      }
+    case UPDATED_RESERVATION:
+      return {
+        ...state,
+        allReservations: [...state.allReservations, action.reservation]
       }
     default:
       return state

@@ -46,7 +46,8 @@ const mapState = state => {
     isLoggedIn: !!state.user.id,
     email: state.user.email,
     name: state.user.name,
-    imageUrl: state.user.imageUrl
+    imageUrl: state.user.imageUrl,
+    userId: state.user.id
   }
 }
 
