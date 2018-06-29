@@ -13,7 +13,7 @@ class UserAccount extends React.Component {
       <div>
         <MyInfo user={this.props.user} />
         <MyReservations
-          headline="My Reservations - Have others waiting in the line"
+          headline="Have others waiting in the line"
           columnName="Waiter"
           propName="seller"
           myReservations={this.props.myReservations.filter(
@@ -21,7 +21,7 @@ class UserAccount extends React.Component {
           )}
         />
         <MyReservations
-          headline="My Tasks - Wait in the line for others"
+          headline="Wait in the line for others"
           columnName="Client"
           propName="buyer"
           myReservations={this.props.myReservations.filter(
