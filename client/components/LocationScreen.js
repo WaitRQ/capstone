@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
 import {withStyles} from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
@@ -9,10 +10,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-import InputAdornment from '@material-ui/core/InputAdornment'
 import {LocationStyles} from './style'
 import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
+
 import Event from '@material-ui/icons/Event'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
@@ -25,8 +25,14 @@ class LocationScreen extends Component {
     super(props)
   }
 
+  handleClick = () => {}
+
   render() {
-    console.log('-----', LocationStyles)
+    const openReservations = this.props.allOpenReservations.filter(
+      reservation => {
+        return reservation.locationId === this.props.location.id
+      }
+    )
 
     const {classes} = this.props
     return (
@@ -38,17 +44,17 @@ class LocationScreen extends Component {
               fullWidth
               className={classes.margin}
             >
-              <InputLabel htmlFor="adornment-amount">Location</InputLabel>
               <Input
                 id="adornment-amount"
-                value="Location"
-                startAdornment={<InputAdornment position="start" />}
+                value={`${this.props.location.name}  ${
+                  this.props.location.address
+                }`}
               />
             </FormControl>
           </ListItem>
         </List>
 
-        <Grid container md={12} style={{backgroundColor: '#DED7D7'}}>
+        <Grid container style={{backgroundColor: '#DED7D7'}}>
           <Grid item md={6}>
             <Paper
               style={{
@@ -78,19 +84,19 @@ class LocationScreen extends Component {
               }}
             >
               <List className={classes.ListBox}>
-                {[
-                  '10pm Saturday for $50',
-                  '3pm Saturday for $100',
-                  '30 min from now!! $1000',
-                  '10pm Saturday for $50',
-                  '3pm Saturday for $100',
-                  '30 min from now!! $1000'
-                ].map((item, index) => {
+                {openReservations.map((item, index) => {
+                  console.log('this is item', item)
                   return (
-                    <div>
-                      <ListItem key={index}>
-                        <ListItemText primary={item} secondary="Jan 9, 2014" />
+                    <div key={index}>
+                      <ListItem>
+                        <ListItemText
+                          primary={`Price: $${item.price} Contact: ${
+                            item.buyer.name
+                          } `}
+                          secondary={`Time: ${item.time}`}
+                        />
                         <Button
+                          onClick={() => this.handleClick(item.id)}
                           style={{marginRight: 20}}
                           variant="contained"
                           className={classes.button}
@@ -131,7 +137,13 @@ class LocationScreen extends Component {
  * CONTAINER
  */
 
-export default withStyles(LocationStyles)(LocationScreen)
+const mapStateToProps = state => ({
+  allOpenReservations: state.reservation.allReservations
+})
+
+export default connect(mapStateToProps, null)(
+  withStyles(LocationStyles)(LocationScreen)
+)
 
 LocationScreen.propTypes = {
   classes: PropTypes.object.isRequired

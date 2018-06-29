@@ -3,7 +3,7 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
-const GET_RESERVATION = 'GET_RESERVATION'
+const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
 const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
 
 /**
@@ -11,13 +11,16 @@ const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
  */
 const initialState = {
   reservationsByUser: [],
-  openReservationsByLocation: []
+  allReservations: []
 }
 
 /**
  * ACTION CREATORS
  */
-const getReservation = reservation => ({type: GET_RESERVATION, reservation})
+const gotAllReservations = reservations => ({
+  type: GOT_ALL_RESERVATIONS,
+  reservations
+})
 const getMyReservations = reservations => ({
   type: GET_RESERVATIONS_BY_USER,
   reservations
@@ -29,7 +32,7 @@ const getMyReservations = reservations => ({
 export const loadReservation = () => async dispatch => {
   try {
     const res = await axios.get('/api/reservations')
-    dispatch(getReservation(res.data))
+    dispatch(gotAllReservations(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -49,7 +52,14 @@ export const fetchMyReservations = userId => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_RESERVATIONS_BY_USER:
-      return {reservationsByUser: action.reservations}
+      return {
+        reservationsByUser: action.reservations
+      }
+    case GOT_ALL_RESERVATIONS:
+      return {
+        ...state,
+        allReservations: action.reservations
+      }
     default:
       return state
   }

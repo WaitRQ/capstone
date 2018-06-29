@@ -36,14 +36,13 @@ class MyMapComponent extends Component {
         bounds.extend(place.geometry.location)
       }
     })
-    console.log('This is place', places)
+
     this.setState({
       center: {
         lat: bounds.f.b,
         lng: bounds.b.b
       }
     })
-    console.log('this is state', this.state)
 
     var userData = {
       name: places[0].name,
