@@ -8,12 +8,13 @@ import Card from '@material-ui/core/Card'
 import CardText from '@material-ui/core/CardContent'
 import {connect} from 'react-redux'
 
+//Componenet needs reservationId passed to it as a prop!!!!
+
 class VideoComponent extends Component {
   constructor(props) {
     super()
     this.state = {
       identity: null,
-      reservationId: 1,
       roomName: '',
       roomNameErr: false, // Track error for room name TextField
       previewTracks: null,
@@ -145,11 +146,17 @@ class VideoComponent extends Component {
     })
   }
 
-  componentDidMount() {
-    axios.get(`/api/twilio/${this.props.userId}`).then(results => {
+  componentDidMount = async () => {
+    await axios.get(`/api/twilio/${this.props.userId}`).then(results => {
       const {identity, token} = results.data
       this.setState({identity, token})
     })
+    if (this.props.reservationId) {
+      this.setState({roomName: 'Reservation' + this.props.reservationId})
+    } else {
+      this.setState({roomName: 'Reservation Default'})
+    }
+    this.joinRoom()
   }
 
   leaveRoom() {
@@ -179,18 +186,21 @@ class VideoComponent extends Component {
     return (
       <Card>
         <CardText>
-          <div className="flex-container">
-            {showLocalTrack}
-            <div className="flex-item">
-              <TextField
-                placeholder="Room Name"
-                onChange={this.handleRoomNameChange}
-                error={!!this.state.roomNameErr}
-              />
-              <br />
-              {joinOrLeaveRoomButton}
+          <div className="flex justify-around flex-wrap">
+            <div className="flex flex-column">
+              {showLocalTrack}
+              <div>
+                <TextField
+                  placeholder="Room Name"
+                  onChange={this.handleRoomNameChange}
+                  error={!!this.state.roomNameErr}
+                  value={this.state.roomName}
+                />
+                <br />
+                {joinOrLeaveRoomButton}
+              </div>
             </div>
-            <div className="flex-item" ref="remoteMedia" id="remote-media" />
+            <div ref="remoteMedia" id="remote-media" />
           </div>
         </CardText>
       </Card>
