@@ -35,7 +35,6 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
-        <Route path="/video" component={VideoComponent} />
 
         {isLoggedIn && (
           <Switch>
@@ -43,6 +42,7 @@ class Routes extends Component {
             {/* <Route path="/home" component={UserHome} /> */}
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
+            <Route path="/video" component={VideoComponent} />
             <Route component={MapContainer} />
           </Switch>
         )}
