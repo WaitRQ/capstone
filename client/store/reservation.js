@@ -17,8 +17,6 @@ const MAKE_RESERVATION = 'MAKE_RESERVATION'
 const initialState = {
   reservationsByUser: [],
 
-  allReservations: [],
-
   newReservations: []
 }
 
@@ -93,12 +91,12 @@ export default function(state = initialState, action) {
     case GOT_ALL_RESERVATIONS:
       return {
         ...state,
-        allReservations: action.reservations
+        newReservations: action.reservations
       }
     case UPDATED_RESERVATION:
       return {
         ...state,
-        allReservations: [...state.allReservations, action.reservation]
+        newReservations: [...state.newReservations, action.reservation]
       }
     case MAKE_RESERVATION:
       return {

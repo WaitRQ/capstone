@@ -29,11 +29,14 @@ class LocationScreen extends Component {
 
   render() {
     console.log('these are my props', this.props.user.id)
+    console.log('these is alOPen Reservations', this.props.allOpenReservations)
     const openReservations = this.props.allOpenReservations.filter(
       reservation => {
         return reservation.locationId === this.props.location.id
       }
     )
+
+    console.log('this is openReservation', openReservations)
 
     const {classes} = this.props
     return (
@@ -86,12 +89,13 @@ class LocationScreen extends Component {
             >
               <List className={classes.ListBox}>
                 {openReservations.map((item, index) => {
+                  console.log('item', item)
                   return (
                     <div key={index}>
                       <ListItem>
                         <ListItemText
                           primary={`Price: $${item.price} Contact: ${
-                            item.buyer.name
+                            item.seller.name
                           } `}
                           secondary={`Time: ${item.time}`}
                         />
@@ -139,7 +143,8 @@ class LocationScreen extends Component {
  */
 
 const mapStateToProps = state => ({
-  allOpenReservations: state.reservation.allReservations
+  allOpenReservations: state.reservation.newReservations,
+  user: state.user
 })
 
 export default connect(mapStateToProps, null)(
