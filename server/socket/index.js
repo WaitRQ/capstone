@@ -1,14 +1,20 @@
+const {Message} = require('../db/models')
+
 module.exports = io => {
-  io.on('connection', socket => {
+  io.on('connection', async socket => {
     const roomId = socket.handshake.query.reservationId
     socket.join(`${roomId}`)
     console.log(`Enter in room ${roomId}`)
-    socket.emit('messages', [{from: 'CQY', text: 'history messages'}])
+    const historyMessages = await Message.findAll({
+      where: {reservationId: roomId}
+    })
+    socket.emit('messages', historyMessages)
+
     socket.on('room_messages', messages => {
       socket.emit('messages', messages)
     })
+
     socket.on('messages', messages => {
-      // TODO(zhangwen829), persist to database
       // Message.create()
       socket.to(`${roomId}`).emit('room_messages', messages)
     })

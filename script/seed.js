@@ -70,7 +70,7 @@ async function seed() {
       address: '103 Prince Street, New York',
       latitude: 40.725058,
       longitude: -73.999037
-    }),
+    }), //0
     Location.create({
       name: 'The Rink At Rockefeller Center',
       imageUrl:
@@ -78,7 +78,7 @@ async function seed() {
       address: '600 5th Ave, New York',
       latitude: 40.7592592,
       longitude: -73.9782257
-    }),
+    }), //1
     Location.create({
       name: 'Ippudo West Side',
       imageUrl:
@@ -86,7 +86,7 @@ async function seed() {
       address: '321 W 51st St, New York',
       latitude: '40.763491',
       longitude: '-73.986586'
-    }),
+    }), //2
     Location.create({
       name: 'Hamilton the Musical',
       imageUrl:
@@ -94,7 +94,7 @@ async function seed() {
       address: '226 W 46th St, New York,',
       latitude: '40.759017',
       longitude: '-73.986698'
-    }),
+    }), //3
     Location.create({
       name: 'The Cloisters',
       imageUrl:
@@ -102,7 +102,7 @@ async function seed() {
       address: '99 Margaret Corbin Dr, New York,',
       latitude: '40.864863',
       longitude: '-73.931727'
-    }),
+    }), //4
     Location.create({
       name: 'The Metropolitan Museum of Art',
       imageUrl:
@@ -110,7 +110,7 @@ async function seed() {
       address: '1000 5th Ave, New York,',
       latitude: '40.779437',
       longitude: '-73.963244'
-    }),
+    }), //5
     Location.create({
       name: 'Wicked',
       imageUrl:
@@ -118,7 +118,7 @@ async function seed() {
       address: '222 W 51st St, New York,',
       latitude: '40.759017',
       longitude: '-73.986698'
-    }),
+    }), //6
     Location.create({
       name: 'Best Buy',
       imageUrl:
@@ -126,7 +126,7 @@ async function seed() {
       address: '529 5th Ave, New York,',
       latitude: '40.754411',
       longitude: '-73.979698'
-    }),
+    }), //7
     Location.create({
       name: 'The Standard, High Line',
       imageUrl:
@@ -134,7 +134,7 @@ async function seed() {
       address: '48 Washington Stree, New York,',
       latitude: '40.740923',
       longitude: '-74.008111'
-    }),
+    }), //8
     Location.create({
       name: 'Fullstack Academy of Code',
       imageUrl:
@@ -142,7 +142,7 @@ async function seed() {
       address: '5 Hanover Sq, New York,',
       latitude: '40.705076',
       longitude: '-74.009160'
-    })
+    }) //9
   ])
 
   const statuses = await Promise.all([
@@ -166,14 +166,17 @@ async function seed() {
   const reservations = await Promise.all([
     Reservation.create({
       sellerId: users[0].id,
+      buyerId: users[2].id,
       locationId: locations[0].id,
-      statusId: statuses[0].id,
+      statusId: statuses[1].id,
       price: 25.5
     }),
     Reservation.create({
+      date: '2018-06-29',
       sellerId: users[0].id,
+      buyerId: users[5].id,
       locationId: locations[8].id,
-      statusId: statuses[0].id,
+      statusId: statuses[1].id,
       price: 38.5
     }),
     Reservation.create({
@@ -208,9 +211,8 @@ async function seed() {
       buyerId: users[0].id
     }),
     Reservation.create({
-      sellerId: users[2].id,
       locationId: locations[5].id,
-      statusId: statuses[1].id,
+      statusId: statuses[0].id,
       price: 35,
       buyerId: users[0].id
     })
@@ -223,6 +225,18 @@ async function seed() {
       toId: reservations[2].buyerId,
       text:
         'hey, lines moving slower, i will text you when i am closer in an hour'
+    }),
+    Message.create({
+      reservationId: reservations[3].id,
+      fromId: reservations[3].buyerId,
+      toId: reservations[3].sellerId,
+      text: 'Hi, I am Cody. Are you available now?'
+    }),
+    Message.create({
+      reservationId: reservations[3].id,
+      fromId: reservations[3].sellerId,
+      toId: reservations[3].buyerId,
+      text: 'Hi, I am Wendy. Going to wait in the line for you.'
     }),
     Message.create({
       reservationId: reservations[3].id,
