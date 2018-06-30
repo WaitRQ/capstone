@@ -21,10 +21,10 @@ class Chat extends React.Component {
         <Card>
           <List>
             {this.props.historyMessages.map(message => (
-              <div>
+              <div key={message.id}>
                 <ListItem>
-                  {message.from.name} : {message.text} [time]{' '}
-                  {message.createdAt.slice(11, 19)} [date]{' '}
+                  {message.from.name} : {message.text} --{' '}
+                  {message.createdAt.slice(11, 19)} on{' '}
                   {message.createdAt.slice(0, 10)}
                 </ListItem>
                 <Divider />

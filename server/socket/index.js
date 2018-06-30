@@ -6,14 +6,16 @@ module.exports = io => {
     socket.join(`${roomId}`)
     console.log(`Enter in room ${roomId}`)
     const historyMessages = await Message.findAll({
-      where: {reservationId: roomId},
+      where: {
+        reservationId: roomId
+      },
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: User,
           as: 'from'
         }
       ]
-      //order
     })
     socket.emit('messages', historyMessages)
 
