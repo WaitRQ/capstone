@@ -25,9 +25,10 @@ export const LocationStyles = theme => ({
     position: 'relative',
     maxHeight: 370
   },
-  div: {
-    padding: '0',
-    margin: '0'
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: '#eaecef'
+    }
   }
 })
 

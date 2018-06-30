@@ -6,17 +6,18 @@ import {withStyles} from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
 import {LocationStyles} from './style'
 import Input from '@material-ui/core/Input'
-import TextField from '@material-ui/core/TextField'
+
+import Typography from '@material-ui/core/Typography'
 
 import Event from '@material-ui/icons/Event'
 import Button from '@material-ui/core/Button'
-import Divider from '@material-ui/core/Divider'
+
 import CardMedia from '@material-ui/core/CardMedia'
 
 import Card from '@material-ui/core/Card'
@@ -113,35 +114,24 @@ class LocationScreen extends Component {
               }}
             >
               <List className={classes.ListBox}>
-                {openResTemp.map((item, index) => {
+                {openResTemp.map((item, n) => {
                   if (this.props.user.id === item.id) {
                     editButton = true
                   }
                   return (
-                    <div key={index}>
+                    <div className={classes.row} key={n}>
                       <ListItem className={classes.MyList}>
                         <div>
-                          <Input
-                            id="adornment-amount"
-                            value={`${this.props.location.name}  ${
-                              this.props.location.address
-                            }`}
-                          />
+                          <Typography variant="subheading" gutterBottom>
+                            {`Date: ${item.date}_______  Time: ${
+                              item.time
+                            }_______  Contact: ${item.seller.name}`}
+                          </Typography>
                           <br />
-
-                          <Input
-                            style={{marginRight: 40}}
-                            id="adornment-amount"
-                            value={`${this.props.location.name}  ${
-                              this.props.location.address
-                            }`}
-                          />
-
                           <Input
                             id="adornment-amount"
-                            value={`${this.props.location.name}  ${
-                              this.props.location.address
-                            }`}
+                            fullWidth
+                            value={`Price: $${item.price}`}
                           />
                         </div>
 
@@ -153,7 +143,6 @@ class LocationScreen extends Component {
                           Reserve
                         </Button>
                       </ListItem>
-                      <Divider />
                     </div>
                   )
                 })}
