@@ -38,8 +38,7 @@ class Chat extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  // historyMessages: state.chat.historyMessages
-  historyMessages: [{text: 'hi', from: 'ZW'}, {text: 'bye', from: 'CQY'}]
+  historyMessages: state.message
 })
 
 const mapDispatchToProps = dispatch => {
