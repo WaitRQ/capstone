@@ -22,36 +22,27 @@ import CardMedia from '@material-ui/core/CardMedia'
 
 import Card from '@material-ui/core/Card'
 
-const openResTemp = [
-  {
-    price: 10,
-    id: 5,
-    date: '2018-06-27',
-    time: '09:00:00',
-    seller: {name: 'Murphy'}
-  },
-  {
-    price: 25.5,
-    id: 1,
-    date: '2018-06-29',
-    time: '09:00:00',
-    seller: {name: 'Cody'}
-  },
-  {
-    price: 38.5,
-    id: 2,
-    date: '2018-06-29',
-    time: '09:00:00',
-    seller: {name: 'Stella'}
-  }
-]
+import editReservation from '../store/reservation'
 
 class LocationScreen extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      price: 0
+    }
   }
 
-  handleChange = async itemId => {}
+  handleClick = async () => {
+    event.preventDefault()
+    const id = this.props.user.id
+    const price = this.state.price
+    const updateObj = {id, price}
+    await this.props.editReservation(updateObj)
+  }
+
+  handleChange = event => {
+    this.setState({[event.target.name]: event.target.value})
+  }
 
   render() {
     console.log('This is my user id', this.props.user)
@@ -63,6 +54,7 @@ class LocationScreen extends Component {
     )
 
     var editButton = false
+    var editable = false
 
     const {classes} = this.props
     return (
@@ -84,8 +76,12 @@ class LocationScreen extends Component {
           </ListItem>
         </List>
 
-        <Grid container style={{backgroundColor: '#DED7D7'}}>
-          <Grid item md={5}>
+        <Grid
+          container
+          className={classes.cont}
+          style={{backgroundColor: '#DED7D7'}}
+        >
+          <Grid item md={6}>
             <Paper
               style={{
                 padding: 20,
@@ -104,7 +100,7 @@ class LocationScreen extends Component {
             </Paper>
           </Grid>
 
-          <Grid item md={7}>
+          <Grid item md={6}>
             <Paper
               style={{
                 padding: 20,
@@ -114,13 +110,14 @@ class LocationScreen extends Component {
               }}
             >
               <List className={classes.ListBox}>
-                {openResTemp.map((item, n) => {
+                {openReservations.map((item, n) => {
                   if (this.props.user.id === item.id) {
                     editButton = true
+                    editable = true
                   }
                   return (
                     <div className={classes.row} key={n}>
-                      <ListItem className={classes.MyList}>
+                      <ListItem>
                         <div>
                           <Typography variant="subheading" gutterBottom>
                             {`Date: ${item.date}_______  Time: ${
@@ -128,11 +125,16 @@ class LocationScreen extends Component {
                             }_______  Contact: ${item.seller.name}`}
                           </Typography>
                           <br />
-                          <Input
-                            id="adornment-amount"
-                            fullWidth
-                            value={`Price: $${item.price}`}
-                          />
+                          {editable ? (
+                            <Input
+                              id="price"
+                              name="price"
+                              value={this.state.price}
+                              onChange={this.handleChange}
+                            />
+                          ) : (
+                            <Input value={item.price} />
+                          )}
                         </div>
 
                         <Button
@@ -152,6 +154,7 @@ class LocationScreen extends Component {
                 style={{marginTop: 20}}
                 variant="contained"
                 color="secondary"
+                onClick={this.handleClick}
                 className={classes.button}
               >
                 Make New Reservation
@@ -185,35 +188,14 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = dispatch => ({
+  editReservation: updateObj => dispatch(editReservation(updateObj))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(LocationStyles)(LocationScreen)
 )
 
 LocationScreen.propTypes = {
   classes: PropTypes.object.isRequired
 }
-
-// <TextField
-//   id="name"
-//   label="Price"
-//   className={classes.textField}
-//
-//   onChange={this.handleChange('name')}
-//   margin="normal"
-// />
-// <TextField
-//  id="name"
-//  label="Contact"
-//  className={classes.textField}
-//
-//  onChange={this.handleChange('name')}
-//  margin="normal"
-// />
-// <TextField
-// id="name"
-// label="Time"
-// className={classes.textField}
-//
-// onChange={this.handleChange('name')}
-// margin="normal"
-// />

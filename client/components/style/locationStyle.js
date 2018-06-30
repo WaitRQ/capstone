@@ -27,7 +27,7 @@ export const LocationStyles = theme => ({
   },
   row: {
     '&:nth-of-type(odd)': {
-      backgroundColor: '#eaecef'
+      backgroundColor: '#e8eaed'
     }
   }
 })
