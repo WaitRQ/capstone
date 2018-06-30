@@ -24,6 +24,10 @@ export const LocationStyles = theme => ({
     width: '100%',
     position: 'relative',
     maxHeight: 370
+  },
+  div: {
+    padding: '0',
+    margin: '0'
   }
 })
 
