@@ -11,6 +11,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    console.log(req.params.id)
+    const messages = await Message.findAll({
+      where: {
+        reservationId: req.params.id
+      },
+      include: [{all: true}]
+    })
+    console.log(messages)
+    res.json(messages)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //Get message by ID? think we need get all messages by reservation ID?
 
 router.post('/', async (req, res, next) => {

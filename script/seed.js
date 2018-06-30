@@ -218,16 +218,16 @@ async function seed() {
 
   const messages = await await Promise.all([
     Message.create({
-      reservationId: reservations[0].id,
-      fromId: reservations[0].sellerId,
-      toId: reservations[0].buyerId,
+      reservationId: reservations[5].id,
+      fromId: reservations[5].sellerId,
+      toId: reservations[5].buyerId,
       text:
         'hey, lines moving slower, i will text you when i am closer in an hour'
     }),
     Message.create({
-      reservationId: reservations[1].id,
-      fromId: reservations[1].sellerId,
-      toId: reservations[1].buyerId,
+      reservationId: reservations[5].id,
+      fromId: reservations[5].sellerId,
+      toId: reservations[5].buyerId,
       text: 'hey, lines moving fast, you may come now!'
     })
   ])

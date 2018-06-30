@@ -7,10 +7,10 @@ import {
   Login,
   Signup,
   NewReservation,
-  UserAccount
+  UserAccount,
+  TimeLine
 } from './components'
-import {getAllLocations} from './store/location'
-import {me, loadReservation} from './store'
+import {me, loadReservation, getAllLocations} from './store'
 import VideoComponent from './components/videoComponent'
 
 /**
@@ -43,6 +43,7 @@ class Routes extends Component {
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
             <Route path="/video" component={VideoComponent} />
+            <Route path="/timeline" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
         )}
@@ -61,7 +62,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    allLocations: state.location.allLocations
+    allLocations: state.location.allLocations,
+    userId: state.user.id
   }
 }
 
