@@ -6,16 +6,26 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import {connect} from 'react-redux'
+import {subscribeMessages} from '../store/message'
 
 class Chat extends React.Component {
+  componentDidMount() {
+    this.props.subscribeMessages(3)
+  }
   render() {
     return (
       <div>
         <Card>
           <List>
-            <ListItem>1111</ListItem>
-            <Divider />
-            <ListItem>2222</ListItem>
+            {this.props.historyMessages.map(message => (
+              <div>
+                <ListItem>
+                  {message.from} : {message.text} at: {message.createdAt}
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
           </List>
         </Card>
         <Card>
@@ -27,4 +37,16 @@ class Chat extends React.Component {
   }
 }
 
-export default Chat
+const mapStateToProps = state => ({
+  // historyMessages: state.chat.historyMessages
+  historyMessages: [{text: 'hi', from: 'ZW'}, {text: 'bye', from: 'CQY'}]
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    subscribeMessages: reservationId =>
+      dispatch(subscribeMessages(reservationId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chat)

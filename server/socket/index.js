@@ -1,9 +1,11 @@
 module.exports = io => {
   io.on('connection', socket => {
-    console.log(`A socket connection to the server has been made: ${socket.id}`)
+    const roomId = socket.handshake.query.reservationId
+    socket.join(`${roomId}`)
+    console.log(`im in ${roomId}`)
 
     socket.on('disconnect', () => {
-      console.log(`Connection ${socket.id} has left the building`)
+      console.log(`Chat in room ${roomId} ended`)
     })
   })
 }
