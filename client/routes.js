@@ -7,7 +7,8 @@ import {
   Login,
   Signup,
   NewReservation,
-  UserAccount
+  UserAccount,
+  Chat
 } from './components'
 import {getAllLocations} from './store/location'
 import {me, loadReservation} from './store'
@@ -43,6 +44,7 @@ class Routes extends Component {
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
             <Route path="/video" component={VideoComponent} />
+            <Route path="/chat" component={Chat} />
             <Route component={MapContainer} />
           </Switch>
         )}
