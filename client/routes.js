@@ -7,10 +7,10 @@ import {
   Login,
   Signup,
   NewReservation,
-  UserAccount
+  UserAccount,
+  TimeLine
 } from './components'
-import {getAllLocations} from './store/location'
-import {me, loadReservation} from './store'
+import {me, loadReservation, getAllLocations} from './store'
 import VideoComponent from './components/videoComponent'
 
 /**
@@ -43,6 +43,7 @@ class Routes extends Component {
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
             <Route path="/video" component={VideoComponent} />
+            <Route path="/timeline" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
         )}
