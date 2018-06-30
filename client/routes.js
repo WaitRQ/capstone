@@ -44,7 +44,7 @@ class Routes extends Component {
             <Route path="/home" component={MapContainer} />
             <Route path="/myaccount" component={UserAccount} />
             <Route path="/video" component={VideoComponent} />
-            <Route path="/chat" component={Chat} />
+            <Route path="/chat/:reservationId" component={Chat} />
             <Route component={MapContainer} />
           </Switch>
         )}

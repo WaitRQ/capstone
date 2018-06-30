@@ -11,9 +11,11 @@ import {subscribeMessages} from '../store/message'
 
 class Chat extends React.Component {
   componentDidMount() {
-    this.props.subscribeMessages(3)
+    const {reservationId} = this.props.match.params
+    this.props.subscribeMessages(+reservationId)
   }
   render() {
+    console.log('______________', this.props.historyMessages)
     return (
       <div>
         <Card>
@@ -21,7 +23,9 @@ class Chat extends React.Component {
             {this.props.historyMessages.map(message => (
               <div>
                 <ListItem>
-                  {message.from} : {message.text} at: {message.createdAt}
+                  {message.from.name} : {message.text} [time]{' '}
+                  {message.createdAt.slice(11, 19)} [date]{' '}
+                  {message.createdAt.slice(0, 10)}
                 </ListItem>
                 <Divider />
               </div>

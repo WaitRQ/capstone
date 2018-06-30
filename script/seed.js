@@ -194,7 +194,7 @@ async function seed() {
       statusId: statuses[1].id,
       price: 20,
       buyerId: users[0].id
-    }),
+    }), // use reservations[3] to test chat
     Reservation.create({
       date: '2018-06-27',
       sellerId: users[2].id,

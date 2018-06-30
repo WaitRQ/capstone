@@ -30,7 +30,7 @@ const MyReservations = props => {
                   <TableCell>{reservation[props.propName].name}</TableCell>
                   <TableCell>{reservation.status.type}</TableCell>
                   <TableCell>
-                    <Link to="/chat">Chat!</Link>
+                    <Link to={`/chat/${reservation.id}`}>Chat!</Link>
                   </TableCell>
                 </TableRow>
               )

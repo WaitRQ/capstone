@@ -1,4 +1,4 @@
-const {Message} = require('../db/models')
+const {Message, User} = require('../db/models')
 
 module.exports = io => {
   io.on('connection', async socket => {
@@ -6,7 +6,14 @@ module.exports = io => {
     socket.join(`${roomId}`)
     console.log(`Enter in room ${roomId}`)
     const historyMessages = await Message.findAll({
-      where: {reservationId: roomId}
+      where: {reservationId: roomId},
+      include: [
+        {
+          model: User,
+          as: 'from'
+        }
+      ]
+      //order
     })
     socket.emit('messages', historyMessages)
 
