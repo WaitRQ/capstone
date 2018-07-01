@@ -24,7 +24,7 @@ module.exports = io => {
     })
 
     socket.on('messages', messages => {
-      // Message.create()
+      Message.create({messages})
       socket.to(`${roomId}`).emit('room_messages', messages)
     })
     socket.on('disconnect', () => {

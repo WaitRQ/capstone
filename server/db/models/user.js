@@ -7,10 +7,10 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   address: {
-    type: Sequelize.TEXT
+    type: Sequelize.STRING
   },
   imageUrl: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     defaultValue: 'https://identix.state.gov/qotw/images/no-photo.gif'
   },
   email: {

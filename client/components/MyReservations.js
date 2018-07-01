@@ -5,6 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import {Link} from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 const MyReservations = props => {
   return (
@@ -17,7 +18,7 @@ const MyReservations = props => {
             <TableCell>Location</TableCell>
             <TableCell>{props.columnName}</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Chat</TableCell>
+            <TableCell>Chat Box</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -30,7 +31,9 @@ const MyReservations = props => {
                   <TableCell>{reservation[props.propName].name}</TableCell>
                   <TableCell>{reservation.status.type}</TableCell>
                   <TableCell>
-                    <Link to={`/chat/${reservation.id}`}>Chat!</Link>
+                    <Link to={`/chat/${reservation.id}`}>
+                      <Button>Chat!</Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               )
