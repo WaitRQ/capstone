@@ -2,21 +2,45 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
 import {connect} from 'react-redux'
-import {subscribeMessages, clearMessages} from '../store/message'
+import {
+  subscribeMessages,
+  clearMessages,
+  postMessage,
+  writeMessage
+} from '../store/message'
 
 class Chat extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   componentDidMount() {
     this.props.clearMessages()
     const {reservationId} = this.props.match.params
     this.props.subscribeMessages(+reservationId)
   }
+  handleChange(event) {
+    console.log(event.target.value)
+    this.props.writeMessage(event.target.value)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const reservationId = Number(this.props.match.params.reservationId)
+    const fromId = Number(this.props.match.params.fromId)
+    const toId = Number(this.props.match.params.toId)
+    this.props.postMessage({
+      text: this.props.newMessageText,
+      reservationId: reservationId,
+      fromId: fromId,
+      toId: toId
+    })
+    this.props.writeMessage('')
+  }
   render() {
-    console.log('______________', this.props.historyMessages)
     return (
       <div>
         <Card>
@@ -33,24 +57,32 @@ class Chat extends React.Component {
             ))}
           </List>
         </Card>
-        <Card>
-          <TextField placeholder="this is a message" />
-          <Button>Send</Button>
-        </Card>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            name="messageText"
+            type="text"
+            value={this.props.newMessageText}
+            onChange={this.handleChange}
+          />
+          <button type="submit">Send</button>
+        </form>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  historyMessages: state.message
+  historyMessages: state.message.historyMessages,
+  newMessageText: state.message.newMessageText
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     subscribeMessages: reservationId =>
       dispatch(subscribeMessages(reservationId)),
-    clearMessages: () => dispatch(clearMessages())
+    clearMessages: () => dispatch(clearMessages()),
+    postMessage: message => dispatch(postMessage(message)),
+    writeMessage: messageText => dispatch(writeMessage(messageText))
   }
 }
 

@@ -10,7 +10,7 @@ const MyInfo = props => {
       <div>Name: {props.user.name}</div>
       <div>Email: {props.user.email}</div>
       <Link to={`/profile/${props.user.id}`}>
-        <Button>edit my profile</Button>
+        <Button variant="outlined">edit my profile</Button>
       </Link>
     </div>
   )

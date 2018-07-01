@@ -23,7 +23,7 @@ module.exports = io => {
       socket.emit('messages', messages)
     })
 
-    socket.on('messages', messages => {
+    socket.on('new_message', messages => {
       Message.create({messages})
       socket.to(`${roomId}`).emit('room_messages', messages)
     })

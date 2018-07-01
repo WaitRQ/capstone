@@ -16,6 +16,7 @@ class UserAccount extends React.Component {
           headline="Have others waiting in the line"
           columnName="Waiter"
           propName="seller"
+          fromId={this.props.user.id}
           myReservations={this.props.myReservations.filter(
             reservation => reservation.buyerId === this.props.user.id
           )}
@@ -24,6 +25,7 @@ class UserAccount extends React.Component {
           headline="Wait in the line for others"
           columnName="Client"
           propName="buyer"
+          fromId={this.props.user.id}
           myReservations={this.props.myReservations.filter(
             reservation => reservation.sellerId === this.props.user.id
           )}
