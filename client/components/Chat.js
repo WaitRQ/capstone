@@ -48,9 +48,9 @@ class Chat extends React.Component {
             {this.props.historyMessages.map(message => (
               <div key={message.id}>
                 <ListItem>
-                  {message.from.name} : {message.text} --{' '}
-                  {message.createdAt.slice(11, 19)} on{' '}
-                  {message.createdAt.slice(0, 10)}
+                  {message.fromId} : {message.text} --{' '}
+                  {/* {message.createdAt.slice(11, 19)} on{' '}
+                  {message.createdAt.slice(0, 10)} */}
                 </ListItem>
                 <Divider />
               </div>

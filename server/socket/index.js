@@ -9,7 +9,7 @@ module.exports = io => {
       where: {
         reservationId: roomId
       },
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt']],
       include: [
         {
           model: User,
@@ -19,13 +19,15 @@ module.exports = io => {
     })
     socket.emit('messages', historyMessages)
 
-    socket.on('room_messages', messages => {
-      socket.emit('messages', messages)
-    })
+    // socket.on('room_messages', messages => {
+    //   console.log('in room messages', messages)
+    //   socket.emit('messages', messages)
+    // })
 
-    socket.on('new_message', messages => {
-      Message.create({messages})
-      socket.to(`${roomId}`).emit('room_messages', messages)
+    socket.on('new_message', message => {
+      console.log(message)
+      Message.create(message)
+      io.sockets.in(`${roomId}`).emit('messages', [message])
     })
     socket.on('disconnect', () => {
       console.log(`Chat in room ${roomId} ended`)
