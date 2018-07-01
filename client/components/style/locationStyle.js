@@ -3,11 +3,6 @@ export const LocationStyles = theme => ({
     width: '100%',
     maxWidth: 360
   },
-  media: {
-    height: 0,
-    padding: '25%'
-  },
-
   ListBox: {
     width: '100%',
 
@@ -16,15 +11,8 @@ export const LocationStyles = theme => ({
     overflow: 'auto',
     maxHeight: 240
   },
-  card: {
-    width: '100%',
-    position: 'relative',
-    maxHeight: 370
-  },
-  row: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: '#e8eaed'
-    }
+  ListItemText: {
+    fontFamily: 'medium-content-sans-serif-font'
   }
 })
 

@@ -8,7 +8,8 @@ import {
   Signup,
   NewReservation,
   UserAccount,
-  LocationScreen
+  LocationScreen,
+  EditReservation
 } from './components'
 import {getAllLocations} from './store/location'
 import {me, loadReservation} from './store'

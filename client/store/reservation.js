@@ -61,8 +61,10 @@ export const fetchMyReservations = userId => async dispatch => {
 
 export const editReservation = resObj => async dispatch => {
   try {
+    console.log('in edit reservation', resObj)
     const updatedRes = await axios.put(`/api/reservations/${resObj.id}`, resObj)
-    dispatch(updatedReservations(updatedRes))
+    console.log('this is the updatedRes', updatedRes.data)
+    dispatch(updatedReservations(updatedRes.data))
   } catch (error) {
     console.error(error)
   }

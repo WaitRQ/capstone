@@ -1,34 +1,27 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import EditReservation from './EditReservation'
 
 import {withStyles} from '@material-ui/core/styles'
-import FormControl from '@material-ui/core/FormControl'
+
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import {LocationStyles} from './style'
-import Input from '@material-ui/core/Input'
+
 import Typography from '@material-ui/core/Typography'
 import Event from '@material-ui/icons/Event'
+
 import Button from '@material-ui/core/Button'
-import CardMedia from '@material-ui/core/CardMedia'
-import Card from '@material-ui/core/Card'
-import editReservation from '../store/reservation'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/ToolBar'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
-
-const reservations = [
-  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
-  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
-  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
-  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
-  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'}
-]
+import Divider from '@material-ui/core/Divider'
 
 class LocationScreen extends Component {
   constructor(props) {
@@ -51,18 +44,18 @@ class LocationScreen extends Component {
   }
 
   render() {
-    console.log('my reservations', reservations)
-
     const openReservations = this.props.allOpenReservations.filter(
       reservation => {
         return reservation.locationId === this.props.location.id
       }
     )
 
-    var editButton = false
+    console.log('this.props', this.props)
     var editable = false
+    var currentRes = {}
 
     const {classes} = this.props
+
     return (
       <>
         <AppBar position="static" color="inherit">
@@ -81,24 +74,44 @@ class LocationScreen extends Component {
                 marginTop: 10,
                 marginBottom: 10,
                 marginLeft: 10,
-                marginRight: 10
+                marginRight: 10,
+                height: 600,
+                overflow: 'auto'
               }}
             >
-              {reservations.map(item => {
+              {openReservations.map(item => {
+                if (this.props.user.id === item.id) {
+                  editable = true
+                  currentRes = item
+                }
                 return (
-                  <Fragment>
-                    <Typography variant="headline" color="primary">
-                      {item.price}
+                  <Fragment key={item.id}>
+                    <Typography
+                      style={{marginTop: 10}}
+                      variant="headline"
+                      color="primary"
+                    >
+                      Price: ${item.price}
+                      <Button
+                        style={{float: 'right'}}
+                        mini
+                        variant="fab"
+                        color="primary"
+                        aria-label="add"
+                      >
+                        <Event />
+                      </Button>
                     </Typography>
 
                     <List component="ul">
                       <ListItem button>
-                        <ListItemText primary={item.time} />
+                        <ListItemText primary={`Time: ${item.time}`} />
                       </ListItem>
                       <ListItem button component="a" href="#simple-list">
-                        <ListItemText primary={item.date} />
+                        <ListItemText primary={`Date: ${item.date}`} />
                       </ListItem>
                     </List>
+                    <Divider />
                   </Fragment>
                 )
               })}
@@ -111,15 +124,41 @@ class LocationScreen extends Component {
                 padding: 20,
                 marginTop: 10,
                 marginBottom: 10,
-                marginRight: 10
+                marginRight: 10,
+                height: 150
               }}
             >
-              <Typography variant="display1" color="primary">
-                Welcome!
-              </Typography>
               <Typography variant="headline" color="primary">
-                Apple Soho 123 West Village Avenue
+                Welcome {this.props.user.name}!
               </Typography>
+              <Typography variant="subheading" color="primary">
+                Your location: {this.props.location.name}
+              </Typography>
+              <Typography variant="subheading" color="primary">
+                {this.props.location.address}
+              </Typography>
+            </Paper>
+            <Paper
+              style={{
+                padding: 20,
+                marginTop: 10,
+                marginBottom: 10,
+                marginRight: 10,
+                height: 400
+              }}
+            >
+              {editable ? (
+                <Fragment>
+                  <Typography variant="headline" color="primary">
+                    Your Reservation
+                  </Typography>
+                  <EditReservation currentRes={currentRes} />
+                </Fragment>
+              ) : (
+                <Typography variant="headline" color="primary">
+                  You currently have no pending reservations
+                </Typography>
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -292,11 +331,7 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-const mapDispatchToProps = dispatch => ({
-  editReservation: updateObj => dispatch(editReservation(updateObj))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, null)(
   withStyles(LocationStyles)(LocationScreen)
 )
 
