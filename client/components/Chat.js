@@ -7,10 +7,11 @@ import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {connect} from 'react-redux'
-import {subscribeMessages} from '../store/message'
+import {subscribeMessages, clearMessages} from '../store/message'
 
 class Chat extends React.Component {
   componentDidMount() {
+    this.props.clearMessages()
     const {reservationId} = this.props.match.params
     this.props.subscribeMessages(+reservationId)
   }
@@ -48,7 +49,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     subscribeMessages: reservationId =>
-      dispatch(subscribeMessages(reservationId))
+      dispatch(subscribeMessages(reservationId)),
+    clearMessages: () => dispatch(clearMessages())
   }
 }
 
