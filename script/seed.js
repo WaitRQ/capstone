@@ -231,19 +231,19 @@ async function seed() {
       fromId: reservations[3].buyerId,
       toId: reservations[3].sellerId,
       text: 'Hi, I am Cody. Are you available now?'
-    }),
-    Message.create({
-      reservationId: reservations[3].id,
-      fromId: reservations[3].sellerId,
-      toId: reservations[3].buyerId,
-      text: 'Hi, I am Wendy. Going to wait in the line for you.'
-    }),
-    Message.create({
-      reservationId: reservations[3].id,
-      fromId: reservations[3].sellerId,
-      toId: reservations[3].buyerId,
-      text: 'hey, lines moving fast, you may come now!'
     })
+    // Message.create({
+    //   reservationId: reservations[3].id,
+    //   fromId: reservations[3].sellerId,
+    //   toId: reservations[3].buyerId,
+    //   text: 'Hi, I am Wendy. Going to wait in the line for you.'
+    // }),
+    // Message.create({
+    //   reservationId: reservations[3].id,
+    //   fromId: reservations[3].sellerId,
+    //   toId: reservations[3].buyerId,
+    //   text: 'hey, lines moving fast, you may come now!'
+    // })
   ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator

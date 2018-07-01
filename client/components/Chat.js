@@ -23,7 +23,6 @@ class Chat extends React.Component {
     this.props.subscribeMessages(+reservationId)
   }
   handleChange(event) {
-    console.log(event.target.value)
     this.props.writeMessage(event.target.value)
   }
 
@@ -48,9 +47,9 @@ class Chat extends React.Component {
             {this.props.historyMessages.map(message => (
               <div key={message.id}>
                 <ListItem>
-                  {message.fromId} : {message.text} --{' '}
-                  {/* {message.createdAt.slice(11, 19)} on{' '}
-                  {message.createdAt.slice(0, 10)} */}
+                  {message.from.name} : {message.text} --{' '}
+                  {message.createdAt.slice(11, 19)} on{' '}
+                  {message.createdAt.slice(0, 10)}
                 </ListItem>
                 <Divider />
               </div>
