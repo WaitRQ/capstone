@@ -6,12 +6,20 @@ class EditProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: this.props.user.name,
-      email: this.props.user.email,
-      address: this.props.user.address
+      name: '',
+      email: '',
+      address: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      name: this.props.user.name,
+      email: this.props.user.email,
+      address: this.props.user.address
+    })
   }
 
   handleChange(event) {
@@ -55,7 +63,10 @@ class EditProfile extends React.Component {
 
           <button type="submit">update my profile</button>
         </form>
-        <button type="submit" onClick={() => this.props.deleteUser()}>
+        <button
+          type="submit"
+          onClick={() => this.props.deleteUser(this.props.user.id)}
+        >
           delete account
         </button>
         <h2>Danger Zone!!</h2>
