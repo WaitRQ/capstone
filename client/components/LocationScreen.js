@@ -23,11 +23,11 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 const reservations = [
-  {price: 25.0, name: 'Cody', date: 2018 - 28 - 19, time: '09:00'},
-  {price: 25.0, name: 'Cody', date: 2018 - 28 - 19, time: '09:00'},
-  {price: 25.0, name: 'Cody', date: 2018 - 28 - 19, time: '09:00'},
-  {price: 25.0, name: 'Cody', date: 2018 - 28 - 19, time: '09:00'},
-  {price: 25.0, name: 'Cody', date: 2018 - 28 - 19, time: '09:00'}
+  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
+  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
+  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
+  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'},
+  {price: 25.0, name: 'Cody', date: '2018 - 28 - 19', time: '09:00'}
 ]
 
 class LocationScreen extends Component {
@@ -91,12 +91,12 @@ class LocationScreen extends Component {
                       {item.price}
                     </Typography>
 
-                    <List component="nav">
+                    <List component="ul">
                       <ListItem button>
-                        <ListItemText primary="Trash" />
+                        <ListItemText primary={item.time} />
                       </ListItem>
                       <ListItem button component="a" href="#simple-list">
-                        <ListItemText primary="Spam" />
+                        <ListItemText primary={item.date} />
                       </ListItem>
                     </List>
                   </Fragment>
@@ -114,7 +114,12 @@ class LocationScreen extends Component {
                 marginRight: 10
               }}
             >
-              Right Pane
+              <Typography variant="display1" color="primary">
+                Welcome!
+              </Typography>
+              <Typography variant="headline" color="primary">
+                Apple Soho 123 West Village Avenue
+              </Typography>
             </Paper>
           </Grid>
         </Grid>
