@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Reservation} = require('../db/models') ///replace this if named differently
+const {Reservation, Message} = require('../db/models') ///replace this if named differently
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 module.exports = router
@@ -8,7 +8,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const reservations = await Reservation.findAll({
-      where: {statusId: 1},
+      // where: {statusId: 1}, //put comment back in once timeline testing done
       include: [{all: true}]
     })
     res.json(reservations)
@@ -41,6 +41,10 @@ router.post('/', async (req, res, next) => {
       const fullRes = await Reservation.findOne({
         where: {id: reservation.id},
         include: [{all: true}]
+      })
+      await Message.create({
+        reservationId: reservation.id,
+        text: 'New Reservation Created!'
       })
       res.json(fullRes.dataValues)
     } else {

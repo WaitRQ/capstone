@@ -5,7 +5,6 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import reservation from './reservation'
 import message from './message'
-
 import location from './location'
 
 const reducer = combineReducers({
@@ -25,3 +24,4 @@ export default store
 export * from './user'
 export * from './reservation'
 export * from './message'
+export * from './location'
