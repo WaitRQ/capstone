@@ -1,37 +1,78 @@
 import React from 'react'
+import {updateUser, deleteUser} from '../store/user'
+import {connect} from 'react-redux'
 
-const EditProfile = props => (
-  <div>
-    <form onSubmit={props.handleSubmit}>
-      <label htmlFor="userName">Name:</label>
-      <input
-        name="userName"
-        type="text"
-        value={props.userName}
-        onChange={props.handleChange}
-      />
+class EditProfile extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: this.props.user.name,
+      email: this.props.user.email,
+      address: this.props.user.address
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-      <label htmlFor="userEmail">Email:</label>
-      <input
-        name="userEmail"
-        type="text"
-        value={props.userEmail}
-        onChange={props.handleChange}
-      />
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
 
-      <label htmlFor="userAddress">Address:</label>
-      <input
-        name="userAddress"
-        type="text"
-        value={props.userAddress}
-        onChange={props.handleChange}
-      />
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.updateUser(this.props.user.id, this.state)
+  }
 
-      <button type="submit">update my profile</button>
-    </form>
-    <button type="submit">delete account</button>
-    <div>Danger Zone!!</div>
-  </div>
-)
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="userName">Name:</label>
+          <input
+            name="name"
+            type="text"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
 
-export default EditProfile
+          <label htmlFor="userEmail">Email:</label>
+          <input
+            name="email"
+            type="text"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+
+          <label htmlFor="userAddress">Address:</label>
+          <input
+            name="address"
+            type="text"
+            value={this.state.address}
+            onChange={this.handleChange}
+          />
+
+          <button type="submit">update my profile</button>
+        </form>
+        <button type="submit" onClick={() => this.props.deleteUser()}>
+          delete account
+        </button>
+        <h2>Danger Zone!!</h2>
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteUser: userId => dispatch(deleteUser(userId)),
+    updateUser: (id, user) => dispatch(updateUser(id, user))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
