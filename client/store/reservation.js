@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -65,7 +64,7 @@ export const createReservation = newReservation => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_ALL_RESERVATIONS:
-      return action.reservation
+      return action.reservations
     case UPDATED_RESERVATION:
       return [
         ...state.filter(res => res.id !== action.reservation.id),
