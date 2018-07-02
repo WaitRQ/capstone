@@ -4,16 +4,16 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbar} from './navbar'
-export {default as MapContainer} from './MapContainer'
+export {default as MapContainer} from './mapContainer'
 export {Login, Signup} from './auth-form'
 export {default as MiniDrawer} from './drawer'
 export {default as NewReservation} from './newReservation'
-export {default as UserAccount} from './UserAccount'
+export {default as UserAccount} from './userAccount'
 
-export {default as LocationScreen} from './LocationScreen'
-export {default as EditReservation} from './EditReservation'
+export {default as LocationScreen} from './locationScreen'
+export {default as EditReservation} from './editReservation'
 
-export {default as Chat} from './Chat'
-export {default as EditProfile} from './EditProfile'
+export {default as Chat} from './chat'
+export {default as EditProfile} from './editProfile'
 
 export {default as TimeLine} from './timeLine'

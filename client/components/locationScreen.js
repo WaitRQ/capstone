@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import EditReservation from './EditReservation'
+import EditReservation from './editReservation'
 import NewReservation from './newReservation'
 import Header from './Header'
 
