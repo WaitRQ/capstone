@@ -35,6 +35,7 @@ const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 export const loadReservation = () => async dispatch => {
   try {
     const res = await axios.get('/api/reservations')
+    console.log(res)
     dispatch(gotAllReservations(res.data))
   } catch (err) {
     console.error(err)
@@ -65,7 +66,7 @@ export const createReservation = newReservation => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_ALL_RESERVATIONS:
-      return action.reservation
+      return action.reservations
     case UPDATED_RESERVATION:
       return [
         ...state.filter(res => res.id !== action.reservation.id),
