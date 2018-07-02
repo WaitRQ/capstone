@@ -1,5 +1,5 @@
 import React from 'react'
-import MyReservations from './MyReservations'
+import MyReservations from './myReservations'
 import MyInfo from './MyInfo'
 import {connect} from 'react-redux'
 import {fetchMyReservations} from '../store/reservation'

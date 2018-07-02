@@ -1,6 +1,6 @@
 import React from 'react'
 import {updateUser, deleteUser} from '../store/user'
-import {connect} from 'react-redux' 
+import {connect} from 'react-redux'
 
 class EditProfile extends React.Component {
   constructor(props) {
