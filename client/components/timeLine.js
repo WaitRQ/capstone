@@ -24,27 +24,30 @@ class TimeLine extends React.Component {
     //need to fill this out more
   }
   render() {
-    let buyerId,
-      sellerId,
-      buyerUrl,
-      sellerUrl = ''
+    let buyerId = 0
+    let sellerId = 0
+    let buyerUrl = ''
+    let sellerUrl = ''
     let fromId,
       toId = 0
+
     if (this.props.allReservations.length > 0) {
       const singleReservation = this.props.allReservations.filter(
         res => this.state.reservationId === res.id
       )[0]
-      buyerId = singleReservation.buyerId
-      sellerId = singleReservation.sellerId
-      buyerUrl = singleReservation.buyer.imageUrl
-      sellerUrl = singleReservation.seller.imageUrl
-      fromId = this.props.userId
-      if ((buyerId = this.props.userId)) {
-        toId = sellerId
-      } else {
-        toId = buyerId
+      if (singleReservation) {
+        buyerId = singleReservation.buyerId
+        sellerId = singleReservation.sellerId
+        buyerUrl = singleReservation.buyer.imageUrl
+        sellerUrl = singleReservation.seller.imageUrl
+        fromId = this.props.userId
+        if ((buyerId = this.props.userId)) {
+          toId = sellerId
+        } else {
+          toId = buyerId
+        }
+        console.log('from and to id', fromId, toId)
       }
-      console.log('from and to id', fromId, toId)
     }
     let lineStyle = {
       borderTop: 'dotted 5px'
