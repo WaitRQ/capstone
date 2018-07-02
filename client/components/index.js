@@ -11,7 +11,7 @@ export {default as NewReservation} from './newReservation'
 export {default as UserAccount} from './UserAccount'
 
 export {default as LocationScreen} from './LocationScreen'
-export {default as EditReservation} from './EditReservation'
+export {default as EditReservation} from './editReservation'
 
 export {default as Chat} from './Chat'
 export {default as EditProfile} from './EditProfile'
