@@ -107,6 +107,7 @@ class NewReservation extends Component {
   }
 
   render() {
+    console.log('in new Reservation')
     const {classes} = this.props
     const {price, date, time} = this.state
     return (

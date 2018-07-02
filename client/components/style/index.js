@@ -6,3 +6,4 @@
 export {styles as DrawerStyle} from './drawerStyle'
 export {NewReservationStyle} from './newReservation'
 export {AvatarStyles} from './avatar'
+export {LocationStyles} from './locationStyle'

@@ -4,8 +4,11 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const GET_RESERVATION = 'GET_RESERVATION'
+const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
 const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
+const GET_RESERVATION = 'GET_RESERVATION'
+const UPDATED_RESERVATION = 'UPDATED_RESERVATION'
+
 const MAKE_RESERVATION = 'MAKE_RESERVATION'
 
 /**
@@ -13,17 +16,27 @@ const MAKE_RESERVATION = 'MAKE_RESERVATION'
  */
 const initialState = {
   reservationsByUser: [],
+
   newReservations: []
 }
 
 /**
  * ACTION CREATORS
  */
-const getReservation = reservation => ({type: GET_RESERVATION, reservation})
+const gotAllReservations = reservations => ({
+  type: GOT_ALL_RESERVATIONS,
+  reservations
+})
 const getMyReservations = reservations => ({
   type: GET_RESERVATIONS_BY_USER,
   reservations
 })
+
+const updatedReservations = reservation => ({
+  type: UPDATED_RESERVATION,
+  reservation
+})
+
 const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 
 /**
@@ -32,7 +45,7 @@ const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 export const loadReservation = () => async dispatch => {
   try {
     const res = await axios.get('/api/reservations')
-    dispatch(getReservation(res.data))
+    dispatch(gotAllReservations(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -43,6 +56,17 @@ export const fetchMyReservations = userId => async dispatch => {
     dispatch(getMyReservations(data))
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const editReservation = resObj => async dispatch => {
+  try {
+    console.log('in edit reservation', resObj)
+    const updatedRes = await axios.put(`/api/reservations/${resObj.id}`, resObj)
+    console.log('this is the updatedRes', updatedRes.data)
+    dispatch(updatedReservations(updatedRes.data))
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -63,7 +87,19 @@ export default function(state = initialState, action) {
     case GET_RESERVATION:
       return {...state, newReservations: action.reservation}
     case GET_RESERVATIONS_BY_USER:
-      return {...state, reservationsByUser: action.reservations}
+      return {
+        reservationsByUser: action.reservations
+      }
+    case GOT_ALL_RESERVATIONS:
+      return {
+        ...state,
+        newReservations: action.reservations
+      }
+    case UPDATED_RESERVATION:
+      return {
+        ...state,
+        newReservations: [...state.newReservations, action.reservation]
+      }
     case MAKE_RESERVATION:
       return {
         ...state,

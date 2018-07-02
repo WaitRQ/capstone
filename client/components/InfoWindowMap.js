@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Marker, InfoWindow} from 'react-google-maps'
-import NewReservation from './newReservation'
+import LocationScreen from './LocationScreen'
 
 class InfoWindowMap extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class InfoWindowMap extends Component {
   }
 
   render() {
+    console.log('this.state is open', this.state.isOpen)
     return (
       <Marker
         onClick={this.handleToggle}
@@ -26,7 +27,7 @@ class InfoWindowMap extends Component {
       >
         {this.state.isOpen && (
           <InfoWindow>
-            <NewReservation location={this.props.location} />
+            <LocationScreen location={this.props.location} />
           </InfoWindow>
         )}
       </Marker>
