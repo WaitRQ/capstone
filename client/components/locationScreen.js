@@ -69,7 +69,7 @@ class LocationScreen extends Component {
 
     return (
       <>
-        <Header />
+        <Header location={this.props.location} />
 
         <Grid container>
           <Grid item sm>

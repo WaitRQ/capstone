@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
 import {connect} from 'react-redux'
-import InfoWindowMap from './infoWindowMap'
+import InfoWindowMap from './InfoWindowMap'
 import {addCurrentUserLocation} from '../store/location'
 
 const refs = {}
@@ -30,12 +30,11 @@ class MyMapComponent extends Component {
     const bounds = new google.maps.LatLngBounds()
 
     places.forEach(place => {
-      if (place.geometry.viewport) {
-        bounds.union(place.geometry.viewport)
-      } else {
-        bounds.extend(place.geometry.location)
-      }
+      bounds.extend(place.geometry.location)
     })
+
+    console.log('this is bounds', bounds)
+    console.log('this is places', places)
 
     this.setState({
       center: {
@@ -109,3 +108,11 @@ const mapDispatch = dispatch => ({
 export default connect(mapStateToProps, mapDispatch)(
   withScriptjs(withGoogleMap(MyMapComponent))
 )
+
+// places.forEach(place => {
+//   if (place.geometry.viewport) {
+//     bounds.union(place.geometry.viewport)
+//   } else {
+//     bounds.extend(place.geometry.location)
+//   }
+// })
