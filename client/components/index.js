@@ -5,7 +5,7 @@
  */
 export {default as Navbar} from './navbar'
 export {default as MapContainer} from './mapContainer'
-export {Login, Signup} from './auth-form'
+export {Login, Signup} from './authForm'
 export {default as MiniDrawer} from './drawer'
 export {default as NewReservation} from './newReservation'
 export {default as UserAccount} from './userAccount'
