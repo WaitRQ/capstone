@@ -9,7 +9,7 @@ const MyInfo = props => {
       <Avatar src={props.user.imageUrl} />
       <div>Name: {props.user.name}</div>
       <div>Email: {props.user.email}</div>
-      <Link to={`/profile/${props.user.id}`}>
+      <Link to="/profile">
         <Button variant="outlined">edit my profile</Button>
       </Link>
     </div>

@@ -11,8 +11,16 @@ import TableCell from '@material-ui/core/TableCell'
 import TextField from '@material-ui/core/TextField'
 
 class TimeLine extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      reservationId: 0
+    }
+  }
   componentDidMount() {
-    this.props.fetchMyMessages(6) //make sure we get reservationID as props
+    const reservationId = Number(this.props.match.params.reservationId)
+    this.setState({reservationId: reservationId})
+    this.props.fetchMyMessages(reservationId)
   }
   onSubmit = evt => {
     evt.preventDefault()
@@ -24,11 +32,15 @@ class TimeLine extends React.Component {
       sellerId,
       buyerUrl,
       sellerUrl = ''
-    if (this.props.singleReservation) {
-      buyerId = this.props.singleReservation.buyerId
-      sellerId = this.props.singleReservation.sellerId
-      buyerUrl = this.props.singleReservation.buyer.imageUrl
-      sellerUrl = this.props.singleReservation.seller.imageUrl
+    console.log(this.props.allReservations)
+    if (this.props.allReservations.length > 0) {
+      const singleReservation = this.props.allReservations.filter(
+        res => this.state.reservationId === res.id
+      )[0]
+      buyerId = singleReservation.buyerId
+      sellerId = singleReservation.sellerId
+      buyerUrl = singleReservation.buyer.imageUrl
+      sellerUrl = singleReservation.seller.imageUrl
     }
     let lineStyle = {
       borderTop: 'dotted 5px'
@@ -88,16 +100,14 @@ class TimeLine extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  singleReservation: state.reservation.find(res => {
-    return res.id === 6
-  }), //change this to filter for some reservationID
+  allReservations: state.reservation,
   messages: state.message
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchMyMessages: reservationID =>
-      dispatch(getReservationMessages(reservationID))
+    fetchMyMessages: reservationId =>
+      dispatch(getReservationMessages(reservationId))
   }
 }
 
