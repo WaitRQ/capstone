@@ -9,5 +9,8 @@ export {Login, Signup} from './auth-form'
 export {default as MiniDrawer} from './drawer'
 export {default as NewReservation} from './newReservation'
 export {default as UserAccount} from './UserAccount'
+
 export {default as LocationScreen} from './LocationScreen'
 export {default as EditReservation} from './EditReservation'
+
+export {default as TimeLine} from './timeLine'
