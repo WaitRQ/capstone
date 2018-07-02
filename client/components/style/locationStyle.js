@@ -11,9 +11,6 @@ export const LocationStyles = theme => ({
     overflow: 'auto',
     maxHeight: 240
   },
-  ListItemText: {
-    fontFamily: 'medium-content-sans-serif-font'
-  },
   leftPaperGrid: {
     padding: 20,
     marginTop: 10,

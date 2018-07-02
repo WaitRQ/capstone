@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import EditReservation from './EditReservation'
+import NewReservation from './newReservation'
 import Header from './Header'
 
 import {withStyles} from '@material-ui/core/styles'
@@ -27,6 +28,10 @@ class LocationScreen extends Component {
     this.state = {
       value: 0
     }
+  }
+
+  handleClick = itemId => {
+    console.log('this is item id', itemId)
   }
   handleTabChange = (event, value) => {
     this.setState({value})
@@ -83,7 +88,7 @@ class LocationScreen extends Component {
                     >
                       Price: ${item.price}
                       <Button
-                        onClick={this.handleClick}
+                        onClick={() => this.handleClick(item.id)}
                         style={{float: 'right'}}
                         mini
                         variant="fab"
@@ -94,7 +99,7 @@ class LocationScreen extends Component {
                       </Button>
                     </Typography>
 
-                    <List component="ul">
+                    <List className={classes.list} component="ul">
                       <ListItem button>
                         <ListItemText primary={`Time: ${item.time}`} />
                       </ListItem>
@@ -131,7 +136,7 @@ class LocationScreen extends Component {
                 </Fragment>
               ) : (
                 <Typography variant="headline" color="primary">
-                  You currently have no pending reservations
+                  <NewReservation location={this.props.location} />
                 </Typography>
               )}
             </Paper>

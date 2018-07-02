@@ -8,7 +8,7 @@ const Header = props => {
     <AppBar position="static" color="inherit">
       <Toolbar>
         <Typography variant="headline" color="primary">
-          Reservations Page
+          Open Reservations
         </Typography>
       </Toolbar>
     </AppBar>
