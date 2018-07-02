@@ -5,8 +5,6 @@ import history from '../history'
  * ACTION TYPES
  */
 const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
-const GET_RESERVATIONS_BY_USER = 'GET_RESERVATIONS_BY_USER'
-const GET_RESERVATION = 'GET_RESERVATION'
 const UPDATED_RESERVATION = 'UPDATED_RESERVATION'
 
 const MAKE_RESERVATION = 'MAKE_RESERVATION'
@@ -14,21 +12,13 @@ const MAKE_RESERVATION = 'MAKE_RESERVATION'
 /**
  * INITIAL STATE
  */
-const initialState = {
-  reservationsByUser: [],
-
-  newReservations: []
-}
+const initialState = []
 
 /**
  * ACTION CREATORS
  */
 const gotAllReservations = reservations => ({
   type: GOT_ALL_RESERVATIONS,
-  reservations
-})
-const getMyReservations = reservations => ({
-  type: GET_RESERVATIONS_BY_USER,
   reservations
 })
 
@@ -50,20 +40,10 @@ export const loadReservation = () => async dispatch => {
     console.error(err)
   }
 }
-export const fetchMyReservations = userId => async dispatch => {
-  try {
-    const {data} = await axios.get(`/api/reservations/user/${userId}`)
-    dispatch(getMyReservations(data))
-  } catch (err) {
-    console.log(err)
-  }
-}
 
 export const editReservation = resObj => async dispatch => {
   try {
-    console.log('in edit reservation', resObj)
     const updatedRes = await axios.put(`/api/reservations/${resObj.id}`, resObj)
-    console.log('this is the updatedRes', updatedRes.data)
     dispatch(updatedReservations(updatedRes.data))
   } catch (error) {
     console.error(error)
@@ -84,28 +64,15 @@ export const createReservation = newReservation => async dispatch => {
  */
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_RESERVATION:
-      return {...state, newReservations: action.reservation}
-    case GET_RESERVATIONS_BY_USER:
-      return {
-        reservationsByUser: action.reservations
-      }
     case GOT_ALL_RESERVATIONS:
-      return {
-        ...state,
-        newReservations: action.reservations
-      }
+      return action.reservation
     case UPDATED_RESERVATION:
-      return {
-        ...state,
-        newReservations: [...state.newReservations, action.reservation]
-      }
+      return [
+        ...state.filter(res => res.id !== action.reservation.id),
+        ...action.reservation
+      ]
     case MAKE_RESERVATION:
-      return {
-        ...state,
-        reservationsByUser: [...state.reservationsByUser, action.reservation],
-        newReservations: [...state.newReservations, action.reservation]
-      }
+      return [...state, ...action.reservation]
     default:
       return state
   }

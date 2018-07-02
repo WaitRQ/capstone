@@ -8,7 +8,6 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const reservations = await Reservation.findAll({
-      // where: {statusId: 1}, //put comment back in once timeline testing done
       include: [{all: true}]
     })
     res.json(reservations)
