@@ -162,7 +162,7 @@ class LocationScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  allOpenReservations: state.reservation.newReservations,
+  allOpenReservations: state.reservation,
   user: state.user
 })
 

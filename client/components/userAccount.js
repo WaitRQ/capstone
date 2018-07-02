@@ -37,7 +37,7 @@ class UserAccount extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  myReservations: state.reservation.reservationsByUser
+  myReservations: state.reservation
 })
 
 const mapDispatchToProps = dispatch => {
