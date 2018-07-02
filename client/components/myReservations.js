@@ -18,7 +18,7 @@ const MyReservations = props => {
             <TableCell>Location</TableCell>
             <TableCell>{props.columnName}</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Contact</TableCell>
+            <TableCell>Timeline</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -32,12 +32,8 @@ const MyReservations = props => {
                     <TableCell>{reservation[props.propName].name}</TableCell>
                     <TableCell>{reservation.status.type}</TableCell>
                     <TableCell>
-                      <Link
-                        to={`/chat/${reservation.id}/${props.fromId}/${
-                          reservation[props.propName].id
-                        }`}
-                      >
-                        <Button variant="outlined">Chat</Button>
+                      <Link to={`/timeline/${reservation.id}`}>
+                        <Button variant="outlined">Chat Box</Button>
                       </Link>
                     </TableCell>
                   </TableRow>

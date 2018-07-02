@@ -9,10 +9,8 @@ import {
   UserAccount,
   LocationScreen,
   MyReservations,
-  Chat,
   EditProfile,
-  TimeLine,
-  VideoComponent
+  TimeLine
 } from './components'
 import {me, loadReservation, getAllLocations} from './store'
 
@@ -47,10 +45,8 @@ class Routes extends Component {
             <Route path="/home" component={MapContainer} />
             <Route path="/myreservations" component={MyReservations} />
             <Route path="/myaccount" component={UserAccount} />
-            <Route path="/video" component={VideoComponent} />
-            <Route path="/chat/:reservationId/:fromId/:toId" component={Chat} />
             <Route path="/profile" component={EditProfile} />
-            <Route path="/timeline" component={TimeLine} />
+            <Route path="/timeline/:reservationId" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
         )}
