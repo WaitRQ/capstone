@@ -13,6 +13,29 @@ export const LocationStyles = theme => ({
   },
   ListItemText: {
     fontFamily: 'medium-content-sans-serif-font'
+  },
+  leftPaperGrid: {
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    height: 600,
+    overflow: 'auto'
+  },
+  upperRightPaperGrid: {
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 10,
+    height: 150
+  },
+  lowerRightPaperGrid: {
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 10,
+    height: 400
   }
 })
 
