@@ -13,4 +13,7 @@ export {default as UserAccount} from './UserAccount'
 export {default as LocationScreen} from './LocationScreen'
 export {default as EditReservation} from './EditReservation'
 
+export {default as Chat} from './Chat'
+export {default as EditProfile} from './EditProfile'
+
 export {default as TimeLine} from './timeLine'

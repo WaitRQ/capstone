@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 module.exports = router
 
+// get all open reservations
 router.get('/', async (req, res, next) => {
   try {
     const reservations = await Reservation.findAll({
@@ -16,7 +17,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//get reservations by userId
+// get reservations by userId
+// all reservations related to me
+// as a buyer having others waiting in the line for me
+// or as a seller waiting in the line for others
 router.get('/user/:userId', async (req, res, next) => {
   try {
     const reservations = await Reservation.getReservationsByUserId(
