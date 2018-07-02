@@ -30,12 +30,11 @@ class MyMapComponent extends Component {
     const bounds = new google.maps.LatLngBounds()
 
     places.forEach(place => {
-      if (place.geometry.viewport) {
-        bounds.union(place.geometry.viewport)
-      } else {
-        bounds.extend(place.geometry.location)
-      }
+      bounds.extend(place.geometry.location)
     })
+
+    console.log('this is bounds', bounds)
+    console.log('this is places', places)
 
     this.setState({
       center: {
@@ -109,3 +108,11 @@ const mapDispatch = dispatch => ({
 export default connect(mapStateToProps, mapDispatch)(
   withScriptjs(withGoogleMap(MyMapComponent))
 )
+
+// places.forEach(place => {
+//   if (place.geometry.viewport) {
+//     bounds.union(place.geometry.viewport)
+//   } else {
+//     bounds.extend(place.geometry.location)
+//   }
+// })
