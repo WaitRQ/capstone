@@ -22,37 +22,38 @@ const MyReservations = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.myReservations.map(reservation => {
-            if (reservation[props.propName]) {
-              return (
-                <TableRow key={reservation.id}>
-                  <TableCell>{reservation.date}</TableCell>
-                  <TableCell>{reservation.location.name}</TableCell>
-                  <TableCell>{reservation[props.propName].name}</TableCell>
-                  <TableCell>{reservation.status.type}</TableCell>
-                  <TableCell>
-                    <Link
-                      to={`/chat/${reservation.id}/${props.fromId}/${
-                        reservation[props.propName].id
-                      }`}
-                    >
-                      <Button variant="outlined">Chat</Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              )
-            } else {
-              return (
-                <TableRow key={reservation.id}>
-                  <TableCell>{reservation.date}</TableCell>
-                  <TableCell>{reservation.location.name}</TableCell>
-                  <TableCell>N/A</TableCell>
-                  <TableCell>{reservation.status.type}</TableCell>
-                  <TableCell>Chat Not Available</TableCell>
-                </TableRow>
-              )
-            }
-          })}
+          {props.myReservations &&
+            props.myReservations.map(reservation => {
+              if (reservation[props.propName]) {
+                return (
+                  <TableRow key={reservation.id}>
+                    <TableCell>{reservation.date}</TableCell>
+                    <TableCell>{reservation.location.name}</TableCell>
+                    <TableCell>{reservation[props.propName].name}</TableCell>
+                    <TableCell>{reservation.status.type}</TableCell>
+                    <TableCell>
+                      <Link
+                        to={`/chat/${reservation.id}/${props.fromId}/${
+                          reservation[props.propName].id
+                        }`}
+                      >
+                        <Button variant="outlined">Chat</Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                )
+              } else {
+                return (
+                  <TableRow key={reservation.id}>
+                    <TableCell>{reservation.date}</TableCell>
+                    <TableCell>{reservation.location.name}</TableCell>
+                    <TableCell>N/A</TableCell>
+                    <TableCell>{reservation.status.type}</TableCell>
+                    <TableCell>Chat Not Available</TableCell>
+                  </TableRow>
+                )
+              }
+            })}
         </TableBody>
       </Table>
     </div>

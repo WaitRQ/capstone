@@ -6,16 +6,15 @@ import {
   MapContainer,
   Login,
   Signup,
-  NewReservation,
   UserAccount,
   LocationScreen,
-  EditReservation,
+  MyReservations,
   Chat,
   EditProfile,
-  TimeLine
+  TimeLine,
+  VideoComponent
 } from './components'
 import {me, loadReservation, getAllLocations} from './store'
-import VideoComponent from './components/videoComponent'
 
 /**
  * COMPONENT
@@ -39,7 +38,6 @@ class Routes extends Component {
         <Route exact path="/location" component={LocationScreen} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/newreservation" component={NewReservation} />
 
         {isLoggedIn && (
           <Switch>
@@ -47,10 +45,11 @@ class Routes extends Component {
             {/* <Route path="/home" component={UserHome} /> */}
             <Route exact path="/location" component={LocationScreen} />
             <Route path="/home" component={MapContainer} />
+            <Route path="/myreservations" component={MyReservations} />
             <Route path="/myaccount" component={UserAccount} />
             <Route path="/video" component={VideoComponent} />
             <Route path="/chat/:reservationId/:fromId/:toId" component={Chat} />
-            <Route path="/profile/:userId" component={EditProfile} />
+            <Route path="/profile" component={EditProfile} />
             <Route path="/timeline" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
