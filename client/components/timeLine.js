@@ -14,18 +14,12 @@ class TimeLine extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      singleReservation: {}
+      reservationId: 0
     }
   }
   componentDidMount() {
     const reservationId = Number(this.props.match.params.reservationId)
-    const singleReservation = this.props.allReservations.filter(
-      res => (res.id = reservationId)
-    )
-    console.log('IDIDID', reservationId)
-    console.log('~~~~~~~~~~~', singleReservation[0])
-    this.setState({singleReservation: singleReservation[0]})
-    console.log('___________', this.state.singleReservation)
+    this.setState({reservationId: reservationId})
     this.props.fetchMyMessages(reservationId)
   }
   onSubmit = evt => {
@@ -38,11 +32,15 @@ class TimeLine extends React.Component {
       sellerId,
       buyerUrl,
       sellerUrl = ''
-    if (this.state.singleReservation) {
-      buyerId = this.state.singleReservation.buyerId
-      sellerId = this.state.singleReservation.sellerId
-      buyerUrl = this.state.singleReservation.buyer.imageUrl
-      sellerUrl = this.state.singleReservation.seller.imageUrl
+    console.log(this.props.allReservations)
+    if (this.props.allReservations.length > 0) {
+      const singleReservation = this.props.allReservations.filter(
+        res => this.state.reservationId === res.id
+      )[0]
+      buyerId = singleReservation.buyerId
+      sellerId = singleReservation.sellerId
+      buyerUrl = singleReservation.buyer.imageUrl
+      sellerUrl = singleReservation.seller.imageUrl
     }
     let lineStyle = {
       borderTop: 'dotted 5px'
