@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Marker, InfoWindow} from 'react-google-maps'
-import LocationScreen from './LocationScreen'
+import LocationScreen from './locationScreen'
 
 class InfoWindowMap extends Component {
   constructor(props) {
