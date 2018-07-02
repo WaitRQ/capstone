@@ -3,12 +3,8 @@ import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import {getReservationMessages} from '../store'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
 import TextField from '@material-ui/core/TextField'
+import Chat from './chat'
 
 class TimeLine extends React.Component {
   constructor(props) {
@@ -32,7 +28,8 @@ class TimeLine extends React.Component {
       sellerId,
       buyerUrl,
       sellerUrl = ''
-    console.log(this.props.allReservations)
+    let fromId,
+      toId = 0
     if (this.props.allReservations.length > 0) {
       const singleReservation = this.props.allReservations.filter(
         res => this.state.reservationId === res.id
@@ -41,6 +38,13 @@ class TimeLine extends React.Component {
       sellerId = singleReservation.sellerId
       buyerUrl = singleReservation.buyer.imageUrl
       sellerUrl = singleReservation.seller.imageUrl
+      fromId = this.props.userId
+      if ((buyerId = this.props.userId)) {
+        toId = sellerId
+      } else {
+        toId = buyerId
+      }
+      console.log('from and to id', fromId, toId)
     }
     let lineStyle = {
       borderTop: 'dotted 5px'
@@ -59,41 +63,12 @@ class TimeLine extends React.Component {
             {sellerId && <Avatar src={sellerUrl} />}
           </div>
         </div>
-        {this.props.messages[0] && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date/Time</TableCell>
-                <TableCell>Message</TableCell>
-                <TableCell>From</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.props.messages.map(message => {
-                return (
-                  <TableRow key={message.id}>
-                    <TableCell>{message.createdAt}</TableCell>
-                    <TableCell>{message.text}</TableCell>
-                    <TableCell>{message.from.name}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        )}
+        <Chat
+          reservationId={this.state.reservationId}
+          fromId={fromId}
+          toId={toId}
+        />
         <br />
-        <form noValidate autoComplete="off" onSubmit={this.onSubmit}>
-          <TextField
-            id="full-width"
-            label="Send Message:"
-            InputLabelProps={{
-              shrink: true
-            }}
-            placeholder="type message here"
-            fullWidth
-            margin="normal"
-          />
-        </form>
       </div>
     )
   }
@@ -101,7 +76,8 @@ class TimeLine extends React.Component {
 
 const mapStateToProps = state => ({
   allReservations: state.reservation,
-  messages: state.message
+  messages: state.message.historyMessages,
+  userId: state.user.id
 })
 
 const mapDispatchToProps = dispatch => {

@@ -162,6 +162,7 @@ class VideoComponent extends Component {
   leaveRoom() {
     this.state.activeRoom.disconnect()
     this.setState({hasJoinedRoom: false, localMediaAvailable: false})
+    this.props.videoOff()
   }
 
   render() {
