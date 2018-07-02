@@ -88,7 +88,7 @@ class TimeLine extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  singleReservation: state.reservation.newReservations.find(res => {
+  singleReservation: state.reservation.find(res => {
     return res.id === 6
   }), //change this to filter for some reservationID
   messages: state.message

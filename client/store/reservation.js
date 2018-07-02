@@ -65,11 +65,11 @@ export const createReservation = newReservation => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_ALL_RESERVATIONS:
-      return action.reservation
+      return action.reservations
     case UPDATED_RESERVATION:
       return [
         ...state.filter(res => res.id !== action.reservation.id),
-        ...action.reservation
+        action.reservation
       ]
     case MAKE_RESERVATION:
       return [...state, ...action.reservation]
@@ -77,3 +77,8 @@ export default function(state = initialState, action) {
       return state
   }
 }
+
+// return {
+//       ...state,
+//       allProducts: [...newProducts, action.product],
+//     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import MyReservations from './myReservations'
-import MyInfo from './MyInfo'
+import MyInfo from './myInfo'
 import {connect} from 'react-redux'
 import {fetchMyReservations} from '../store/reservation'
 
@@ -37,7 +37,7 @@ class UserAccount extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  myReservations: state.reservation.reservationsByUser
+  myReservations: state.reservation
 })
 
 const mapDispatchToProps = dispatch => {
