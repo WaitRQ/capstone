@@ -4,6 +4,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
+import {Link} from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 const MyReservations = props => {
   return (
@@ -16,6 +18,7 @@ const MyReservations = props => {
             <TableCell>Location</TableCell>
             <TableCell>{props.columnName}</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Contact</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -27,6 +30,15 @@ const MyReservations = props => {
                   <TableCell>{reservation.location.name}</TableCell>
                   <TableCell>{reservation[props.propName].name}</TableCell>
                   <TableCell>{reservation.status.type}</TableCell>
+                  <TableCell>
+                    <Link
+                      to={`/chat/${reservation.id}/${props.fromId}/${
+                        reservation[props.propName].id
+                      }`}
+                    >
+                      <Button variant="outlined">Chat</Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               )
             } else {
@@ -36,6 +48,7 @@ const MyReservations = props => {
                   <TableCell>{reservation.location.name}</TableCell>
                   <TableCell>N/A</TableCell>
                   <TableCell>{reservation.status.type}</TableCell>
+                  <TableCell>Chat Not Available</TableCell>
                 </TableRow>
               )
             }

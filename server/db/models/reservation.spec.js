@@ -81,7 +81,7 @@ describe('Reservation model', () => {
         await User.bulkCreate([testUser1, testUser2, testUser3])
         await Location.bulkCreate([testLocation1, testLocation2])
         await Status.bulkCreate([testStatus1, testStatus2])
-        await Reservation.bulkCreate([
+        const res = await Reservation.bulkCreate([
           testReservation1,
           testReservation2,
           testReservation3
@@ -100,6 +100,8 @@ describe('Reservation model', () => {
 
       it('Eager loading user, location, and status', async () => {
         const rets = await Reservation.getReservationsByUserId(1)
+        // return [testReservation2, testReservation1]
+        // Sequelize findAll NOT in order
         expect(rets)
           .to.be.an('array')
           .that.to.have.lengthOf(2)
