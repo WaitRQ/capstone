@@ -45,7 +45,7 @@ const MyReservations = props => {
                     <TableCell>{reservation.location.name}</TableCell>
                     <TableCell>N/A</TableCell>
                     <TableCell>{reservation.status.type}</TableCell>
-                    <TableCell>Chat Not Available</TableCell>
+                    <TableCell>Not Available</TableCell>
                   </TableRow>
                 )
               }

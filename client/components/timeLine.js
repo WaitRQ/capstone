@@ -20,6 +20,7 @@ class TimeLine extends React.Component {
     const lineStyle = {
       borderTop: 'dotted 5px'
     }
+
     return (
       <div>
         <Typography variant="headline" component="h3">
@@ -47,7 +48,6 @@ class TimeLine extends React.Component {
 
 const mapStateToProps = state => ({
   allReservations: state.reservation,
-  messages: state.message.historyMessages,
   userId: state.user.id
 })
 
