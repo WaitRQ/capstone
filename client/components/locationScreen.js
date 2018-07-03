@@ -30,14 +30,16 @@ class LocationScreen extends Component {
     super(props)
     this.state = {
       value: 0,
-      currentRes: {}
+      currentRes: {},
+      newScreen: true
     }
   }
 
   handleClickEdit = currentRes => {
     console.log('this is currentRes', currentRes)
     this.setState({
-      currentRes: currentRes
+      currentRes: currentRes,
+      newScreen: false
     })
   }
   handleTabChange = (event, value) => {
@@ -46,7 +48,8 @@ class LocationScreen extends Component {
   resetCurrentRes = () => {
     console.log('in reset')
     this.setState({
-      currentRes: {}
+      currentRes: {},
+      newScreen: true
     })
   }
 
@@ -88,84 +91,90 @@ class LocationScreen extends Component {
         <Header location={this.props.location} />
 
         <Grid container>
-          <Grid item sm={7}>
+          <Grid item sm={6}>
             <Paper className={classes.leftPaperGrid}>
-              {openReservations.map(item => {
-                console.log('this is item_____________', item)
-                if (this.props.user.id === item.buyerId) {
-                  editable = true
-                } else {
-                  editable = false
-                }
-                return (
-                  <Fragment key={item.id}>
-                    <Typography
-                      style={{marginTop: 10}}
-                      variant="headline"
-                      color="primary"
-                    >
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={item.buyer.imageUrl}
-                        className={classes.avatar}
-                      />
-                      Price: ${item.price}
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          history.push(`/timeline/${item.id}`)
-                        }}
-                        style={{float: 'right'}}
-                        size="small"
+              {openReservations.length === 0 ? (
+                <div>No Reservations to take here</div>
+              ) : (
+                openReservations.map(item => {
+                  console.log('this is item_____________', item)
+                  if (this.props.user.id === item.buyerId) {
+                    editable = true
+                  } else {
+                    editable = false
+                  }
+                  return (
+                    <Fragment key={item.id}>
+                      <Typography
+                        style={{marginTop: 10}}
+                        variant="headline"
                         color="primary"
-                        className={classes.button}
                       >
-                        Reserve
-                      </Button>
-                    </Typography>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={item.buyer.imageUrl}
+                          className={classes.avatar}
+                        />
+                        Price: ${item.price}
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            history.push(`/timeline/${item.id}`)
+                          }}
+                          style={{float: 'right'}}
+                          size="small"
+                          color="primary"
+                          className={classes.button}
+                        >
+                          Reserve
+                        </Button>
+                      </Typography>
 
-                    <List className={classes.list} component="ul">
-                      <ListItem button>
-                        <ListItemText primary={`Time: ${item.time}`} />
-                      </ListItem>
-                      <ListItem button component="a" href="#simple-list">
-                        <ListItemText primary={`Date: ${item.date}`} />
-                        {editable ? (
-                          <EditIcon
-                            onClick={() => {
-                              this.handleClickEdit(item)
-                            }}
-                          />
-                        ) : (
-                          ''
-                        )}
-                      </ListItem>
-                    </List>
-                    <Divider />
-                  </Fragment>
-                )
-              })}
+                      <List className={classes.list} component="ul">
+                        <ListItem button>
+                          <ListItemText primary={`Time: ${item.time}`} />
+                        </ListItem>
+                        <ListItem button component="a" href="#simple-list">
+                          <ListItemText primary={`Date: ${item.date}`} />
+                          {editable ? (
+                            <EditIcon
+                              onClick={() => {
+                                this.handleClickEdit(item)
+                              }}
+                            />
+                          ) : (
+                            ''
+                          )}
+                        </ListItem>
+                      </List>
+                      <Divider />
+                    </Fragment>
+                  )
+                })
+              )}
             </Paper>
           </Grid>
 
-          <Grid item sm={5}>
-            <Paper className={classes.upperRightPaperGrid}>
-              <NewReservation location={this.props.location} />
-            </Paper>
-
-            <Paper className={classes.lowerRightPaperGrid}>
-              {this.state.currentRes.id && (
-                <Fragment>
-                  <Typography variant="title" color="primary">
-                    Your Reservation
-                  </Typography>
-                  <EditReservation
-                    reset={this.resetCurrentRes}
-                    currentRes={this.state.currentRes}
-                  />
-                </Fragment>
-              )}
-            </Paper>
+          <Grid item sm={6}>
+            {this.state.newScreen ? (
+              <Paper className={classes.upperRightPaperGrid}>
+                <NewReservation location={this.props.location} />
+              </Paper>
+            ) : (
+              <Paper className={classes.lowerRightPaperGrid}>
+                {this.state.currentRes.id && (
+                  <Fragment>
+                    <Typography variant="title" color="primary">
+                      Your Reservation
+                    </Typography>
+                    <EditReservation
+                      reset={this.resetCurrentRes}
+                      currentRes={this.state.currentRes}
+                    />
+                  </Fragment>
+                )}
+              </Paper>
+            )}
           </Grid>
         </Grid>
 
