@@ -43,11 +43,12 @@ class LocationScreen extends Component {
   handleTabChange = (event, value) => {
     this.setState({value})
   }
-  // resetCurrentRes = () => {
-  //   this.setState({
-  //     currentRes: {}
-  //   })
-  // }
+  resetCurrentRes = () => {
+    console.log('in reset')
+    this.setState({
+      currentRes: {}
+    })
+  }
 
   render() {
     console.log('this is all reservations', this.props.allReservations)
@@ -157,7 +158,10 @@ class LocationScreen extends Component {
                   <Typography variant="title" color="primary">
                     Your Reservation
                   </Typography>
-                  <EditReservation currentRes={this.state.currentRes} />
+                  <EditReservation
+                    reset={this.resetCurrentRes}
+                    currentRes={this.state.currentRes}
+                  />
                 </Fragment>
               )}
             </Paper>
