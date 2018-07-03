@@ -1,6 +1,10 @@
 import React from 'react'
 import {updateUser, deleteUser} from '../store/user'
 import {connect} from 'react-redux'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Badge from '@material-ui/core/Badge'
+import Card from '@material-ui/core/Card'
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -36,40 +40,46 @@ class EditProfile extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="userName">Name:</label>
-          <input
-            name="name"
-            type="text"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
+        <Card>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="userName">Name:</label>
+            <TextField
+              name="name"
+              type="text"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
 
-          <label htmlFor="userEmail">Email:</label>
-          <input
-            name="email"
-            type="text"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
+            <label htmlFor="userEmail">Email:</label>
+            <TextField
+              name="email"
+              type="text"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
 
-          <label htmlFor="userAddress">Address:</label>
-          <input
-            name="address"
-            type="text"
-            value={this.state.address}
-            onChange={this.handleChange}
-          />
+            <label htmlFor="userAddress">Address:</label>
+            <TextField
+              name="address"
+              type="text"
+              value={this.state.address}
+              onChange={this.handleChange}
+            />
 
-          <button type="submit">update my profile</button>
-        </form>
-        <button
+            <Button type="submit" variant="outlined">
+              update my profile
+            </Button>
+          </form>
+        </Card>
+
+        <Button
           type="submit"
+          variant="outlined"
           onClick={() => this.props.deleteUser(this.props.user.id)}
         >
           delete account
-        </button>
-        <h2>Danger Zone!!</h2>
+        </Button>
+        <h3>Danger Zone!!!</h3>
       </div>
     )
   }
