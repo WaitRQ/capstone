@@ -1,62 +1,37 @@
 import React from 'react'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import {Link} from 'react-router-dom'
-import Button from '@material-ui/core/Button'
+import ReservationTable from './reservationTable'
+import {connect} from 'react-redux'
 
-const MyReservations = props => {
-  return (
-    <div>
-      <h3>{props.headline}</h3>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Location</TableCell>
-            <TableCell>{props.columnName}</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Contact</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.myReservations.map(reservation => {
-            if (reservation[props.propName]) {
-              return (
-                <TableRow key={reservation.id}>
-                  <TableCell>{reservation.date}</TableCell>
-                  <TableCell>{reservation.location.name}</TableCell>
-                  <TableCell>{reservation[props.propName].name}</TableCell>
-                  <TableCell>{reservation.status.type}</TableCell>
-                  <TableCell>
-                    <Link
-                      to={`/chat/${reservation.id}/${props.fromId}/${
-                        reservation[props.propName].id
-                      }`}
-                    >
-                      <Button variant="outlined">Chat</Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              )
-            } else {
-              return (
-                <TableRow key={reservation.id}>
-                  <TableCell>{reservation.date}</TableCell>
-                  <TableCell>{reservation.location.name}</TableCell>
-                  <TableCell>N/A</TableCell>
-                  <TableCell>{reservation.status.type}</TableCell>
-                  <TableCell>Chat Not Available</TableCell>
-                </TableRow>
-              )
-            }
-          })}
-        </TableBody>
-      </Table>
-    </div>
-  )
+class MyReservations extends React.Component {
+  render() {
+    return (
+      <div>
+        <ReservationTable
+          headline="Have others waiting in the line"
+          columnName="Waiter"
+          propName="seller"
+          fromId={this.props.user.id}
+          myReservations={this.props.myReservations.filter(
+            reservation => reservation.buyerId === this.props.user.id
+          )}
+        />
+        <ReservationTable
+          headline="Wait in the line for others"
+          columnName="Client"
+          propName="buyer"
+          fromId={this.props.user.id}
+          myReservations={this.props.myReservations.filter(
+            reservation => reservation.sellerId === this.props.user.id
+          )}
+        />
+      </div>
+    )
+  }
 }
 
-export default MyReservations
+const mapStateToProps = state => ({
+  user: state.user,
+  myReservations: state.reservation
+})
+
+export default connect(mapStateToProps)(MyReservations)

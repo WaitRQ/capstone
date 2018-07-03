@@ -1,11 +1,14 @@
 import React, {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import history from '../history'
+import {withStyles} from '@material-ui/core/styles'
+
 import EditReservation from './editReservation'
 import NewReservation from './newReservation'
-import Header from './Header'
+import Header from './header'
 
-import {withStyles} from '@material-ui/core/styles'
+import EditIcon from '@material-ui/icons/Edit'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -13,9 +16,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import {LocationStyles} from './style'
+import Avatar from '@material-ui/core/Avatar'
 
 import Typography from '@material-ui/core/Typography'
-import Event from '@material-ui/icons/Event'
 
 import Button from '@material-ui/core/Button'
 import Tab from '@material-ui/core/Tab'
@@ -26,23 +29,36 @@ class LocationScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 0
+      value: 0,
+      currentRes: {}
     }
   }
 
-  handleClick = itemId => {
-    console.log('this is item id', itemId)
+  handleClickEdit = currentRes => {
+    console.log('this is currentRes', currentRes)
+    this.setState({
+      currentRes: currentRes
+    })
   }
   handleTabChange = (event, value) => {
     this.setState({value})
   }
+  resetCurrentRes = () => {
+    console.log('in reset')
+    this.setState({
+      currentRes: {}
+    })
+  }
 
   render() {
-    var openReservations = this.props.allOpenReservations.filter(
-      reservation => {
-        return reservation.locationId === this.props.location.id
-      }
-    )
+    console.log('this is all reservations', this.props.allReservations)
+    var openReservations = this.props.allReservations.filter(reservation => {
+      return (
+        reservation.locationId === this.props.location.id &&
+        reservation.status.type === 'open'
+      )
+    })
+    console.log('this is all reservations', openReservations)
     if (this.state.value === 0) {
       openReservations = openReservations.sort(function(resA, resB) {
         return resB.price - resA.price
@@ -63,21 +79,23 @@ class LocationScreen extends Component {
     }
 
     var editable = false
-    var currentRes = {}
 
     const {classes} = this.props
+    console.log('this is state', this.state.currentRes)
 
     return (
       <>
         <Header location={this.props.location} />
 
         <Grid container>
-          <Grid item sm>
+          <Grid item sm={7}>
             <Paper className={classes.leftPaperGrid}>
               {openReservations.map(item => {
-                if (this.props.user.id === item.id) {
+                console.log('this is item_____________', item)
+                if (this.props.user.id === item.buyerId) {
                   editable = true
-                  currentRes = item
+                } else {
+                  editable = false
                 }
                 return (
                   <Fragment key={item.id}>
@@ -86,16 +104,23 @@ class LocationScreen extends Component {
                       variant="headline"
                       color="primary"
                     >
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={item.buyer.imageUrl}
+                        className={classes.avatar}
+                      />
                       Price: ${item.price}
                       <Button
-                        onClick={() => this.handleClick(item.id)}
+                        variant="contained"
+                        onClick={() => {
+                          history.push(`/timeline/${item.id}`)
+                        }}
                         style={{float: 'right'}}
-                        mini
-                        variant="fab"
+                        size="small"
                         color="primary"
-                        aria-label="add"
+                        className={classes.button}
                       >
-                        <Event />
+                        Reserve
                       </Button>
                     </Typography>
 
@@ -105,6 +130,15 @@ class LocationScreen extends Component {
                       </ListItem>
                       <ListItem button component="a" href="#simple-list">
                         <ListItemText primary={`Date: ${item.date}`} />
+                        {editable ? (
+                          <EditIcon
+                            onClick={() => {
+                              this.handleClickEdit(item)
+                            }}
+                          />
+                        ) : (
+                          ''
+                        )}
                       </ListItem>
                     </List>
                     <Divider />
@@ -114,30 +148,22 @@ class LocationScreen extends Component {
             </Paper>
           </Grid>
 
-          <Grid item sm>
+          <Grid item sm={5}>
             <Paper className={classes.upperRightPaperGrid}>
-              <Typography variant="headline" color="primary">
-                Welcome {this.props.user.name}!
-              </Typography>
-              <Typography variant="subheading" color="primary">
-                Your location: {this.props.location.name}
-              </Typography>
-              <Typography variant="subheading" color="primary">
-                {this.props.location.address}
-              </Typography>
+              <NewReservation location={this.props.location} />
             </Paper>
+
             <Paper className={classes.lowerRightPaperGrid}>
-              {editable ? (
+              {this.state.currentRes.id && (
                 <Fragment>
-                  <Typography variant="headline" color="primary">
+                  <Typography variant="title" color="primary">
                     Your Reservation
                   </Typography>
-                  <EditReservation currentRes={currentRes} />
+                  <EditReservation
+                    reset={this.resetCurrentRes}
+                    currentRes={this.state.currentRes}
+                  />
                 </Fragment>
-              ) : (
-                <Typography variant="headline" color="primary">
-                  <NewReservation location={this.props.location} />
-                </Typography>
               )}
             </Paper>
           </Grid>
@@ -162,7 +188,8 @@ class LocationScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  allOpenReservations: state.reservation,
+  allReservations: state.reservation,
+
   user: state.user
 })
 
