@@ -65,12 +65,13 @@ class EditReservation extends Component {
     const updateObj = {id, price, date, time}
     console.log('this is the current object', updateObj)
     await this.props.editReservation(updateObj)
+    this.props.reset()
   }
 
   render() {
     const {classes} = this.props
     const {price, date, time} = this.state
-    console.log('this is state', this.state)
+
     return (
       <Fragment>
         <Paper>
@@ -125,6 +126,7 @@ class EditReservation extends Component {
           variant="contained"
           className={classes.button}
           color="primary"
+          size="small"
         >
           Edit Price
         </Button>

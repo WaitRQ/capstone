@@ -17,7 +17,7 @@ export const LocationStyles = theme => ({
     marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
-    height: 600,
+    height: 700,
     overflow: 'auto'
   },
   upperRightPaperGrid: {
@@ -25,14 +25,14 @@ export const LocationStyles = theme => ({
     marginTop: 10,
     marginBottom: 10,
     marginRight: 10,
-    height: 150
+    height: 325
   },
   lowerRightPaperGrid: {
     padding: 20,
     marginTop: 10,
     marginBottom: 10,
     marginRight: 10,
-    height: 400
+    height: 325
   }
 })
 
