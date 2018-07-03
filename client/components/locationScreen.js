@@ -188,6 +188,7 @@ class LocationScreen extends Component {
 
 const mapStateToProps = state => ({
   allReservations: state.reservation,
+
   user: state.user
 })
 
@@ -198,106 +199,3 @@ export default connect(mapStateToProps, null)(
 LocationScreen.propTypes = {
   classes: PropTypes.object.isRequired
 }
-
-// {this.state.editRes && (
-// <Fragment>
-//   <Typography variant="title" color="primary">
-//     Your Reservation
-//   </Typography>
-//   <EditReservation currentRes={this.state.editRes} />
-// </Fragment>
-// )}
-
-// return (
-//   <>
-//     <Header location={this.props.location} />
-//
-//     <Grid container>
-//       <Grid item sm>
-//         <Paper className={classes.leftPaperGrid}>
-//           {openReservations.map(item => {
-//             if (this.props.user.id === item.id) {
-//               editable = true
-//               currentRes = item
-//             }
-//             return (
-//               <Fragment key={item.id}>
-//                 <Typography
-//                   style={{marginTop: 10}}
-//                   variant="headline"
-//                   color="primary"
-//                 >
-//                   Price: ${item.price}
-//                   <Button
-//                     onClick={() => this.handleClick(item.id)}
-//                     style={{float: 'right'}}
-//                     mini
-//                     variant="fab"
-//                     color="primary"
-//                     aria-label="add"
-//                   >
-//                     <Event />
-//                   </Button>
-//                 </Typography>
-//
-//                 <List className={classes.list} component="ul">
-//                   <ListItem button>
-//                     <ListItemText primary={`Time: ${item.time}`} />
-//                   </ListItem>
-//                   <ListItem button component="a" href="#simple-list">
-//                     <ListItemText primary={`Date: ${item.date}`} />
-//                   </ListItem>
-//                 </List>
-//                 <Divider />
-//               </Fragment>
-//             )
-//           })}
-//         </Paper>
-//       </Grid>
-//
-//       <Grid item sm>
-//         <Paper className={classes.upperRightPaperGrid}>
-//           <Typography variant="headline" color="primary">
-//             Welcome {this.props.user.name}!
-//           </Typography>
-//           <Typography variant="subheading" color="primary">
-//             Your location: {this.props.location.name}
-//           </Typography>
-//           <Typography variant="subheading" color="primary">
-//             {this.props.location.address}
-//           </Typography>
-//         </Paper>
-//         <Paper className={classes.lowerRightPaperGrid}>
-//           {editable ? (
-//             <Fragment>
-//               <Typography variant="headline" color="primary">
-//                 Your Reservation
-//               </Typography>
-//               <EditReservation currentRes={currentRes} />
-//             </Fragment>
-//           ) : (
-//             <Typography variant="headline" color="primary">
-//               <NewReservation location={this.props.location} />
-//             </Typography>
-//           )}
-//         </Paper>
-//       </Grid>
-//     </Grid>
-//
-//     <Paper style={{marginRight: 10, marginLeft: 10}}>
-//       <Tabs
-//         value={this.state.value}
-//         onChange={this.handleTabChange}
-//         indicatorColor="primary"
-//         textColor="primary"
-//         centered
-//       >
-//         <Tab label="Price" />
-//         <Tab label="Date" />
-//         <Tab label="Time" />
-//       </Tabs>
-//     </Paper>
-//   </>
-// )
-// }
-// }

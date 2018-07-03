@@ -10,17 +10,24 @@ import {
   postMessage,
   writeMessage
 } from '../store/message'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import VideoComponent from './videoComponent'
+import videoComponent from './videoComponent'
 
 class Chat extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      video: false
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
     this.props.clearMessages()
-    const {reservationId} = this.props.match.params
-    this.props.subscribeMessages(+reservationId)
+    const reservationId = this.props.reservationId
+    this.props.subscribeMessages(reservationId)
   }
   handleChange(event) {
     this.props.writeMessage(event.target.value)
@@ -28,9 +35,9 @@ class Chat extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const reservationId = Number(this.props.match.params.reservationId)
-    const fromId = Number(this.props.match.params.fromId)
-    const toId = Number(this.props.match.params.toId)
+    const reservationId = this.props.reservationId
+    const fromId = this.props.fromId
+    const toId = this.props.toId
     this.props.postMessage({
       text: this.props.newMessageText,
       reservationId: reservationId,
@@ -39,32 +46,58 @@ class Chat extends React.Component {
     })
     this.props.writeMessage('')
   }
+
+  videoOn = () => {
+    this.setState({video: true})
+  }
+
+  videoOff = () => {
+    this.setState({video: false})
+  }
+
   render() {
+    console.log('chat props', this.props)
     return (
       <div>
-        <Card>
-          <List>
-            {this.props.historyMessages.map(message => (
-              <div key={message.id}>
-                <ListItem>
-                  {message.from.name} : {message.text} --{' '}
-                  {message.createdAt.slice(11, 19)} on{' '}
-                  {message.createdAt.slice(0, 10)}
-                </ListItem>
-                <Divider />
-              </div>
-            ))}
-          </List>
-        </Card>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="messageText"
-            type="text"
-            value={this.props.newMessageText}
-            onChange={this.handleChange}
+        {this.state.video ? (
+          <VideoComponent
+            reservationId={this.props.reservationId}
+            videoOff={this.videoOff}
           />
-          <button type="submit">Send</button>
-        </form>
+        ) : (
+          <div>
+            <Card>
+              <List>
+                {this.props.historyMessages.map(message => (
+                  <div key={message.id}>
+                    <ListItem>
+                      {message.from.name} : {message.text} --{' '}
+                      {message.createdAt.slice(11, 19)} on{' '}
+                      {message.createdAt.slice(0, 10)}
+                    </ListItem>
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+            </Card>
+            <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+              <TextField
+                name="messageText"
+                id="full-width"
+                label="Send Message:"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                placeholder="type message here"
+                fullWidth
+                margin="normal"
+                onChange={this.handleChange}
+              />
+              <Button type="submit">Send</Button>
+            </form>
+            <Button onClick={this.videoOn}>Video Chat</Button>
+          </div>
+        )}
       </div>
     )
   }
@@ -86,3 +119,13 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)
+
+// <form onSubmit={this.handleSubmit}>
+// <input
+//   name="messageText"
+//   type="text"
+//   value={this.props.newMessageText}
+//   onChange={this.handleChange}
+// />
+// <button type="submit">Send</button>
+// </form>

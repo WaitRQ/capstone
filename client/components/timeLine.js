@@ -3,16 +3,20 @@ import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
 import {getReservationMessages} from '../store'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
 import TextField from '@material-ui/core/TextField'
+import Chat from './chat'
 
 class TimeLine extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      reservationId: 0
+    }
+  }
   componentDidMount() {
-    this.props.fetchMyMessages(6) //make sure we get reservationID as props
+    const reservationId = Number(this.props.match.params.reservationId)
+    this.setState({reservationId: reservationId})
+    this.props.fetchMyMessages(reservationId)
   }
   onSubmit = evt => {
     evt.preventDefault()
@@ -20,15 +24,30 @@ class TimeLine extends React.Component {
     //need to fill this out more
   }
   render() {
-    let buyerId,
-      sellerId,
-      buyerUrl,
-      sellerUrl = ''
-    if (this.props.singleReservation) {
-      buyerId = this.props.singleReservation.buyerId
-      sellerId = this.props.singleReservation.sellerId
-      buyerUrl = this.props.singleReservation.buyer.imageUrl
-      sellerUrl = this.props.singleReservation.seller.imageUrl
+    let buyerId = 0
+    let sellerId = 0
+    let buyerUrl = ''
+    let sellerUrl = ''
+    let fromId,
+      toId = 0
+
+    if (this.props.allReservations.length > 0) {
+      const singleReservation = this.props.allReservations.filter(
+        res => this.state.reservationId === res.id
+      )[0]
+      if (singleReservation) {
+        buyerId = singleReservation.buyerId
+        sellerId = singleReservation.sellerId
+        buyerUrl = singleReservation.buyer.imageUrl
+        sellerUrl = singleReservation.seller.imageUrl
+        fromId = this.props.userId
+        if ((buyerId = this.props.userId)) {
+          toId = sellerId
+        } else {
+          toId = buyerId
+        }
+        console.log('from and to id', fromId, toId)
+      }
     }
     let lineStyle = {
       borderTop: 'dotted 5px'
@@ -47,57 +66,27 @@ class TimeLine extends React.Component {
             {sellerId && <Avatar src={sellerUrl} />}
           </div>
         </div>
-        {this.props.messages[0] && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date/Time</TableCell>
-                <TableCell>Message</TableCell>
-                <TableCell>From</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.props.messages.map(message => {
-                return (
-                  <TableRow key={message.id}>
-                    <TableCell>{message.createdAt}</TableCell>
-                    <TableCell>{message.text}</TableCell>
-                    <TableCell>{message.from.name}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        )}
+        <Chat
+          reservationId={this.state.reservationId}
+          fromId={fromId}
+          toId={toId}
+        />
         <br />
-        <form noValidate autoComplete="off" onSubmit={this.onSubmit}>
-          <TextField
-            id="full-width"
-            label="Send Message:"
-            InputLabelProps={{
-              shrink: true
-            }}
-            placeholder="type message here"
-            fullWidth
-            margin="normal"
-          />
-        </form>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  singleReservation: state.reservation.find(res => {
-    return res.id === 6
-  }), //change this to filter for some reservationID
-  messages: state.message
+  allReservations: state.reservation,
+  messages: state.message.historyMessages,
+  userId: state.user.id
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchMyMessages: reservationID =>
-      dispatch(getReservationMessages(reservationID))
+    fetchMyMessages: reservationId =>
+      dispatch(getReservationMessages(reservationId))
   }
 }
 

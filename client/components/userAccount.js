@@ -5,9 +5,6 @@ import {connect} from 'react-redux'
 import {fetchMyReservations} from '../store/reservation'
 
 class UserAccount extends React.Component {
-  componentDidMount() {
-    this.props.fetchMyReservations(this.props.user.id)
-  }
   render() {
     return (
       <div>

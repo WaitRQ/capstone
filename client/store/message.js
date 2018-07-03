@@ -1,4 +1,5 @@
 import io from 'socket.io-client'
+import axios from 'axios'
 
 const GET_MESSAGES = 'GET_MESSAGES'
 const WRITE_MESSAGE = 'WRITE_MESSAGE'
@@ -13,6 +14,17 @@ const setSocket = socket => ({type: SET_SOCKET, socket})
 export const clearMessages = () => ({type: CLEAR_MESSAGES})
 export const writeMessage = text => ({type: WRITE_MESSAGE, text})
 export const postMessage = message => ({type: POST_MESSAGE, message})
+
+export const getReservationMessages = reservationId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/messages/${reservationId}`)
+      dispatch(getMessages(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
 
 export const subscribeMessages = reservationId => {
   return dispatch => {
