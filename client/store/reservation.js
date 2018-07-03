@@ -34,7 +34,6 @@ const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
 export const loadReservation = () => async dispatch => {
   try {
     const res = await axios.get('/api/reservations')
-    console.log(res)
     dispatch(gotAllReservations(res.data))
   } catch (err) {
     console.error(err)

@@ -2,54 +2,22 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
-import {getReservationMessages} from '../store'
-import TextField from '@material-ui/core/TextField'
 import Chat from './chat'
 
 class TimeLine extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      reservationId: 0
-    }
-  }
-  componentDidMount() {
-    const reservationId = Number(this.props.match.params.reservationId)
-    this.setState({reservationId: reservationId})
-    this.props.fetchMyMessages(reservationId)
-  }
-  onSubmit = evt => {
-    evt.preventDefault()
-    console.log('you hit enter')
-    //need to fill this out more
-  }
   render() {
-    let buyerId = 0
-    let sellerId = 0
-    let buyerUrl = ''
-    let sellerUrl = ''
-    let fromId,
-      toId = 0
+    const reservationId = Number(this.props.match.params.reservationId)
+    const [singleReservation] = this.props.allReservations.filter(
+      res => reservationId === res.id
+    )
+    const buyerId = singleReservation.buyerId
+    const sellerId = singleReservation.sellerId
+    const buyerUrl = singleReservation.buyer.imageUrl
+    const sellerUrl = singleReservation.seller.imageUrl
+    const fromId = this.props.userId
+    const toId = buyerId === this.props.userId ? sellerId : buyerId
 
-    if (this.props.allReservations.length > 0) {
-      const singleReservation = this.props.allReservations.filter(
-        res => this.state.reservationId === res.id
-      )[0]
-      if (singleReservation) {
-        buyerId = singleReservation.buyerId
-        sellerId = singleReservation.sellerId
-        buyerUrl = singleReservation.buyer.imageUrl
-        sellerUrl = singleReservation.seller.imageUrl
-        fromId = this.props.userId
-        if ((buyerId = this.props.userId)) {
-          toId = sellerId
-        } else {
-          toId = buyerId
-        }
-        console.log('from and to id', fromId, toId)
-      }
-    }
-    let lineStyle = {
+    const lineStyle = {
       borderTop: 'dotted 5px'
     }
     return (
@@ -67,7 +35,7 @@ class TimeLine extends React.Component {
           </div>
         </div>
         <Chat
-          reservationId={this.state.reservationId}
+          reservationId={Number(this.props.match.params.reservationId)}
           fromId={fromId}
           toId={toId}
         />
@@ -83,11 +51,4 @@ const mapStateToProps = state => ({
   userId: state.user.id
 })
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchMyMessages: reservationId =>
-      dispatch(getReservationMessages(reservationId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TimeLine)
+export default connect(mapStateToProps)(TimeLine)
