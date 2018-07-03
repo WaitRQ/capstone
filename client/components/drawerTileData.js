@@ -37,7 +37,7 @@ const LoginIcons = props => (
         <ListItemIcon>
           <AccountIcon />
         </ListItemIcon>
-        <ListItemText primary="Edit Profile" />
+        <ListItemText primary="My Profile" />
       </ListItem>
     </Link>
     <a href="#" onClick={props.handleClick}>

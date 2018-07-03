@@ -13,7 +13,6 @@ import {
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import VideoComponent from './videoComponent'
-import videoComponent from './videoComponent'
 
 class Chat extends React.Component {
   constructor(props) {
@@ -56,7 +55,6 @@ class Chat extends React.Component {
   }
 
   render() {
-    console.log('chat props', this.props)
     return (
       <div>
         {this.state.video ? (
@@ -89,6 +87,7 @@ class Chat extends React.Component {
                   shrink: true
                 }}
                 placeholder="type message here"
+                value={this.props.newMessageText}
                 fullWidth
                 margin="normal"
                 onChange={this.handleChange}
@@ -119,13 +118,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)
-
-// <form onSubmit={this.handleSubmit}>
-// <input
-//   name="messageText"
-//   type="text"
-//   value={this.props.newMessageText}
-//   onChange={this.handleChange}
-// />
-// <button type="submit">Send</button>
-// </form>

@@ -6,13 +6,15 @@ import {
   MapContainer,
   Login,
   Signup,
-  UserAccount,
+  MyProfile,
   LocationScreen,
   MyReservations,
   EditProfile,
   TimeLine
 } from './components'
 import {me, loadReservation, getAllLocations} from './store'
+import VideoComponent from './components/videoComponent'
+import BgImage from './components/backgroundImage'
 
 /**
  * COMPONENT
@@ -33,8 +35,11 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+
         <Route exact path="/location" component={LocationScreen} />
+
         <Route path="/login" component={Login} />
+        <Route path="/test" component={BgImage} />
         <Route path="/signup" component={Signup} />
 
         {isLoggedIn && (
@@ -44,8 +49,8 @@ class Routes extends Component {
             <Route exact path="/location" component={LocationScreen} />
             <Route path="/home" component={MapContainer} />
             <Route path="/myreservations" component={MyReservations} />
-            <Route path="/myaccount" component={UserAccount} />
-            <Route path="/profile" component={EditProfile} />
+            <Route path="/profile" component={MyProfile} />
+            <Route path="/edit" component={EditProfile} />
             <Route path="/timeline/:reservationId" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
