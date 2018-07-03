@@ -3,7 +3,6 @@ import {updateUser, deleteUser} from '../store/user'
 import {connect} from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import Badge from '@material-ui/core/Badge'
 import Card from '@material-ui/core/Card'
 
 class EditProfile extends React.Component {
