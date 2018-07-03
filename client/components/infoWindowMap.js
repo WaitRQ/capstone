@@ -2,37 +2,39 @@ import React, {Component} from 'react'
 import {Marker, InfoWindow} from 'react-google-maps'
 import LocationScreen from './locationScreen'
 
-var window = {}
 class InfoWindowMap extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      isOpen: false,
-      windowTracker: {}
+      isOpen: false
     }
   }
 
-  // toggleClose = () =>{
-  //  this.setState({
-  //    isOpen: !window.isOpen
-  //  })
-  // }
+  //   handleCloseToggle =  (marker) => {
+  // console.log("in HandleCloseToggle")
+  //
+  //     this.setState(marker => ({
+  //       isOpen: !marker.isOpen,
+  //
+  //     }))
+  //
+  //   }
 
-  handleToggle = prevState => {
-    // if(window.latLng){
-    //   this.toggleClose()
-    // }
+  handleToggle = () => {
+    console.log('in handletoggle', this)
+    this.props.windowTracker(this.props.myUniqKey)
 
-    window = prevState
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen,
-      windowTracker: window
-    }))
+    // this.setState(prevState => ({
+    //   isOpen: !prevState.isOpen,
+    //
+    // }))
   }
 
   render() {
-    console.log('this.state.windowTracker1', this.state.windowTracker)
+    console.log('in render')
+    console.log('isOPen', this.props.isOpen)
+    console.log('my uniq key', this.props.myUniqKey)
     return (
       <Marker
         onClick={this.handleToggle}
@@ -41,7 +43,7 @@ class InfoWindowMap extends Component {
           lng: this.props.location.longitude
         }}
       >
-        {this.state.isOpen && (
+        {this.props.isOpen === this.props.myUniqKey && (
           <InfoWindow>
             <LocationScreen location={this.props.location} />
           </InfoWindow>
