@@ -4,13 +4,7 @@ const db = require('../db')
 
 const Reservation = db.define('reservation', {
   price: {
-    type: Sequelize.FLOAT,
-    get() {
-      return this.getDataValue('price') / 100
-    },
-    set(val) {
-      this.setDataValue('price', val * 100)
-    }
+    type: Sequelize.FLOAT
   },
   date: {
     type: Sequelize.DATEONLY,

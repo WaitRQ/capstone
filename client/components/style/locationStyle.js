@@ -1,7 +1,7 @@
 export const LocationStyles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360
+    maxWidth: 500
   },
   ListBox: {
     width: '100%',
