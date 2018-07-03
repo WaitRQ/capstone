@@ -92,7 +92,7 @@ class MyMapComponent extends Component {
         >
           <input
             type="text"
-            placeholder="Customized your placeholder"
+            placeholder="waitrQ Location?"
             style={{
               boxSizing: `border-box`,
               border: `1px solid transparent`,

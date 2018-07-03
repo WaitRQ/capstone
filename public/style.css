@@ -304,3 +304,7 @@ form div {
 .carousel:hover .slide .legend {
   opacity: 1;
 }
+
+.gm-style-iw {
+  width: 1000px;
+}
