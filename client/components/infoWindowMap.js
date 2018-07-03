@@ -16,7 +16,6 @@ class InfoWindowMap extends Component {
   }
 
   render() {
-    console.log('this.state is open', this.state.isOpen)
     return (
       <Marker
         onClick={this.handleToggle}

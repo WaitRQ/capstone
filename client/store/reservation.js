@@ -68,7 +68,7 @@ export default function(state = initialState, action) {
     case UPDATED_RESERVATION:
       return [
         ...state.filter(res => res.id !== action.reservation.id),
-        ...action.reservation
+        action.reservation
       ]
     case MAKE_RESERVATION:
       return [...state, ...action.reservation]
@@ -76,3 +76,8 @@ export default function(state = initialState, action) {
       return state
   }
 }
+
+// return {
+//       ...state,
+//       allProducts: [...newProducts, action.product],
+//     }
