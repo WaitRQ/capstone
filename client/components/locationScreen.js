@@ -35,7 +35,7 @@ class LocationScreen extends Component {
   }
 
   handleClickEdit = currentRes => {
-    console.log(currentRes)
+    console.log('this is currentRes', currentRes)
     this.setState({
       currentRes: currentRes
     })
@@ -43,6 +43,11 @@ class LocationScreen extends Component {
   handleTabChange = (event, value) => {
     this.setState({value})
   }
+  // resetCurrentRes = () => {
+  //   this.setState({
+  //     currentRes: {}
+  //   })
+  // }
 
   render() {
     console.log('this is all reservations', this.props.allReservations)
@@ -85,8 +90,10 @@ class LocationScreen extends Component {
           <Grid item sm={7}>
             <Paper className={classes.leftPaperGrid}>
               {openReservations.map(item => {
-                if (this.props.user.id === item.id) {
+                if (this.props.user.id === item.sellerId) {
                   editable = true
+                } else {
+                  editable = false
                 }
                 return (
                   <Fragment key={item.id}>
