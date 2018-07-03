@@ -91,7 +91,8 @@ class LocationScreen extends Component {
           <Grid item sm={7}>
             <Paper className={classes.leftPaperGrid}>
               {openReservations.map(item => {
-                if (this.props.user.id === item.sellerId) {
+                console.log('this is item_____________', item)
+                if (this.props.user.id === item.buyerId) {
                   editable = true
                 } else {
                   editable = false
@@ -105,7 +106,7 @@ class LocationScreen extends Component {
                     >
                       <Avatar
                         alt="Remy Sharp"
-                        src={item.seller.imageUrl}
+                        src={item.buyer.imageUrl}
                         className={classes.avatar}
                       />
                       Price: ${item.price}

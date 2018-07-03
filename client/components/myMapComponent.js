@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
+import {withScriptjs, withGoogleMap, GoogleMap} from 'react-google-maps'
 const {SearchBox} = require('react-google-maps/lib/components/places/SearchBox')
 import {connect} from 'react-redux'
 import InfoWindowMap from './infoWindowMap'
