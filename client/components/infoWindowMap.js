@@ -42,9 +42,11 @@ class InfoWindowMap extends Component {
         }}
       >
         {this.state.isOpen && (
-          <InfoWindow>
-            <LocationScreen location={this.props.location} />
-          </InfoWindow>
+          <div style={{width: '800px'}}>
+            <InfoWindow>
+              <LocationScreen location={this.props.location} />
+            </InfoWindow>
+          </div>
         )}
       </Marker>
     )
