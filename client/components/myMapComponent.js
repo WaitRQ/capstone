@@ -15,7 +15,8 @@ class MyMapComponent extends Component {
         lat: this.props.defaultCenter.lat,
         lng: this.props.defaultCenter.lng
       },
-      windows: null
+      windows: null,
+      newLocation: ''
     }
   }
 
@@ -55,11 +56,16 @@ class MyMapComponent extends Component {
       latitude: bounds.f.b,
       longitude: bounds.b.b
     }
+
     await this.props.addCurrentUserLocation(userData)
+    this.setState({
+      windows: this.props.allLocations[this.props.allLocations.length - 1].id
+    })
   }
 
   render() {
     console.log('this state.windows', this.state.windows)
+    console.log('this is user data', this.state)
     return (
       <div>
         <GoogleMap defaultZoom={14} center={this.state.center}>
