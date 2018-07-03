@@ -14,8 +14,18 @@ class MyMapComponent extends Component {
       center: {
         lat: this.props.defaultCenter.lat,
         lng: this.props.defaultCenter.lng
-      }
+      },
+      windows: null,
+      newLocation: ''
     }
+  }
+
+  windowTracker = markerKey => {
+    console.log('in windowTracker')
+    this.setState({
+      windows: markerKey
+    })
+    console.log('______', this.state.windows)
   }
 
   onMapMounted = ref => {
@@ -46,10 +56,16 @@ class MyMapComponent extends Component {
       latitude: bounds.f.b,
       longitude: bounds.b.b
     }
+
     await this.props.addCurrentUserLocation(userData)
+    this.setState({
+      windows: this.props.allLocations[this.props.allLocations.length - 1].id
+    })
   }
 
   render() {
+    console.log('this state.windows', this.state.windows)
+    console.log('this is user data', this.state)
     return (
       <div>
         <GoogleMap defaultZoom={14} center={this.state.center}>
@@ -57,6 +73,9 @@ class MyMapComponent extends Component {
             this.props.allLocations.map(location => {
               return (
                 <InfoWindowMap
+                  windowTracker={this.windowTracker}
+                  isOpen={this.state.windows}
+                  myUniqKey={location.id}
                   key={location.id}
                   userData={this.state}
                   location={location}
