@@ -6,7 +6,7 @@ import {
   MapContainer,
   Login,
   Signup,
-  UserAccount,
+  MyProfile,
   LocationScreen,
   MyReservations,
   EditProfile,
@@ -44,8 +44,8 @@ class Routes extends Component {
             <Route exact path="/location" component={LocationScreen} />
             <Route path="/home" component={MapContainer} />
             <Route path="/myreservations" component={MyReservations} />
-            <Route path="/myaccount" component={UserAccount} />
-            <Route path="/profile" component={EditProfile} />
+            <Route path="/profile" component={MyProfile} />
+            <Route path="/edit" component={EditProfile} />
             <Route path="/timeline/:reservationId" component={TimeLine} />
             <Route component={MapContainer} />
           </Switch>
