@@ -16,6 +16,7 @@ import {
 } from './components'
 import {me, loadReservation, getAllLocations} from './store'
 import VideoComponent from './components/videoComponent'
+import BgImage from './components/backgroundImage'
 
 /**
  * COMPONENT
@@ -36,8 +37,11 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+
         <Route exact path="/location" component={LocationScreen} />
+
         <Route path="/login" component={Login} />
+        <Route path="/test" component={BgImage} />
         <Route path="/signup" component={Signup} />
         <Route path="/newreservation" component={NewReservation} />
 
