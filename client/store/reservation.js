@@ -71,7 +71,7 @@ export default function(state = initialState, action) {
         action.reservation
       ]
     case MAKE_RESERVATION:
-      return [...state, ...action.reservation]
+      return [...state, action.reservation]
     default:
       return state
   }
