@@ -107,7 +107,6 @@ class NewReservation extends Component {
   }
 
   render() {
-    console.log('in new Reservation')
     const {classes} = this.props
     const {price, date, time} = this.state
     return (
@@ -225,90 +224,3 @@ NewReservation.propTypes = {
   // isLoggedIn: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired
 }
-
-// return (
-//   <div className="max-width-2 mx-auto">
-//     <div className="py2">
-//       <Typography variant="headline" component="h3">
-//         Make a new reservation
-//       </Typography>
-//       <Typography variant="subheading">
-//         {this.props.location.name}
-//       </Typography>
-//     </div>
-//     <div className="pb2">
-//       <Paper className={classes.root} elevation={1}>
-//         <form
-//           className={classes.container}
-//           noValidate
-//           onSubmit={this.handleSubmit}
-//         >
-//           <div className="block">
-//             <TextField
-//               id="date"
-//               label="Reservation Date"
-//               type="date"
-//               value={date}
-//               onChange={this.handleChange('date')}
-//               className={classes.textField}
-//               InputLabelProps={{
-//                 shrink: true
-//               }}
-//             />
-//           </div>
-//           <div className="block">
-//             <TextField
-//               id="time"
-//               label="Reservation Time"
-//               type="time"
-//               value={time}
-//               onChange={this.handleChange('time')}
-//               className={classes.textField}
-//               InputLabelProps={{
-//                 shrink: true
-//               }}
-//               inputProps={{
-//                 step: 300 // 5 min
-//               }}
-//             />
-//           </div>
-//           <div className="block">
-//             <TextField
-//               className={classes.formControl}
-//               label="Reservation Price"
-//               value={price}
-//               onChange={this.handleChange('price')}
-//               id="price"
-//               InputProps={{
-//                 inputComponent: NumberFormatCustom
-//               }}
-//             />
-//           </div>
-//         </form>
-//       </Paper>
-//     </div>
-//     <div className="center">
-//       {this.state.booked ? (
-//         <MuiThemeProvider theme={theme}>
-//           <Button
-//             variant="contained"
-//             color="primary"
-//             className={classes.margin}
-//             onClick={this.handleNewRes}
-//           >
-//             Reservation Created!
-//           </Button>
-//         </MuiThemeProvider>
-//       ) : (
-//         <Payment
-//           {...this.state}
-//           {...this.props.location}
-//           userId={this.props.userId}
-//           handlePaid={this.handlePaid}
-//         />
-//       )}
-//     </div>
-//   </div>
-// )
-// }
-// }

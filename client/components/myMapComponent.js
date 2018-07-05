@@ -21,7 +21,6 @@ class MyMapComponent extends Component {
   }
 
   windowTracker = markerKey => {
-    console.log('in windowTracker')
     this.setState({
       windows: markerKey
     })
@@ -87,6 +86,7 @@ class MyMapComponent extends Component {
           bounds={this.props.bounds}
           controlPosition={google.maps.ControlPosition.TOP_LEFT}
           onPlacesChanged={this.onPlacesChanged}
+          autoUpdate
         >
           <input
             type="text"
@@ -122,11 +122,3 @@ const mapDispatch = dispatch => ({
 export default connect(mapStateToProps, mapDispatch)(
   withScriptjs(withGoogleMap(MyMapComponent))
 )
-
-// places.forEach(place => {
-//   if (place.geometry.viewport) {
-//     bounds.union(place.geometry.viewport)
-//   } else {
-//     bounds.extend(place.geometry.location)
-//   }
-// })

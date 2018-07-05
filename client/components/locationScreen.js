@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import history from '../history'
 import {withStyles} from '@material-ui/core/styles'
+import {editReservation} from '../store/reservation'
+import {createMessage} from '../store/message'
 
 import EditReservation from './editReservation'
 import NewReservation from './newReservation'
@@ -36,7 +38,6 @@ class LocationScreen extends Component {
   }
 
   handleClickEdit = currentRes => {
-    console.log('this is currentRes', currentRes)
     this.setState({
       currentRes: currentRes,
       newScreen: false
@@ -46,11 +47,20 @@ class LocationScreen extends Component {
     this.setState({value})
   }
   resetCurrentRes = () => {
-    console.log('in reset')
     this.setState({
       currentRes: {},
       newScreen: true
     })
+  }
+
+  handleReserve = async item => {
+    item.statusId = 2
+    item.sellerId = this.props.user.id
+    await this.props.editReservation(item)
+    var message = {text: 'You have a waiter', reservationId: item.id}
+    await this.props.createMessage(message)
+
+    history.push(`/timeline/${item.id}`)
   }
 
   render() {
@@ -60,8 +70,6 @@ class LocationScreen extends Component {
         reservation.status.type === 'open'
       )
     })
-    console.log('these are All Reservations', this.props.allReservations)
-    console.log('these are openReservations', openReservations)
 
     if (this.state.value === 0) {
       openReservations = openReservations.sort(function(resA, resB) {
@@ -118,6 +126,8 @@ class LocationScreen extends Component {
                         <Button
                           variant="contained"
                           onClick={() => {
+                            this.handleReserve(item)
+
                             history.push(`/myreservations`)
                           }}
                           style={{float: 'right'}}
@@ -201,7 +211,12 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = dispatch => ({
+  editReservation: reservation => dispatch(editReservation(reservation)),
+  createMessage: message => dispatch(createMessage(message))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(LocationStyles)(LocationScreen)
 )
 

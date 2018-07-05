@@ -84,9 +84,3 @@ router.delete('/:id', async (req, res, next) => {
     next(err)
   }
 })
-
-// returning: true
-// })
-// res.json(reservation[1][0].dataValues)
-
-//included other routes like an update post/put route
