@@ -65,8 +65,21 @@ router.put('/:id', async (req, res, next) => {
       where: {id: req.params.id},
       include: [{all: true}]
     })
-    console.log('this is the full res', fullRes.dataValues)
+
     res.json(fullRes.dataValues)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Reservation.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.json(req.params.id)
   } catch (err) {
     next(err)
   }

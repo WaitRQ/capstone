@@ -54,14 +54,15 @@ class LocationScreen extends Component {
   }
 
   render() {
-    console.log('this is all reservations', this.props.allReservations)
     var openReservations = this.props.allReservations.filter(reservation => {
       return (
         reservation.locationId === this.props.location.id &&
         reservation.status.type === 'open'
       )
     })
-    console.log('this is all reservations', openReservations)
+    console.log('these are All Reservations', this.props.allReservations)
+    console.log('these are openReservations', openReservations)
+
     if (this.state.value === 0) {
       openReservations = openReservations.sort(function(resA, resB) {
         return resB.price - resA.price
@@ -84,7 +85,6 @@ class LocationScreen extends Component {
     var editable = false
 
     const {classes} = this.props
-    console.log('this is state', this.state.currentRes)
 
     return (
       <>
@@ -97,7 +97,6 @@ class LocationScreen extends Component {
                 <div>No Reservations to take here</div>
               ) : (
                 openReservations.map(item => {
-                  console.log('this is item_____________', item)
                   if (this.props.user.id === item.buyerId) {
                     editable = true
                   } else {
@@ -119,7 +118,7 @@ class LocationScreen extends Component {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            history.push(`/timeline/${item.id}`)
+                            history.push(`/myreservations`)
                           }}
                           style={{float: 'right'}}
                           size="small"
@@ -209,3 +208,5 @@ export default connect(mapStateToProps, null)(
 LocationScreen.propTypes = {
   classes: PropTypes.object.isRequired
 }
+
+//  history.push(`/timeline/${item.id}`)
