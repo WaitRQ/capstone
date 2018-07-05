@@ -39,7 +39,7 @@ const MyProfile = props => {
           <Star className={classes.starIcon} />
           <Star className={classes.starIcon} />
           <Star className={classes.starIcon} />
-          <Star className={classes.starIcon} />
+          <Star className={classes.starIcon} /> (1)
         </ListItem>
         <ListItem>Name: {props.user.name}</ListItem>
         <ListItem>Email: {props.user.email}</ListItem>
