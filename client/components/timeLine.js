@@ -10,6 +10,7 @@ class TimeLine extends React.Component {
     const [singleReservation] = this.props.allReservations.filter(
       res => reservationId === res.id
     )
+
     const buyerId = singleReservation.buyerId
     const sellerId = singleReservation.sellerId
     const buyerUrl = singleReservation.buyer.imageUrl

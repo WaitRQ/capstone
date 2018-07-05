@@ -5,8 +5,8 @@ import axios from 'axios'
  */
 const GOT_ALL_RESERVATIONS = 'GOT_ALL_RESERVATIONS'
 const UPDATED_RESERVATION = 'UPDATED_RESERVATION'
-
 const MAKE_RESERVATION = 'MAKE_RESERVATION'
+const DELETED_RESERVATION = 'DELETED_RESERVATION'
 
 /**
  * INITIAL STATE
@@ -24,6 +24,11 @@ const gotAllReservations = reservations => ({
 const updatedReservations = reservation => ({
   type: UPDATED_RESERVATION,
   reservation
+})
+
+const deletedReservation = id => ({
+  type: DELETED_RESERVATION,
+  id
 })
 
 const makeReservation = reservation => ({type: MAKE_RESERVATION, reservation})
@@ -58,6 +63,15 @@ export const createReservation = newReservation => async dispatch => {
   }
 }
 
+export const deleteReservation = id => async dispatch => {
+  try {
+    await axios.delete(`/api/reservations/${id}`)
+    dispatch(deletedReservation(id))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -72,12 +86,9 @@ export default function(state = initialState, action) {
       ]
     case MAKE_RESERVATION:
       return [...state, action.reservation]
+    case DELETED_RESERVATION:
+      return [...state.filter(res => res.id !== action.id)]
     default:
       return state
   }
 }
-
-// return {
-//       ...state,
-//       allProducts: [...newProducts, action.product],
-//     }

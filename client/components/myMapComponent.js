@@ -64,8 +64,6 @@ class MyMapComponent extends Component {
   }
 
   render() {
-    console.log('this state.windows', this.state.windows)
-    console.log('this is user data', this.state)
     return (
       <div>
         <GoogleMap defaultZoom={14} center={this.state.center}>
