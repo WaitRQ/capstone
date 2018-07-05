@@ -24,16 +24,20 @@ class TimeLine extends React.Component {
 
     return (
       <div>
-        <Typography variant="headline" component="h3">
-          Timeline for Reservation
-        </Typography>
-        <div className="clearfix md-flex flex-row items-baseline justify-center">
-          <div className="align-end">
-            {buyerId && <Avatar src={buyerUrl} />}
-          </div>
-          <hr style={lineStyle} className="col col-4" />
-          <div className="flex-auto">
-            {sellerId && <Avatar src={sellerUrl} />}
+        <div className="center">
+          <Typography variant="headline" component="h3">
+            Timeline for Reservation
+          </Typography>
+        </div>
+        <div>
+          <div className="clearfix mx-auto md-flex flex-row items-baseline justify-center">
+            <div className="align-end">
+              {buyerId && <Avatar src={buyerUrl} />}
+            </div>
+            <hr style={lineStyle} className="col col-11" />
+            <div className="flex-auto">
+              {sellerId && <Avatar src={sellerUrl} />}
+            </div>
           </div>
         </div>
         <Chat

@@ -41,6 +41,7 @@
     "body-parser": "^1.16.1",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
+    "css-loader": "^0.28.11",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
@@ -66,6 +67,7 @@
     "sequelize": "^4.3.1",
     "socket.io": "^2.0.3",
     "stripe": "^6.2.0",
+    "style-loader": "^0.21.0",
     "twilio": "^3.17.4",
     "twilio-video": "^1.10.0"
   },

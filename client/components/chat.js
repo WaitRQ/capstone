@@ -1,8 +1,5 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
 import {connect} from 'react-redux'
 import {
   subscribeMessages,
@@ -13,6 +10,7 @@ import {
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import VideoComponent from './videoComponent'
+import ChatBubble from './chatBubble'
 
 class Chat extends React.Component {
   constructor(props) {
@@ -55,6 +53,26 @@ class Chat extends React.Component {
   }
 
   render() {
+    let chatMessages = {
+      type: 1,
+      image: 'https://identix.state.gov/qotw/images/no-photo.gif',
+      text: 'No chats available'
+    }
+    if (this.props.historyMessages) {
+      chatMessages = this.props.historyMessages.map(message => {
+        let type = this.props.userId === message.fromId ? 0 : 1
+        let image = message.from.imageUrl
+        let text = message.text
+        let time =
+          '(' +
+          message.createdAt.slice(11, 16) +
+          ' on ' +
+          message.createdAt.slice(0, 10) +
+          ')'
+        return {type, image, text, time}
+      })
+    }
+
     return (
       <div>
         {this.state.video ? (
@@ -64,37 +82,48 @@ class Chat extends React.Component {
           />
         ) : (
           <div>
-            <Card>
-              <List>
-                {this.props.historyMessages.map(message => (
-                  <div key={message.id}>
-                    <ListItem>
-                      {message.from.name} : {message.text} --{' '}
-                      {message.createdAt.slice(11, 19)} on{' '}
-                      {message.createdAt.slice(0, 10)}
-                    </ListItem>
-                    <Divider />
+            <div style={{maxHeight: '70vh', overflowY: 'scroll'}}>
+              <Card>
+                <ChatBubble messages={chatMessages} />
+              </Card>
+            </div>
+            <div className="flex flex-row justify-center items-center">
+              <div className="col col-11">
+                <form
+                  noValidate
+                  autoComplete="off"
+                  onSubmit={this.handleSubmit}
+                >
+                  <div style={{width: '90%'}}>
+                    <TextField
+                      name="messageText"
+                      id="full-width"
+                      label="Send Message:"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      placeholder="type message here"
+                      value={this.props.newMessageText}
+                      fullWidth
+                      margin="dense"
+                      onChange={this.handleChange}
+                    />
                   </div>
-                ))}
-              </List>
-            </Card>
-            <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-              <TextField
-                name="messageText"
-                id="full-width"
-                label="Send Message:"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                placeholder="type message here"
-                value={this.props.newMessageText}
-                fullWidth
-                margin="normal"
-                onChange={this.handleChange}
-              />
-              <Button type="submit">Send</Button>
-            </form>
-            <Button onClick={this.videoOn}>Video Chat</Button>
+                  <Button variant="outlined" type="submit" color="primary">
+                    Send
+                  </Button>
+                </form>
+              </div>
+              <div className="col col-1">
+                <Button
+                  variant="outlined"
+                  onClick={this.videoOn}
+                  color="primary"
+                >
+                  Video Chat
+                </Button>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -104,7 +133,8 @@ class Chat extends React.Component {
 
 const mapStateToProps = state => ({
   historyMessages: state.message.historyMessages,
-  newMessageText: state.message.newMessageText
+  newMessageText: state.message.newMessageText,
+  userId: state.user.id
 })
 
 const mapDispatchToProps = dispatch => {
