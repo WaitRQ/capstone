@@ -43,22 +43,30 @@ async function seed() {
     }),
     User.create({
       name: 'Jason',
+      imageUrl:
+        'https://nhl.bamcontent.com/images/headshots/current/168x168/8471698.jpg',
       email: 'jason@email.com',
       password: '123'
     }),
     User.create({
       name: 'Wendy',
       email: 'wendy@email.com',
+      imageUrl:
+        'https://nyppagesix.files.wordpress.com/2018/03/gettyimages-852486536.jpg?quality=90&strip=all&w=618&h=410&crop=1',
       password: '123'
     }),
     User.create({
       name: 'Phil',
       email: 'phil@email.com',
+      imageUrl:
+        'https://media.gettyimages.com/photos/british-musician-phil-collins-picture-id108797528?s=612x612',
       password: '123'
     }),
     User.create({
       name: 'John',
       email: 'john@email.com',
+      imageUrl:
+        'https://akns-images.eonline.com/eol_images/Entire_Site/2017418/rs_600x600-170518174134-600.Mike-Situation-Sorrentino-Kf.51817.png?fit=around|700:700&crop=700:700;center,top&output-quality=90',
       password: '123'
     })
   ])
