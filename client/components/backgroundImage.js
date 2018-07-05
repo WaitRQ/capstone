@@ -4,6 +4,8 @@ import {Carousel} from 'react-responsive-carousel'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import {Login} from '../components'
+import PropTypes from 'prop-types'
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -18,7 +20,7 @@ const styles = theme => ({
 
 class HomeCarousel extends Component {
   render() {
-    const {classes, cars} = this.props
+    const {classes} = this.props
     return (
       <div>
         <div>
@@ -28,7 +30,7 @@ class HomeCarousel extends Component {
               variant="headline"
               component="h3"
             >
-              Welcome to Wait a Que
+              <Login />
             </Typography>
             <Typography className={classes.paperText} component="p">
               The world's premier Waiting Application.
@@ -60,6 +62,9 @@ class HomeCarousel extends Component {
       </div>
     )
   }
+}
+HomeCarousel.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(HomeCarousel)
