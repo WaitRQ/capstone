@@ -65,15 +65,8 @@ router.put('/:id', async (req, res, next) => {
       where: {id: req.params.id},
       include: [{all: true}]
     })
-    console.log('this is the full res', fullRes.dataValues)
     res.json(fullRes.dataValues)
   } catch (err) {
     next(err)
   }
 })
-
-// returning: true
-// })
-// res.json(reservation[1][0].dataValues)
-
-//included other routes like an update post/put route

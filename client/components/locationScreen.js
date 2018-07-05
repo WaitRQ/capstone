@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import history from '../history'
 import {withStyles} from '@material-ui/core/styles'
+import {editReservation} from '../store/reservation'
+import {createMessage} from '../store/message'
 
 import EditReservation from './editReservation'
 import NewReservation from './newReservation'
@@ -36,7 +38,6 @@ class LocationScreen extends Component {
   }
 
   handleClickEdit = currentRes => {
-    console.log('this is currentRes', currentRes)
     this.setState({
       currentRes: currentRes,
       newScreen: false
@@ -46,22 +47,30 @@ class LocationScreen extends Component {
     this.setState({value})
   }
   resetCurrentRes = () => {
-    console.log('in reset')
     this.setState({
       currentRes: {},
       newScreen: true
     })
   }
 
+  handleReserve = async item => {
+    item.statusId = 2
+    item.sellerId = this.props.user.id
+    await this.props.editReservation(item)
+    var message = {text: 'You have a waiter', reservationId: item.id}
+    await this.props.createMessage(message)
+
+    history.push(`/timeline/${item.id}`)
+  }
+
   render() {
-    console.log('this is all reservations', this.props.allReservations)
     var openReservations = this.props.allReservations.filter(reservation => {
       return (
         reservation.locationId === this.props.location.id &&
         reservation.status.type === 'open'
       )
     })
-    console.log('this is all reservations', openReservations)
+
     if (this.state.value === 0) {
       openReservations = openReservations.sort(function(resA, resB) {
         return resB.price - resA.price
@@ -84,7 +93,6 @@ class LocationScreen extends Component {
     var editable = false
 
     const {classes} = this.props
-    console.log('this is state', this.state.currentRes)
 
     return (
       <>
@@ -97,7 +105,6 @@ class LocationScreen extends Component {
                 <div>No Reservations to take here</div>
               ) : (
                 openReservations.map(item => {
-                  console.log('this is item_____________', item)
                   if (this.props.user.id === item.buyerId) {
                     editable = true
                   } else {
@@ -119,7 +126,7 @@ class LocationScreen extends Component {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            history.push(`/timeline/${item.id}`)
+                            this.handleReserve(item)
                           }}
                           style={{float: 'right'}}
                           size="small"
@@ -202,7 +209,12 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps, null)(
+const mapDispatchToProps = dispatch => ({
+  editReservation: reservation => dispatch(editReservation(reservation)),
+  createMessage: message => dispatch(createMessage(message))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(LocationStyles)(LocationScreen)
 )
 

@@ -76,8 +76,3 @@ export default function(state = initialState, action) {
       return state
   }
 }
-
-// return {
-//       ...state,
-//       allProducts: [...newProducts, action.product],
-//     }

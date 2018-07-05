@@ -63,7 +63,7 @@ class EditReservation extends Component {
     const date = this.state.date
     const time = this.state.time
     const updateObj = {id, price, date, time}
-    console.log('this is the current object', updateObj)
+
     await this.props.editReservation(updateObj)
     this.props.reset()
   }

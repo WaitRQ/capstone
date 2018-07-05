@@ -34,6 +34,16 @@ export const subscribeMessages = reservationId => {
   }
 }
 
+export const createMessage = message => {
+  return async () => {
+    try {
+      await axios.post('/api/messages', message)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_MESSAGES:
@@ -52,6 +62,7 @@ export default function(state = initialState, action) {
         state.socket.emit('new_message', action.message)
       }
       return state
+
     default:
       return state
   }
