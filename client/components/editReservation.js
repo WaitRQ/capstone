@@ -2,14 +2,15 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
 import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
+
 import {withStyles} from '@material-ui/core/styles'
+import DeleteIcon from '@material-ui/icons/DeleteForever'
 
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import {LocationStyles} from './style'
-import {editReservation} from '../store/reservation'
+import {editReservation, deleteReservation} from '../store/reservation'
 
 class EditReservation extends Component {
   constructor(props) {
@@ -54,6 +55,12 @@ class EditReservation extends Component {
     this.setState({
       [name]: event.target.value
     })
+  }
+
+  handleDelete = async () => {
+    console.log('inhandleDelete')
+    await this.props.deleteReservation(this.props.currentRes.id)
+    this.props.reset()
   }
 
   handleSubmit = async event => {
@@ -130,6 +137,7 @@ class EditReservation extends Component {
         >
           Edit Price
         </Button>
+        <DeleteIcon style={{float: 'right'}} onClick={this.handleDelete} />
       </Fragment>
     )
   }
@@ -140,7 +148,8 @@ class EditReservation extends Component {
  */
 
 const mapDispatchToProps = dispatch => ({
-  editReservation: updateObj => dispatch(editReservation(updateObj))
+  editReservation: updateObj => dispatch(editReservation(updateObj)),
+  deleteReservation: id => dispatch(deleteReservation(id))
 })
 
 export default withStyles(LocationStyles)(

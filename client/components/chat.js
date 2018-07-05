@@ -52,6 +52,13 @@ class Chat extends React.Component {
     this.setState({video: false})
   }
 
+  scrollDown = () => {
+    window.setTimeout(function() {
+      var elem = document.getElementById('chatWindow')
+      elem.scrollTop = elem.scrollHeight
+    }, 1000)
+  }
+
   render() {
     let chatMessages = {
       type: 1,
@@ -61,7 +68,9 @@ class Chat extends React.Component {
     if (this.props.historyMessages) {
       chatMessages = this.props.historyMessages.map(message => {
         let type = this.props.userId === message.fromId ? 0 : 1
-        let image = message.from.imageUrl
+        let image = message.fromId
+          ? message.from.imageUrl
+          : 'https://avatars3.githubusercontent.com/u/40404440?s=200&v=4'
         let text = message.text
         let time =
           '(' +
@@ -72,7 +81,7 @@ class Chat extends React.Component {
         return {type, image, text, time}
       })
     }
-
+    this.scrollDown()
     return (
       <div>
         {this.state.video ? (
@@ -82,7 +91,10 @@ class Chat extends React.Component {
           />
         ) : (
           <div>
-            <div style={{maxHeight: '70vh', overflowY: 'scroll'}}>
+            <div
+              id="chatWindow"
+              style={{maxHeight: '70vh', overflowY: 'scroll'}}
+            >
               <Card>
                 <ChatBubble messages={chatMessages} />
               </Card>

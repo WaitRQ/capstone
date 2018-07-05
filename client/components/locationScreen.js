@@ -127,6 +127,8 @@ class LocationScreen extends Component {
                           variant="contained"
                           onClick={() => {
                             this.handleReserve(item)
+
+                            history.push(`/myreservations`)
                           }}
                           style={{float: 'right'}}
                           size="small"
@@ -221,3 +223,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 LocationScreen.propTypes = {
   classes: PropTypes.object.isRequired
 }
+
+//  history.push(`/timeline/${item.id}`)

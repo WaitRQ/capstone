@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import './style/ChatBubble.css'
 
 class ChatBubble extends Component {
   getConversations(messages) {
