@@ -14,4 +14,4 @@ Huu Nguyen, Scott Soffel, Wen Zhang, Yeshi Wangdi
 
 # deployed link
 
-[Heroku deployed linke](https://waitrq.herokuapp.com/)
+[Heroku deployed link](https://waitrq.herokuapp.com/)
