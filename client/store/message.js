@@ -9,8 +9,8 @@ const SET_SOCKET = 'SET_SOCKET'
 
 const initialState = {historyMessages: [], newMessageText: '', socket: null}
 
-const getMessages = messages => ({type: GET_MESSAGES, messages})
-const setSocket = socket => ({type: SET_SOCKET, socket})
+export const getMessages = messages => ({type: GET_MESSAGES, messages})
+export const setSocket = socket => ({type: SET_SOCKET, socket})
 export const clearMessages = () => ({type: CLEAR_MESSAGES})
 export const writeMessage = text => ({type: WRITE_MESSAGE, text})
 export const postMessage = message => ({type: POST_MESSAGE, message})
